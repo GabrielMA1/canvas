@@ -1,0 +1,16 @@
+RielArt static site audit
+=========================
+Root: C:\Users\Gabriel\Documents\Codex\2026-07-18\are-you-able-to-search-every-2\live-rielart-working2
+
+Summary
+-------
+- HTML files checked: 30
+- Indexable pages checked: 25
+- Sitemap URLs checked: 25
+- Client Portal URL occurrences: 90
+- Formspree endpoint occurrences: 2
+- Approved Stripe Payment Links found: 6/6
+- Warnings: none
+- Critical failures: 0
+
+PASS: no critical static-site failures were found.

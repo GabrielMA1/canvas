@@ -1,99 +1,67 @@
-# rielart.com — business website
+# rielart.com
 
-Static production-ready website files. Deploy the contents of this folder at the domain root.
+Static, dependency-free production website for RielArt. Deploy the contents of this repository at the domain root.
 
-## Structure
-- `index.html` — complete business homepage
-- `services/` — service overview
-- `pricing/` — US-dollar fixed-scope projects, monthly subscriptions, live Stripe Payment Links, comparison, and scope notes
-- `portfolio/` — representative project directions
-- `process/` — detailed delivery process
-- `about/` — company and team
-- `contact/` — Formspree free-audit request form with direct contact and consultation-scheduling options
-- `blog/` — insights index and articles
+## Site structure
+
+- `index.html` — connected-system homepage with free-audit and project-inquiry form
+- `services/` — service overview plus five detailed service routes
+- `portfolio/` — clearly labeled representative solution models
+- `process/` — five-phase delivery process and Client Portal overview
+- `pricing/` — fixed-scope projects, monthly support, comparison tables, and live Stripe Payment Links
+- `about/` — founder-led studio overview
+- `blog/` — searchable, filterable Insights index and nine articles
+- `faq/` — grouped service, process, pricing, ownership, AI, and support questions
+- `contact/` — the same inquiry form used on the homepage
 - `privacy-policy/`, `terms/` — legal pages
+- `thanks/`, `404.html` — noindex utility pages
+- `assets/css/site.css` — consolidated site design system
+- `assets/js/site.js` — theme, navigation, FAQ, filter, reveal, and form behavior
+- `tools/site_audit.py` — local static-site audit
 
-## Homepage features
-- Light mode by default with a persistent dark-mode toggle
-- Brand, web, AI systems, pricing, process, insights, FAQ, and contact sections
-- Email-based free-audit requests with a direct consultation-scheduling option
-- Accessible single-open FAQ behavior
-- Responsive layouts and reduced-motion support
+## Preserved production integrations
 
-## Important checks before publishing
-- Confirm one-time prices (USD $497 and USD $247) and monthly subscription prices (USD $149, $249, $399, and $699) remain current.
-- Confirm the subscription scope, billing terms, cancellation terms, and the note that advertising spend is separate.
-- Confirm the Formspree endpoint, thank-you redirect, and consultation-scheduling link.
-- Replace representative project directions with approved case studies as they become available.
+- Client Portal: `https://portal.rielart.com`
+- Formspree: `https://formspree.io/f/xojrdoel`
+- Thank-you destination: `https://rielart.com/thanks/`
+- Consultation scheduling: `https://calendly.com/gabrielmacovei001/15min?hide_gdpr_banner=1`
+- Email: `hello@rielart.com`
+- LinkedIn: `https://www.linkedin.com/in/gabrielmacovei/`
 
-## Redirects
-The `_redirects` file covers older legal `.html` paths on compatible hosts. Static redirect pages are included for GitHub Pages compatibility.
+The Pricing page preserves six live Stripe-hosted Payment Links:
 
+- Digital Foundation — USD $497
+- Focused Automation Setup — USD $247
+- Digital Presence Care — USD $149/month
+- AI Automation Care — USD $249/month
+- Online Ads Management — USD $399/month
+- Growth Systems Partner — USD $699/month
 
-## Stripe Payment Links
+The custom Connected System remains inquiry-only.
 
-The Pricing page uses live Stripe-hosted Payment Links for the two fixed-scope services and four monthly subscriptions. Each Order or Subscribe button opens Stripe Checkout in a new browser tab.
+## Local review
 
-Configured links:
+From the repository root, run a simple static server, for example:
 
-- Digital Foundation: `https://buy.stripe.com/8x25kvbsKcKF6M2gYqfw400`
-- Focused Automation Setup: `https://buy.stripe.com/dRm00b9kC5id6M29vYfw401`
-- Digital Presence Care: `https://buy.stripe.com/bJe14f54m11Xc6mdMefw402`
-- AI Automation Care: `https://buy.stripe.com/7sYbIT0O64e95HYfUmfw403`
-- Online Ads Management: `https://buy.stripe.com/14A5kv9kCh0Vb2igYqfw404`
-- Growth Systems Partner: `https://buy.stripe.com/5kQ6oz2WefWRgmCfUmfw405`
+```powershell
+python -m http.server 4173
+```
 
-The custom Connected System intentionally remains inquiry-only. Keep `/packages/` as the included redirect to `/pricing/`.
+Then open the local address printed by the server.
 
-## July 2026 content and UX update
+Run the repository audit with:
 
-- The homepage hero uses a non-overlapping responsive grid.
-- Homepage pricing cards intentionally omit prices and link to `/pricing/`.
-- The Pricing page includes project and monthly-subscription comparison tables.
-- The Services page includes an Ongoing Management section linked to monthly plans.
-- Contact panels lead with the free email-audit process and include direct contact and consultation-scheduling options.
-- Five original, people-first insight articles were added with Article structured data, canonical URLs, bylines, internal links, and primary-source references.
-- Stripe Payment Links are live in `pricing/index.html`; test each link in Stripe live mode before deployment.
+```powershell
+python tools/site_audit.py
+```
 
-## v6 layout refinements
+## Publishing checklist
 
-- Homepage hero uses three deliberate lines with balanced word counts and responsive no-wrap sizing.
-- Homepage pricing cards include a consistent gap before the CTA.
-- Homepage and Contact page now use the same contact section and light/dark theme styling.
-- Contact shortcuts include `Email hello@rielart.com`, `Connect on LinkedIn`, and `Schedule a Consultation`.
+- Review the Git diff in GitHub Desktop.
+- Confirm current prices, scopes, billing terms, and third-party-cost notes.
+- Test all six Stripe links in the intended Stripe mode.
+- Confirm Formspree delivery and the `/thanks/` redirect.
+- Confirm the Client Portal, email, LinkedIn, and scheduling destinations.
+- Add only approved client proof, testimonials, and case-study results. Representative examples must remain labeled until real, permissioned work replaces them.
 
-
-## v7 interface refinements
-- Header CTA uses **Reach Out** and opens the message section.
-- Homepage hero uses **View Pricing** and a connected Brand/Web/AI visual.
-- Contact shortcuts are stacked vertically for better readability.
-- Theme icon alignment was normalized across browsers.
-
-## July 2026 pre-launch audit update
-- Removed unfinished About-page placeholder copy.
-- Reframed the Work page around representative solution examples without presenting fictional proof.
-- Added a pre-checkout clarity block covering currency, onboarding, scope exclusions, and recurring billing.
-- Improved the Insights and Process title tags.
-- Added visible required-field guidance and response-time expectations to both contact forms.
-- Strengthened Toronto/Canada business identity signals and Organization structured data.
-
-Real client testimonials and case-study results should only be added after written client approval; none were fabricated in this update.
-
-## Launch polish update (v11)
-
-- Internal RielArt links now open in the same tab; external sources, LinkedIn, and Stripe links open safely in a new tab.
-- Added a results-oriented delivery section and a clear explanation of the RielArt Client Portal.
-- Added Client Portal references across Services, Pricing, Process, Contact, footer navigation, and legal pages.
-- Clarified that billing remains handled through Stripe while portal billing tools are in development.
-- Updated the About page to present RielArt as a founder-led studio, with Daniel Patel listed as the Web and AI Partner supporting selected projects.
-- Strengthened portfolio transparency language and expanded privacy/terms coverage for portal access and data.
-
-
-## 2027 liquid-glass redesign
-
-- Rebuilt the visual system around a restrained liquid-glass aesthetic with light and dark modes.
-- Added a floating glass navigation bar, editorial typography, layered depth, subtle grid lighting, and more deliberate spacing.
-- Refined the homepage hero, delivery proof, pricing, results, portal promotion, insights, FAQ, contact, and footer sections without changing the approved business copy.
-- Updated every interior page through the shared design system, including Services, Pricing, Work, Process, About, Insights, Contact, legal pages, and article layouts.
-- Added active navigation states, scroll-aware header treatment, subtle pointer-responsive glass lighting, reduced-motion support, and responsive mobile layouts.
-- Internal links remain in the current tab; external destinations, Stripe Checkout, LinkedIn, and the Client Portal use their existing safe behaviour.
+See `IMPLEMENTATION-PLAN.md`, `CHANGELOG-RIELART-IMPROVEMENT.md`, `SITE-AUDIT-RESULT.txt`, and `FINAL-QA-REPORT.md` for this improvement pass.
