@@ -33,7 +33,8 @@ Command:
 | Indexable pages | 25 |
 | Sitemap URLs | 25 |
 | Sitemap `lastmod` values checked | 25 |
-| Local references checked | 241 |
+| Local references checked | 242 |
+| Images checked for alt text and dimensions | 59 |
 | JSON-LD blocks parsed | 35 |
 | Contact forms checked | 2 |
 | Redirect rules checked | 4 |
@@ -58,7 +59,7 @@ Command:
 | Routes requested | 32 |
 | Routes expected to return HTTP 200 | 31 |
 | HTML responses inspected | 29 |
-| Aggregate HTML response payload | 437,530 bytes |
+| Aggregate HTML response payload | 436,358 bytes |
 | Status, H1, title, canonical, or local-image failures | 0 |
 
 The same run enforced the raw-file budgets:
@@ -66,8 +67,8 @@ The same run enforced the raw-file budgets:
 | Budget | Final / maximum |
 |---|---:|
 | HTML per ordinary route | Largest route below 61,440 B |
-| CSS | 61,012 / 66,560 B |
-| JavaScript | 16,221 / 20,480 B |
+| CSS | 62,760 / 66,560 B |
+| JavaScript | 14,012 / 20,480 B |
 | Image library | 643,390 / 665,600 B |
 | Global logo | 8,587 / 10,240 B |
 
@@ -146,10 +147,10 @@ Comparable repeated cards aligned to equal heights within their desktop grid row
 
 - Mobile navigation focus wrapped from the last focusable item to the first and from the first to the last with Shift+Tab.
 - Escape closed the mobile navigation and restored focus to the menu control.
-- The homepage priority tabs supported arrow navigation plus Home and End.
-- Pressing End selected and focused **Growth**, exposed its panel, and updated the selected-tab state.
-- The capability marquee control changed **Pause → Resume** and updated its pressed state.
-- The capability ticker’s computed animation was `capability-marquee`, with a 38-second duration and `running` play state. Its transform changed from `-362.414px` to `-376.473px` over 320 ms, directly confirming visible right-to-left motion.
+- The replacement homepage visual is decorative, hidden from assistive technology, and contains no rendered text or interactive controls.
+- Timed observation confirmed that the hero orbit and path-flow animations changed state. The reduced-motion stylesheet disables those animations.
+- No visible Pause/Resume control remains in the capability strip. Keyboard focus on the strip paused the ticker and exposed the screen-reader instruction that the list also pauses while hovered.
+- The capability ticker’s computed animation was `capability-marquee`; its transform changed during a 360 ms observation, directly confirming visible right-to-left motion.
 - FAQ interaction preserved a single-open item within each group.
 
 ### Blog behavior
@@ -190,8 +191,8 @@ The browser console log collected after the representative page and interaction 
 |---|---|
 | Light/dark mode | Local toggle changed `data-theme` from `light` to `dark` and updated its accessible label; PASS |
 | Mobile menu | Open/close state, two-way focus wrap, Escape, and focus restoration; PASS |
-| Hero tabs | Selected-state/panel behavior and keyboard Home/End path; PASS |
-| Capability ticker | Running right-to-left animation plus working Pause/Resume state; PASS |
+| Hero animation | Decorative and text-free; orbit and path motion observed; reduced-motion static state present; PASS |
+| Capability ticker | Running right-to-left animation; no visible Pause control; hover/focus pause and reduced-motion static state; PASS |
 | FAQ | Correct state and single-open behavior; PASS |
 | Blog filters | Five populated categories plus All, correct counts, no empty Advertising filter; PASS |
 | Contact form | Project default, local native/error/live-region/recovery behavior; PASS without external submission |
@@ -214,14 +215,14 @@ These are raw public-source sizes, not compressed network-transfer measurements.
 
 | Asset group | Baseline | Final | Change |
 |---|---:|---:|---:|
-| Public source total | 1,245,018 B | 1,169,482 B | -75,536 B (-6.07%) |
-| HTML | 439,611 B | 444,812 B | +5,201 B (+1.18%) |
-| CSS | 60,906 B | 61,012 B | +106 B (+0.17%) |
-| JavaScript | 13,286 B | 16,221 B | +2,935 B (+22.09%) |
+| Public source total | 1,245,018 B | 1,167,849 B | -77,169 B (-6.20%) |
+| HTML | 439,611 B | 443,640 B | +4,029 B (+0.92%) |
+| CSS | 60,906 B | 62,760 B | +1,854 B (+3.04%) |
+| JavaScript | 13,286 B | 14,012 B | +726 B (+5.46%) |
 | Images | 727,177 B | 643,390 B | -83,787 B (-11.52%) |
 | `images/logo.png` | 92,374 B | 8,587 B | -83,787 B (-90.71%) |
 
-The JavaScript increase supports intent routing, announced validation state, recovery, and the reviewed interactions. The optimized logo more than offsets the HTML, CSS, and JavaScript additions.
+The modest JavaScript increase supports intent routing, announced validation state, and form recovery; obsolete hero-tab and marquee-button logic was removed. The CSS increase contains the code-native hero animation and responsive/reduced-motion treatment. The optimized logo more than offsets these additions.
 
 ### Representative raw initial-route payloads
 
@@ -229,13 +230,13 @@ The figures count one HTML request plus the shared CSS, JavaScript, logo, and fa
 
 | Route | Baseline | Final | Requests | Change |
 |---|---:|---:|---:|---:|
-| Home | 214,221 B | 133,718 B | 5 | -80,503 B (-37.58%) |
-| Process | 190,989 B | 110,357 B | 5 | -80,632 B (-42.22%) |
-| Contact | 193,431 B | 112,881 B | 5 | -80,550 B (-41.64%) |
-| Portfolio | 188,391 B | 107,758 B | 5 | -80,633 B (-42.80%) |
-| Pricing | 196,886 B | 116,620 B | 5 | -80,266 B (-40.77%) |
-| About, initial | — | 112,314 B | 5 | — |
-| About, after both lazy photos load | 318,730 B | 238,214 B | 7 | -80,516 B (-25.26%) |
+| Home | 214,221 B | 132,085 B | 5 | -82,136 B (-38.34%) |
+| Process | 190,989 B | 109,896 B | 5 | -81,093 B (-42.46%) |
+| Contact | 193,431 B | 112,420 B | 5 | -81,011 B (-41.88%) |
+| Portfolio | 188,391 B | 107,297 B | 5 | -81,094 B (-43.05%) |
+| Pricing | 196,886 B | 116,159 B | 5 | -80,727 B (-41.00%) |
+| About, initial | — | 111,853 B | 5 | — |
+| About, after both lazy photos load | 318,730 B | 237,753 B | 7 | -80,977 B (-25.41%) |
 
 No external font, framework, autoplay video, or third-party application runtime is required for the initial local render.
 

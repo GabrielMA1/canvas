@@ -9,7 +9,7 @@
 
 ## Executive conclusion
 
-The rebuilt site is ready for owner review as a credible, professional production candidate. It did not need another broad visual rewrite. The implementation instead removed the highest-value friction: project and free-review intent now remain distinct, the paid audit is clearly separated from the no-cost initial review, form errors are announced and recover correctly, contact typography uses intentional three-word lines, service and article paths are more specific, empty or inconsistent taxonomy was removed, and the most wasteful global image was reduced by more than 90%.
+The rebuilt site is ready for owner review as a credible, professional production candidate. It did not need another broad visual rewrite. The implementation instead removed the highest-value friction: project and free-review intent now remain distinct, the paid audit is clearly separated from the no-cost initial review, form errors are announced and recover correctly, contact typography uses intentional three-word lines, service and article paths are more specific, empty or inconsistent taxonomy was removed, and the most wasteful global image was reduced by more than 90%. Following owner visual review, the text-heavy homepage priority panel was also replaced with a decorative connected-signal animation, leaving the hero copy as the only message in that composition.
 
 No confirmed P0 failure was found. The final static audit reports **0 critical failures and 0 warnings**, the local HTTP crawl reports **0 failures**, and the final browser matrix reports **0 failures across 100 route/viewport combinations**. All approved production integration values and all six Stripe prices/links remain unchanged.
 
@@ -17,7 +17,7 @@ The remaining work is deliberately outside a safe static-repository change: owne
 
 ## Pre-change executive baseline
 
-The rebuilt local site is a strong foundation and is materially better than the production site visible on the audit date. It has clearer positioning, a readable three-line homepage proposition, an accessible interactive priority panel, a user-controlled animated capability marquee, more concise process cards, better contact typography, honest representative-work disclosures, international service wording, and the approved business mailing address. The no-framework architecture remains fast, portable, crawlable, and easy to deploy.
+At the recorded baseline, the rebuilt local site was a strong foundation and materially better than the production site visible on the audit date. It had clearer positioning, a readable three-line homepage proposition, an accessible interactive priority panel, a user-controlled animated capability marquee, more concise process cards, better contact typography, honest representative-work disclosures, international service wording, and the approved business mailing address. The no-framework architecture remains fast, portable, crawlable, and easy to deploy.
 
 The baseline did **not** need another broad visual rewrite. Its most valuable remaining improvements were:
 
@@ -136,9 +136,9 @@ These values are treated as invariants and will be compared after implementation
 
 - There is a skip link and consistent landmark structure.
 - The mobile menu has an accessible name, focus management, focus containment, Escape support, and focus restoration.
-- The homepage priority interface uses a tab pattern with arrow, Home, and End support.
+- At the recorded baseline, the homepage priority interface used a tab pattern with arrow, Home, and End support.
 - FAQ buttons expose state and controlled regions.
-- The capability marquee has a Pause/Resume control and respects reduced-motion preferences.
+- At the recorded baseline, the capability marquee had a Pause/Resume control and respected reduced-motion preferences.
 - Form controls have explicit labels, required-state instructions, autocomplete attributes, consent wording, and a live submission-status region.
 - Light and dark themes are first-class and persist locally without blocking operation if storage fails.
 
@@ -286,7 +286,7 @@ Do not publish city-variant pages, generic “top tools” lists, or multiple ne
 ## Decision log
 
 - Preserve the rebuilt visual system, light/dark modes, logo, typography, Client Portal treatment, and static architecture.
-- Do not replace the homepage interactive panel or marquee; they solve the user’s earlier presentation concerns and include accessibility controls.
+- Following owner review, replace the text-heavy homepage priority panel with a text-free decorative animation. Remove the visible marquee button while preserving hover/focus pausing and reduced-motion behavior.
 - Do not invent testimonials, case studies, results, offices, partnerships, guarantees, or staff claims.
 - Do not change prices, Stripe links, Formspree, Thank-you, Calendly, email, LinkedIn, or Client Portal values during this pass.
 - Do not install analytics without explicit owner approval.
@@ -324,7 +324,7 @@ Lab-performance and accessibility scores will be recorded after the available to
 - The global growth-service name is “Digital Growth & Ongoing Management.”
 - Service timing statements now identify scope, access, content, decisions, integrations, media, and third-party dependencies without inventing delivery promises.
 - Blog taxonomy has no empty Advertising filter. Article schema uses the visible five-category taxonomy, bylines connect to Gabriel’s About profile, and each article offers its relevant service plus the Free Initial Review.
-- “Business result” is now “Intended outcome”; required email fields use “Email.”
+- The former hero “Business result” panel was removed in favor of a decorative, text-free animation; required email fields use “Email.”
 - A restrained buyer-facing tone pass made 51 exact edits across 11 pages, reducing generic repetition of “practical,” “constraint,” and “useful next step” while retaining “Practical AI” where it names the established offer.
 - The homepage and contact conversion sections use a deliberate two-line heading with three words on each line: “Share what needs / to work better.”
 
@@ -333,7 +333,7 @@ Lab-performance and accessibility scores will be recorded after the available to
 - Invalid required controls receive `aria-invalid="true"` and the existing live region announces one concise review message.
 - Invalid state and the announcement clear as controls become valid, including radio groups.
 - Query-driven form selection is progressive and leaves the native Formspree submission path unchanged.
-- Existing skip-link, mobile-menu focus containment, Escape/focus restoration, tab keyboard behavior, FAQ state, theme support, marquee control, and reduced-motion behavior were preserved.
+- Existing skip-link, mobile-menu focus containment, Escape/focus restoration, FAQ state, and theme support were preserved. The hero visual is decorative and hidden from assistive technology. The capability ticker has no visible Pause button, pauses when hovered or keyboard-focused, and stops under reduced-motion preferences.
 
 ### SEO, privacy, performance, and maintainability
 
@@ -353,7 +353,8 @@ Lab-performance and accessibility scores will be recorded after the available to
 |---|---:|
 | Static HTML files / indexable pages / sitemap URLs | 30 / 25 / 25 |
 | Sitemap lastmod values | 25 valid |
-| Asset references | 241 checked |
+| Asset references | 242 checked |
+| Images checked for alt behavior and dimensions | 59 |
 | JSON-LD blocks | 35 valid |
 | Forms / redirect rules | 2 / 4 |
 | GitHub Pages exclusions / covered internal artifacts | 17 / 17 |
@@ -373,8 +374,8 @@ Interaction regression checks confirmed:
 - Empty-submit focus on the first invalid field, five programmatically marked invalid controls, and the live announcement.
 - Complete clearing of invalid state after locally entering valid test values; no form was submitted.
 - Mobile menu backward/forward focus wrap, Escape closure, and focus restoration.
-- The homepage hero remains exactly three deliberate lines with 4 / 4 / 4 words at 1440 px, and the capability ticker’s transform changed during a timed observation while its 38-second animation was running.
-- Homepage End-key selection of Growth, Pause changing to Resume, FAQ single-open behavior, final blog filters, linked Gabriel byline, relevant article CTAs, and matching Article taxonomy.
+- The homepage hero remains exactly three deliberate four-word lines at 1440 px. Its replacement visual contains no rendered text; the orbit, path-flow, and ticker transforms all changed during timed observation.
+- The visible marquee button is absent. Focusing the capability strip changed its animation play state to `paused`, while hover and reduced-motion behavior remain available. FAQ single-open behavior, final blog filters, linked Gabriel byline, relevant article CTAs, and matching Article taxonomy also passed.
 - The revised contact heading remains two intentional lines at desktop, 390 px, and 320 px with no horizontal overflow.
 
 JavaScript syntax and `git diff --check` passed. The latter reported only the repository’s expected Windows LF-to-CRLF notices.
@@ -383,14 +384,14 @@ JavaScript syntax and `git diff --check` passed. The latter reported only the re
 
 | Asset group | Baseline | Final | Change |
 |---|---:|---:|---:|
-| Public source payload | 1,245,018 B | 1,169,482 B | −75,536 B (−6.07%) |
-| HTML | 439,611 B | 444,812 B | +5,201 B |
-| CSS | 60,906 B | 61,012 B | +106 B |
-| JavaScript | 13,286 B | 16,221 B | +2,935 B |
+| Public source payload | 1,245,018 B | 1,167,849 B | −77,169 B (−6.20%) |
+| HTML | 439,611 B | 443,640 B | +4,029 B |
+| CSS | 60,906 B | 62,760 B | +1,854 B |
+| JavaScript | 13,286 B | 14,012 B | +726 B |
 | Images | 727,177 B | 643,390 B | −83,787 B |
 | Logo | 92,374 B | 8,587 B | −83,787 B (−90.71%) |
 
-Conservative uncompressed local initial payloads are 133,718 bytes for Home, 110,357 for Process, 112,881 for Contact, 107,758 for Work, and 116,620 for Pricing, each in five core requests. About is 112,314 bytes initially and 238,214 bytes after its two lazy images load. These are raw local-file comparisons, not compressed production transfer sizes.
+Conservative uncompressed local initial payloads are 132,085 bytes for Home, 109,896 for Process, 112,420 for Contact, 107,297 for Work, and 116,159 for Pricing, each in five core requests. About is 111,853 bytes initially and 237,753 bytes after its two lazy images load. These are raw local-file comparisons, not compressed production transfer sizes.
 
 Lighthouse, axe, and a standards-conformance HTML validator were not installed in the available environment, so no score, violation count, or formal conformance result is fabricated. Every HTML document was still parsed by the repository audit and subjected to its structural, metadata, schema, and link invariants. Field Core Web Vitals, INP, real-device timing, and production cache/compression behavior also require deployed or field tooling.
 

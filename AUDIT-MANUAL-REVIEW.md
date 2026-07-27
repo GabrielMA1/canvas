@@ -249,7 +249,7 @@ Test at least:
 - NVDA + Chrome or Firefox on Windows.
 - VoiceOver + Safari on macOS/iOS.
 
-Verify the skip link, page landmarks, navigation state, hero tab names/state, marquee pause state, FAQ expansion, blog results announcement, form required/error announcements, radio-group intent, privacy consent, and Thank-you page.
+Verify the skip link, page landmarks, navigation state, decorative hero treatment, capability-strip focus/pause instruction, FAQ expansion, blog results announcement, form required/error announcements, radio-group intent, privacy consent, and Thank-you page.
 
 ## Close-out record
 

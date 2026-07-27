@@ -113,61 +113,6 @@
   desktopNavigation.addEventListener?.("change", resetMenuForDesktop);
   resetMenuForDesktop(desktopNavigation);
 
-  /* Accessible homepage priority navigator */
-  document.querySelectorAll("[data-hero-system]").forEach((system) => {
-    const tabs = [...system.querySelectorAll("[data-hero-topic]")];
-    const panels = [...system.querySelectorAll("[data-hero-panel]")];
-    const count = system.querySelector("[data-hero-count]");
-
-    function activateHeroTopic(index, { moveFocus = false } = {}) {
-      const nextIndex = (index + tabs.length) % tabs.length;
-
-      tabs.forEach((tab, tabIndex) => {
-        const isActive = tabIndex === nextIndex;
-        tab.setAttribute("aria-selected", String(isActive));
-        tab.tabIndex = isActive ? 0 : -1;
-      });
-
-      panels.forEach((panel, panelIndex) => {
-        panel.hidden = panelIndex !== nextIndex;
-      });
-
-      if (count) count.textContent = `${String(nextIndex + 1).padStart(2, "0")} / ${String(tabs.length).padStart(2, "0")}`;
-      if (moveFocus) tabs[nextIndex]?.focus();
-    }
-
-    tabs.forEach((tab, index) => {
-      tab.addEventListener("click", () => activateHeroTopic(index));
-      tab.addEventListener("keydown", (event) => {
-        let nextIndex = null;
-
-        if (event.key === "ArrowRight" || event.key === "ArrowDown") nextIndex = index + 1;
-        if (event.key === "ArrowLeft" || event.key === "ArrowUp") nextIndex = index - 1;
-        if (event.key === "Home") nextIndex = 0;
-        if (event.key === "End") nextIndex = tabs.length - 1;
-        if (nextIndex === null) return;
-
-        event.preventDefault();
-        activateHeroTopic(nextIndex, { moveFocus: true });
-      });
-    });
-
-    const initialIndex = Math.max(0, tabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true"));
-    activateHeroTopic(initialIndex);
-  });
-
-  /* User-controlled capability marquee */
-  document.querySelectorAll("[data-marquee]").forEach((marquee) => {
-    const button = marquee.querySelector("[data-marquee-toggle]");
-    const label = button?.querySelector("[data-marquee-label]");
-
-    button?.addEventListener("click", () => {
-      const paused = marquee.classList.toggle("is-paused");
-      button.setAttribute("aria-pressed", String(paused));
-      if (label) label.textContent = paused ? "Resume" : "Pause";
-    });
-  });
-
   /* Accessible single-open FAQ groups */
   const faqTimers = new WeakMap();
 

@@ -161,12 +161,12 @@
     "severity": "P3 Low",
     "affected_url": "/",
     "affected_file": "index.html",
-    "evidence": "All four interactive homepage priority panels now label their final field Intended outcome.",
+    "evidence": "The former four-panel homepage interface was replaced with a decorative, text-free connected-signal animation. The previous Business result field and its outcome statements are no longer present, and no visible Business result label remains.",
     "impact": "The label can sound more certain than an intended, non-guaranteed outcome.",
-    "recommended_fix": "Use Intended outcome.",
+    "recommended_fix": "Avoid presenting an illustrative hero outcome as a guaranteed business result; use Intended outcome when such a label is needed, or remove the redundant explanatory panel.",
     "implemented": true,
-    "validation_method": "Four-of-four visible-copy source check plus local Chromium rendered-text inspection.",
-    "remaining_risk": "Outcome statements still need to avoid unsupported guarantees."
+    "validation_method": "Source search plus local Chromium inspection confirmed that the decorative hero visual has no rendered text and that no visible Business result label remains.",
+    "remaining_risk": "Future hero or portfolio copy must continue to avoid unsupported outcome guarantees."
   },
   {
     "id": "CONTENT-003",
@@ -256,7 +256,7 @@
     "impact": "Internal working files stay out of the published site and repeatable checks make regressions easier to detect before deployment.",
     "recommended_fix": "Keep the exclusion list and reusable audit aligned with repository structure, and run the audit before each release.",
     "implemented": true,
-    "validation_method": "Bundled-Python audit completed with exit code 0 across 30 HTML files, 25 indexable routes, 241 asset references, 35 JSON-LD blocks, 2 forms, and 4 redirects, with 0 warnings and 0 critical failures.",
+    "validation_method": "Bundled-Python audit completed with exit code 0 across 30 HTML files, 25 indexable routes, 242 asset references, 59 images, 35 JSON-LD blocks, 2 forms, and 4 redirects, with 0 warnings and 0 critical failures.",
     "remaining_risk": "The deployment must actually build with _config.yml; exclusions and audit coverage need revision whenever files or the publishing pipeline change."
   },
   {
