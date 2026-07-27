@@ -2,7 +2,7 @@
 
 ## Objective
 
-Strengthen RielArt's production website as a clear, founder-led digital studio connecting brand strategy, websites, and practical AI systems. Preserve the existing static architecture, visual identity, integrations, pricing, legal routes, and approved people while improving service depth, conversion paths, accessibility, and maintainability.
+Strengthen RielArt's production website as a clear digital studio connecting brand strategy, websites, and practical AI systems for businesses internationally. Preserve the existing static architecture, visual identity, integrations, pricing, legal routes, and approved people while improving service depth, conversion paths, accessibility, and maintainability.
 
 ## Verified baseline
 
@@ -38,7 +38,7 @@ Strengthen RielArt's production website as a clear, founder-led digital studio c
 4. **Core interior pages**
    - Rework Work around clearly labelled representative solution models.
    - Expand Process to Assess, Define, Build, Validate, and Launch & Improve.
-   - Expand About around the founder-led model, actual approved people, principles, standards, Toronto, and service area.
+   - Expand About around the studio approach, approved people, principles, standards, international work, and business mailing address.
    - Reorganize Pricing without changing prices, package scope, payment links, subscription terms, advertising-spend wording, cancellation language, or currency.
    - Keep the same audit-led contact experience on the homepage and Contact page, with project inquiry and free email audit paths in one accessible form.
    - Improve the Insights hierarchy and six requested filter categories without changing article content.

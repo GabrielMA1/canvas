@@ -84,7 +84,8 @@
         <span class="theme-glyph sun" aria-hidden="true">☼</span>
         <span class="theme-glyph moon" aria-hidden="true">☾</span>
       </button>
-      <a class="btn btn-primary btn-small portal-button" href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
+      <a class="header-portal-link" href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
+      <a class="btn btn-primary btn-small project-button" href="/contact/">Start a Project</a>
       <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation">
         <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
       </button>
@@ -100,7 +101,8 @@
     <a href="/about/">About</a>
     <a href="/blog/">Insights</a>
     <a href="/contact/">Contact</a>
-    <a class="btn btn-primary" href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
+    <a href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
+    <a class="btn btn-primary" href="/contact/">Start a Project</a>
   </nav>
 </div>
 
@@ -112,29 +114,18 @@
           <span aria-hidden="true">/</span>
           <span>Contact</span>
         </nav>
-        <span class="eyebrow">Start with the constraint</span>
-        <h1 class="page-title">Tell us what you are trying to improve.</h1>
-        <p class="lead">Share what is not working, what a better outcome should make possible, and which pages, tools, or workflows are involved. Choose a project inquiry or a free email audit in the same form below.</p>
+        <span class="eyebrow">Start with what matters</span>
+        <h1 class="page-title">Tell us what you want to improve.</h1>
+        <p class="lead">Choose a project inquiry or free website audit, then share the context you already have.</p>
       </div>
     </section>
 
     <section class="section" id="contact">
       <div class="container contact-shell">
         <div class="contact-intro">
-          <span class="eyebrow">Choose the useful next step</span>
-          <h2 class="section-title">Bring the business problem, not a polished brief.</h2>
-          <p class="lead">Use the form for a scoped project conversation or a free email audit. The details help RielArt understand the context before recommending a next step.</p>
-
-          <div class="inquiry-paths" aria-label="Available inquiry paths">
-            <div class="inquiry-path">
-              <span>01</span>
-              <div><strong>Free email audit</strong><small>For practical initial observations and priorities.</small></div>
-            </div>
-            <div class="inquiry-path">
-              <span>02</span>
-              <div><strong>Project inquiry</strong><small>For scoped project or connected implementation work.</small></div>
-            </div>
-          </div>
+          <span class="eyebrow">A straightforward first step</span>
+          <h2 class="section-title">Start with what should work better.</h2>
+          <p class="lead">A few useful details are enough to begin. We will review them and reply with a clear next step.</p>
 
           <div class="simple-contact ra-contact-links" aria-label="Contact shortcuts">
             <a class="contact-method" href="mailto:hello@rielart.com">
@@ -147,6 +138,14 @@
               <span><strong>Schedule a Consultation</strong></span>
             </a>
           </div>
+
+          <address class="business-address">
+            <strong>Business mailing address</strong>
+            <span>135-21320 Gordon Way</span>
+            <span>Suite #N297790</span>
+            <span>Richmond, BC V6W 1J8</span>
+            <span>Canada</span>
+          </address>
 
           <div class="existing-client-link">
             <span>Existing client?</span>
@@ -163,7 +162,7 @@
               <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
             </label>
 
-            <p class="form-guidance" id="contact-form-guidance"><strong>Required fields are marked with an asterisk.</strong> Select one inquiry path, then share enough context for a useful review.</p>
+            <p class="form-guidance" id="contact-form-guidance"><strong>Required fields are marked with an asterisk.</strong> A few useful details are enough to begin.</p>
 
             <fieldset class="form-choice full" id="inquiry-paths">
               <legend>How would you like to begin? <span class="required-indicator" aria-hidden="true">*</span><span class="sr-only"> required</span></legend>
@@ -219,18 +218,13 @@
               </div>
 
               <div class="form-field full">
-                <label for="contact-problem">What is not working? <span class="required-indicator" aria-hidden="true">*</span><span class="sr-only"> required</span></label>
-                <textarea id="contact-problem" name="current_constraint" required placeholder="Where are customers or your team losing time, clarity, or momentum?"></textarea>
-              </div>
-
-              <div class="form-field full">
-                <label for="contact-outcome">Desired outcome <span class="required-indicator" aria-hidden="true">*</span><span class="sr-only"> required</span></label>
-                <textarea id="contact-outcome" name="desired_outcome" required placeholder="What should become clearer, easier, faster, or more reliable?"></textarea>
+                <label for="contact-problem">What would you like help with? <span class="required-indicator" aria-hidden="true">*</span><span class="sr-only"> required</span></label>
+                <textarea id="contact-problem" name="message" rows="5" required placeholder="Tell us what needs to improve, who it affects, and what a better result would look like."></textarea>
               </div>
 
               <div class="form-field">
-                <label for="contact-timeline">Desired timeline <span class="required-indicator" aria-hidden="true">*</span><span class="sr-only"> required</span></label>
-                <select id="contact-timeline" name="desired_timeline" required>
+                <label for="contact-timeline">Desired timeline <span class="muted">(optional)</span></label>
+                <select id="contact-timeline" name="desired_timeline">
                   <option value="">Select a range</option>
                   <option value="As soon as scope is clear">As soon as scope is clear</option>
                   <option value="Within 1–2 months">Within 1–2 months</option>
@@ -251,11 +245,6 @@
                   <option value="$15,000+ USD">$15,000+ USD</option>
                   <option value="Need guidance">Need guidance</option>
                 </select>
-              </div>
-
-              <div class="form-field full">
-                <label for="contact-message">Message <span class="required-indicator" aria-hidden="true">*</span><span class="sr-only"> required</span></label>
-                <textarea id="contact-message" name="message" required placeholder="Add the pages, tools, dependencies, source material, or other context that would help."></textarea>
               </div>
 
               <div class="form-field full consent-field">
@@ -280,7 +269,7 @@
   <div class="container footer-grid">
     <div class="footer-brand">
       <a class="brand" href="/"><img src="/images/logo.png" width="34" height="34" alt=""><span>RielArt</span></a>
-      <p class="footer-copy">A Toronto-based, founder-led digital studio connecting brand strategy, websites, and practical AI systems for growing businesses across Canada and the United States.</p>
+      <p class="footer-copy">Brand strategy, websites, and practical AI systems for growing businesses.</p>
     </div>
     <div>
       <h2 class="footer-title">Explore</h2>
@@ -318,13 +307,19 @@
         <a href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
         <a href="mailto:hello@rielart.com">hello@rielart.com</a>
         <a href="https://www.linkedin.com/in/gabrielmacovei/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <span>Toronto, Ontario</span>
+        <address class="footer-address">
+          <span class="footer-address-label">Business mailing address</span>
+          <span>135-21320 Gordon Way</span>
+          <span>Suite #N297790</span>
+          <span>Richmond, BC V6W 1J8</span>
+          <span>Canada</span>
+        </address>
       </div>
     </div>
   </div>
   <div class="container footer-bottom">
     <span>&copy; <span data-year>2026</span> RielArt. All rights reserved.</span>
-    <span>Serving growing businesses across Canada and the United States.</span>
+    <span>Working with businesses internationally.</span>
   </div>
   <div class="footer-giant" aria-hidden="true">RIELART</div>
 </footer>

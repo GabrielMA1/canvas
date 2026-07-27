@@ -9,7 +9,7 @@ Static, dependency-free production website for RielArt. Deploy the contents of t
 - `portfolio/` — clearly labeled representative solution models
 - `process/` — five-phase delivery process and Client Portal overview
 - `pricing/` — fixed-scope projects, monthly support, comparison tables, and live Stripe Payment Links
-- `about/` — founder-led studio overview
+- `about/` — studio approach, team, and international service overview
 - `blog/` — searchable, filterable Insights index and nine articles
 - `faq/` — grouped service, process, pricing, ownership, AI, and support questions
 - `contact/` — the same inquiry form used on the homepage
