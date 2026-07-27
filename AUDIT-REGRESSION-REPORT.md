@@ -59,7 +59,7 @@ Command:
 | Routes requested | 32 |
 | Routes expected to return HTTP 200 | 31 |
 | HTML responses inspected | 29 |
-| Aggregate HTML response payload | 436,358 bytes |
+| Aggregate HTML response payload | 435,330 bytes |
 | Status, H1, title, canonical, or local-image failures | 0 |
 
 The same run enforced the raw-file budgets:
@@ -67,7 +67,7 @@ The same run enforced the raw-file budgets:
 | Budget | Final / maximum |
 |---|---:|
 | HTML per ordinary route | Largest route below 61,440 B |
-| CSS | 62,760 / 66,560 B |
+| CSS | 61,174 / 66,560 B |
 | JavaScript | 14,012 / 20,480 B |
 | Image library | 643,390 / 665,600 B |
 | Global logo | 8,587 / 10,240 B |
@@ -148,9 +148,10 @@ Comparable repeated cards aligned to equal heights within their desktop grid row
 - Mobile navigation focus wrapped from the last focusable item to the first and from the first to the last with Shift+Tab.
 - Escape closed the mobile navigation and restored focus to the menu control.
 - The replacement homepage visual is decorative, hidden from assistive technology, and contains no rendered text or interactive controls.
-- Timed observation confirmed that the hero orbit and path-flow animations changed state. The reduced-motion stylesheet disables those animations.
-- No visible Pause/Resume control remains in the capability strip. Keyboard focus on the strip paused the ticker and exposed the screen-reader instruction that the list also pauses while hovered.
-- The capability ticker’s computed animation was `capability-marquee`; its transform changed during a 360 ms observation, directly confirming visible right-to-left motion.
+- Timed observation confirmed that the hero orbit, satellite, and core-pulse animations changed state. The reduced-motion stylesheet disables those animations.
+- No visible Pause/Resume control remains in the capability strip. Only the first list copy is exposed to assistive technology; the three layout copies are `aria-hidden`.
+- The capability ticker’s computed animation was `capability-marquee` with an `infinite` iteration count and `running` play state. It continued running after more than one complete 38-second cycle.
+- Five viewports from 320 through 2560 px showed four equal-width copies, 0 px gaps at all three copy boundaries, continuous viewport coverage, no page overflow, and no broken images.
 - FAQ interaction preserved a single-open item within each group.
 
 ### Blog behavior
@@ -191,8 +192,8 @@ The browser console log collected after the representative page and interaction 
 |---|---|
 | Light/dark mode | Local toggle changed `data-theme` from `light` to `dark` and updated its accessible label; PASS |
 | Mobile menu | Open/close state, two-way focus wrap, Escape, and focus restoration; PASS |
-| Hero animation | Decorative and text-free; orbit and path motion observed; reduced-motion static state present; PASS |
-| Capability ticker | Running right-to-left animation; no visible Pause control; hover/focus pause and reduced-motion static state; PASS |
+| Hero animation | Decorative, text-free, and unboxed; orbit, satellite, and core-pulse motion observed; reduced-motion static state present; PASS |
+| Capability ticker | Seamless infinite right-to-left animation; four-copy wide-screen coverage; no visible Pause control; reduced-motion static state; PASS |
 | FAQ | Correct state and single-open behavior; PASS |
 | Blog filters | Five populated categories plus All, correct counts, no empty Advertising filter; PASS |
 | Contact form | Project default, local native/error/live-region/recovery behavior; PASS without external submission |
@@ -215,9 +216,9 @@ These are raw public-source sizes, not compressed network-transfer measurements.
 
 | Asset group | Baseline | Final | Change |
 |---|---:|---:|---:|
-| Public source total | 1,245,018 B | 1,167,849 B | -77,169 B (-6.20%) |
-| HTML | 439,611 B | 443,640 B | +4,029 B (+0.92%) |
-| CSS | 60,906 B | 62,760 B | +1,854 B (+3.04%) |
+| Public source total | 1,245,018 B | 1,165,235 B | -79,783 B (-6.41%) |
+| HTML | 439,611 B | 442,612 B | +3,001 B (+0.68%) |
+| CSS | 60,906 B | 61,174 B | +268 B (+0.44%) |
 | JavaScript | 13,286 B | 14,012 B | +726 B (+5.46%) |
 | Images | 727,177 B | 643,390 B | -83,787 B (-11.52%) |
 | `images/logo.png` | 92,374 B | 8,587 B | -83,787 B (-90.71%) |
@@ -230,13 +231,13 @@ The figures count one HTML request plus the shared CSS, JavaScript, logo, and fa
 
 | Route | Baseline | Final | Requests | Change |
 |---|---:|---:|---:|---:|
-| Home | 214,221 B | 132,085 B | 5 | -82,136 B (-38.34%) |
-| Process | 190,989 B | 109,896 B | 5 | -81,093 B (-42.46%) |
-| Contact | 193,431 B | 112,420 B | 5 | -81,011 B (-41.88%) |
-| Portfolio | 188,391 B | 107,297 B | 5 | -81,094 B (-43.05%) |
-| Pricing | 196,886 B | 116,159 B | 5 | -80,727 B (-41.00%) |
-| About, initial | — | 111,853 B | 5 | — |
-| About, after both lazy photos load | 318,730 B | 237,753 B | 7 | -80,977 B (-25.41%) |
+| Home | 214,221 B | 129,471 B | 5 | -84,750 B (-39.56%) |
+| Process | 190,989 B | 108,310 B | 5 | -82,679 B (-43.29%) |
+| Contact | 193,431 B | 110,834 B | 5 | -82,597 B (-42.70%) |
+| Portfolio | 188,391 B | 105,711 B | 5 | -82,680 B (-43.89%) |
+| Pricing | 196,886 B | 114,573 B | 5 | -82,313 B (-41.81%) |
+| About, initial | — | 110,267 B | 5 | — |
+| About, after both lazy photos load | 318,730 B | 236,167 B | 7 | -82,563 B (-25.90%) |
 
 No external font, framework, autoplay video, or third-party application runtime is required for the initial local render.
 

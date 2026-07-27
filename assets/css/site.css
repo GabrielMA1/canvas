@@ -904,142 +904,93 @@ code {
 }
 
 .hero-motion {
+  --hero-ring-soft: rgba(24, 91, 168, 0.15);
+  --hero-ring: rgba(29, 112, 214, 0.42);
+  --hero-ring-accent: rgba(14, 151, 132, 0.34);
+  --hero-satellite: #2487ee;
+  --hero-satellite-ring: rgba(36, 135, 238, 0.2);
   position: relative;
-  min-height: 490px;
-  overflow: hidden;
-  isolation: isolate;
-  border: 1px solid rgba(133, 191, 255, 0.28);
-  border-radius: var(--radius-scene);
-  background:
-    radial-gradient(circle at 50% 44%, rgba(41, 137, 255, 0.19), transparent 13rem),
-    radial-gradient(circle at 100% 0%, rgba(70, 202, 255, 0.13), transparent 18rem),
-    linear-gradient(145deg, #06182e, #092746 58%, #06162b);
-  color: #fff;
-  box-shadow: 0 28px 72px rgba(7, 29, 58, 0.24);
-}
-
-.hero-motion::after {
-  position: absolute;
-  z-index: 6;
-  inset: 14px;
-  border: 1px solid rgba(145, 202, 255, 0.08);
-  border-radius: calc(var(--radius-scene) - 10px);
-  content: "";
-  pointer-events: none;
-}
-
-.hero-motion-grid {
-  position: absolute;
-  z-index: -2;
-  inset: -12%;
-  background:
-    linear-gradient(rgba(82, 157, 232, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(82, 157, 232, 0.07) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: radial-gradient(circle, #000 22%, rgba(0, 0, 0, 0.82) 52%, transparent 78%);
-  transform: perspective(560px) rotateX(58deg) translateY(21%);
-}
-
-.hero-motion-glow {
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  width: 56%;
+  width: min(100%, 500px);
+  min-height: 0;
   aspect-ratio: 1;
-  border-radius: 50%;
-  background: rgba(35, 132, 255, 0.13);
-  filter: blur(54px);
-  transform: translate(-50%, -50%);
+  overflow: visible;
+  isolation: isolate;
+  justify-self: end;
+}
+
+[data-theme="dark"] .hero-motion {
+  --hero-ring-soft: rgba(137, 201, 255, 0.13);
+  --hero-ring: rgba(94, 180, 255, 0.42);
+  --hero-ring-accent: rgba(89, 222, 181, 0.3);
+  --hero-satellite: #66c9ff;
+  --hero-satellite-ring: rgba(102, 201, 255, 0.17);
 }
 
 .hero-motion-art {
   position: absolute;
-  inset: 18px;
-  width: calc(100% - 36px);
-  height: calc(100% - 36px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
 .hero-motion-halo,
-.hero-motion-orbit,
-.hero-motion-connections path,
-.hero-motion-flow path {
+.hero-motion-orbit {
   fill: none;
   vector-effect: non-scaling-stroke;
 }
 
 .hero-motion-halo {
-  stroke: rgba(133, 202, 255, 0.11);
+  stroke: var(--hero-ring-soft);
   stroke-width: 1;
 }
 
 .hero-motion-orbit {
   transform-box: view-box;
   transform-origin: center;
-  stroke: rgba(94, 180, 255, 0.31);
+  stroke: var(--hero-ring);
   stroke-linecap: round;
   stroke-width: 1.4;
 }
 
 .hero-motion-orbit-outer {
-  stroke-dasharray: 108 34 18 28;
-  animation: hero-orbit-spin 24s linear infinite;
+  stroke-dasharray: 126 38 22 34;
+  animation: hero-orbit-spin 26s linear infinite;
+}
+
+.hero-motion-orbit-mid {
+  stroke: var(--hero-ring-soft);
+  stroke-dasharray: 8 18;
+  animation: hero-orbit-spin 34s linear infinite reverse;
 }
 
 .hero-motion-orbit-inner {
-  stroke: rgba(89, 222, 181, 0.24);
+  stroke: var(--hero-ring-accent);
   stroke-dasharray: 52 26 9 23;
   animation: hero-orbit-spin 18s linear infinite reverse;
 }
 
-.hero-motion-connections path {
-  stroke: rgba(131, 197, 255, 0.18);
-  stroke-width: 1.1;
-}
-
-.hero-motion-flow path {
-  stroke: url("#hero-path-gradient");
-  stroke-dasharray: 3 15;
-  stroke-linecap: round;
-  stroke-width: 2.2;
-  animation: hero-path-flow 7s linear infinite;
-}
-
-.hero-motion-flow path:nth-child(2) {
-  animation-delay: -1.75s;
-}
-
-.hero-motion-flow path:nth-child(3) {
-  animation-delay: -3.5s;
-}
-
-.hero-motion-flow path:nth-child(4) {
-  animation-delay: -5.25s;
-}
-
-.hero-motion-node {
-  transform-box: fill-box;
+.hero-motion-satellites {
+  transform-box: view-box;
   transform-origin: center;
-  animation: hero-node-breathe 4.8s ease-in-out infinite;
+  animation: hero-orbit-spin 16s linear infinite;
 }
 
-.hero-motion-node > circle:first-child {
-  fill: rgba(8, 34, 62, 0.88);
-  stroke: rgba(122, 199, 255, 0.42);
-  stroke-width: 1.2;
+.hero-motion-satellites-inner {
+  animation-duration: 22s;
+  animation-direction: reverse;
+}
+
+.hero-motion-satellites circle {
+  fill: var(--hero-satellite);
+  stroke: var(--hero-satellite-ring);
+  stroke-width: 10;
   vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 5px rgba(36, 135, 238, 0.5));
 }
 
-.hero-motion-node-two {
-  animation-delay: -1.2s;
-}
-
-.hero-motion-node-three {
-  animation-delay: -2.4s;
-}
-
-.hero-motion-node-four {
-  animation-delay: -3.6s;
+[data-theme="dark"] .hero-motion-satellites circle {
+  filter: drop-shadow(0 0 6px rgba(102, 201, 255, 0.55));
 }
 
 .hero-motion-core {
@@ -1136,25 +1087,6 @@ code {
   }
 }
 
-@keyframes hero-path-flow {
-  to {
-    stroke-dashoffset: -72;
-  }
-}
-
-@keyframes hero-node-breathe {
-  0%,
-  100% {
-    opacity: 0.62;
-    transform: scale(0.9);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-}
-
 @keyframes hero-core-pulse {
   0%,
   100% {
@@ -1235,10 +1167,6 @@ code {
   background: linear-gradient(90deg, transparent, var(--surface));
 }
 
-.capability-marquee:focus-visible {
-  outline-offset: -4px;
-}
-
 .capability-track {
   display: flex;
   width: max-content;
@@ -1252,7 +1180,7 @@ code {
   display: flex;
   flex: none;
   align-items: center;
-  padding: 14px 34px;
+  padding: 14px 0;
   margin: 0;
   list-style: none;
 }
@@ -1273,14 +1201,9 @@ code {
   content: "•";
 }
 
-.capability-marquee:hover .capability-track,
-.capability-marquee:focus-within .capability-track {
-  animation-play-state: paused;
-}
-
 @keyframes capability-marquee {
   to {
-    transform: translateX(-50%);
+    transform: translateX(-25%);
   }
 }
 
@@ -3147,7 +3070,7 @@ body:not(.home) .contact-shell {
   }
 
   .hero-motion {
-    width: min(100%, 560px);
+    width: min(100%, 480px);
     justify-self: center;
   }
 
@@ -3267,10 +3190,6 @@ body:not(.home) .contact-shell {
   .problem-grid,
   .pillar-grid {
     grid-template-columns: 1fr;
-  }
-
-  .hero-motion {
-    min-height: 420px;
   }
 
   .phase-card {
@@ -3528,10 +3447,6 @@ body:not(.home) .contact-shell {
     font-size: 1.75rem;
   }
 
-  .hero-motion {
-    min-height: 340px;
-  }
-
   .hero-motion-core {
     width: 94px;
     height: 94px;
@@ -3583,8 +3498,7 @@ body:not(.home) .contact-shell {
   }
 
   .hero-motion-orbit,
-  .hero-motion-flow path,
-  .hero-motion-node,
+  .hero-motion-satellites,
   .hero-motion-core::before,
   .hero-motion-spark {
     animation: none !important;

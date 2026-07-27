@@ -157,53 +157,20 @@
         </div>
 
         <div class="hero-motion reveal" aria-hidden="true">
-          <div class="hero-motion-grid"></div>
-          <div class="hero-motion-glow"></div>
           <svg class="hero-motion-art" viewBox="0 0 520 520" focusable="false">
-            <defs>
-              <linearGradient id="hero-path-gradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#2186ff" stop-opacity="0.12"></stop>
-                <stop offset="52%" stop-color="#55c7ff" stop-opacity="0.75"></stop>
-                <stop offset="100%" stop-color="#5ae0ad" stop-opacity="0.16"></stop>
-              </linearGradient>
-              <radialGradient id="hero-node-gradient">
-                <stop offset="0%" stop-color="#78d8ff"></stop>
-                <stop offset="100%" stop-color="#2186ff"></stop>
-              </radialGradient>
-            </defs>
+            <circle class="hero-motion-halo" cx="260" cy="260" r="214"></circle>
+            <circle class="hero-motion-orbit hero-motion-orbit-outer" cx="260" cy="260" r="184"></circle>
+            <circle class="hero-motion-orbit hero-motion-orbit-mid" cx="260" cy="260" r="145"></circle>
+            <circle class="hero-motion-orbit hero-motion-orbit-inner" cx="260" cy="260" r="108"></circle>
 
-            <circle class="hero-motion-halo" cx="260" cy="260" r="192"></circle>
-            <circle class="hero-motion-orbit hero-motion-orbit-outer" cx="260" cy="260" r="166"></circle>
-            <circle class="hero-motion-orbit hero-motion-orbit-inner" cx="260" cy="260" r="112"></circle>
-
-            <g class="hero-motion-connections">
-              <path d="M92 110 C164 112 160 218 226 240"></path>
-              <path d="M428 110 C356 112 360 218 294 240"></path>
-              <path d="M92 410 C164 408 160 302 226 280"></path>
-              <path d="M428 410 C356 408 360 302 294 280"></path>
+            <g class="hero-motion-satellites hero-motion-satellites-outer">
+              <circle cx="260" cy="76" r="5"></circle>
+              <circle cx="444" cy="260" r="3"></circle>
+              <circle cx="260" cy="444" r="4"></circle>
             </g>
-            <g class="hero-motion-flow">
-              <path d="M92 110 C164 112 160 218 226 240"></path>
-              <path d="M428 110 C356 112 360 218 294 240"></path>
-              <path d="M92 410 C164 408 160 302 226 280"></path>
-              <path d="M428 410 C356 408 360 302 294 280"></path>
-            </g>
-
-            <g class="hero-motion-node hero-motion-node-one">
-              <circle cx="92" cy="110" r="16"></circle>
-              <circle cx="92" cy="110" r="4" fill="url(#hero-node-gradient)"></circle>
-            </g>
-            <g class="hero-motion-node hero-motion-node-two">
-              <circle cx="428" cy="110" r="16"></circle>
-              <circle cx="428" cy="110" r="4" fill="url(#hero-node-gradient)"></circle>
-            </g>
-            <g class="hero-motion-node hero-motion-node-three">
-              <circle cx="92" cy="410" r="16"></circle>
-              <circle cx="92" cy="410" r="4" fill="url(#hero-node-gradient)"></circle>
-            </g>
-            <g class="hero-motion-node hero-motion-node-four">
-              <circle cx="428" cy="410" r="16"></circle>
-              <circle cx="428" cy="410" r="4" fill="url(#hero-node-gradient)"></circle>
+            <g class="hero-motion-satellites hero-motion-satellites-inner">
+              <circle cx="260" cy="115" r="4"></circle>
+              <circle cx="405" cy="260" r="3"></circle>
             </g>
           </svg>
 
@@ -219,8 +186,7 @@
     </section>
 
     <section class="capability-strip" aria-label="RielArt capabilities">
-      <div class="capability-marquee" role="group" tabindex="0" aria-describedby="capability-motion-help">
-        <span class="sr-only" id="capability-motion-help">The capability list pauses while it is focused or hovered.</span>
+      <div class="capability-marquee">
         <div class="capability-track">
           <ul class="capability-set">
             <li>Brand Strategy</li>
@@ -235,16 +201,40 @@
             <li>Ongoing Management</li>
           </ul>
           <ul class="capability-set" aria-hidden="true">
-          <li>Brand Strategy</li>
-          <li>Visual Identity</li>
-          <li>Web Design</li>
-          <li>UX</li>
-          <li>SEO Foundations</li>
-          <li>AI Chatbots</li>
-          <li>Workflow Automation</li>
-          <li>Analytics</li>
-          <li>Advertising</li>
-          <li>Ongoing Management</li>
+            <li>Brand Strategy</li>
+            <li>Visual Identity</li>
+            <li>Web Design</li>
+            <li>UX</li>
+            <li>SEO Foundations</li>
+            <li>AI Chatbots</li>
+            <li>Workflow Automation</li>
+            <li>Analytics</li>
+            <li>Advertising</li>
+            <li>Ongoing Management</li>
+          </ul>
+          <ul class="capability-set" aria-hidden="true">
+            <li>Brand Strategy</li>
+            <li>Visual Identity</li>
+            <li>Web Design</li>
+            <li>UX</li>
+            <li>SEO Foundations</li>
+            <li>AI Chatbots</li>
+            <li>Workflow Automation</li>
+            <li>Analytics</li>
+            <li>Advertising</li>
+            <li>Ongoing Management</li>
+          </ul>
+          <ul class="capability-set" aria-hidden="true">
+            <li>Brand Strategy</li>
+            <li>Visual Identity</li>
+            <li>Web Design</li>
+            <li>UX</li>
+            <li>SEO Foundations</li>
+            <li>AI Chatbots</li>
+            <li>Workflow Automation</li>
+            <li>Analytics</li>
+            <li>Advertising</li>
+            <li>Ongoing Management</li>
           </ul>
         </div>
       </div>

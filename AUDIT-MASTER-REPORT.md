@@ -9,7 +9,7 @@
 
 ## Executive conclusion
 
-The rebuilt site is ready for owner review as a credible, professional production candidate. It did not need another broad visual rewrite. The implementation instead removed the highest-value friction: project and free-review intent now remain distinct, the paid audit is clearly separated from the no-cost initial review, form errors are announced and recover correctly, contact typography uses intentional three-word lines, service and article paths are more specific, empty or inconsistent taxonomy was removed, and the most wasteful global image was reduced by more than 90%. Following owner visual review, the text-heavy homepage priority panel was also replaced with a decorative connected-signal animation, leaving the hero copy as the only message in that composition.
+The rebuilt site is ready for owner review as a credible, professional production candidate. It did not need another broad visual rewrite. The implementation instead removed the highest-value friction: project and free-review intent now remain distinct, the paid audit is clearly separated from the no-cost initial review, form errors are announced and recover correctly, contact typography uses intentional three-word lines, service and article paths are more specific, empty or inconsistent taxonomy was removed, and the most wasteful global image was reduced by more than 90%. Following owner visual review, the text-heavy homepage priority panel was also replaced with a decorative floating orbital mark, leaving the hero copy as the only message in that composition.
 
 No confirmed P0 failure was found. The final static audit reports **0 critical failures and 0 warnings**, the local HTTP crawl reports **0 failures**, and the final browser matrix reports **0 failures across 100 route/viewport combinations**. All approved production integration values and all six Stripe prices/links remain unchanged.
 
@@ -286,7 +286,7 @@ Do not publish city-variant pages, generic “top tools” lists, or multiple ne
 ## Decision log
 
 - Preserve the rebuilt visual system, light/dark modes, logo, typography, Client Portal treatment, and static architecture.
-- Following owner review, replace the text-heavy homepage priority panel with a text-free decorative animation. Remove the visible marquee button while preserving hover/focus pausing and reduced-motion behavior.
+- Following owner review, replace the text-heavy homepage priority panel with a text-free decorative animation. Remove the visible marquee button, make the capability loop continuous and seamless, and retain a static reduced-motion presentation.
 - Do not invent testimonials, case studies, results, offices, partnerships, guarantees, or staff claims.
 - Do not change prices, Stripe links, Formspree, Thank-you, Calendly, email, LinkedIn, or Client Portal values during this pass.
 - Do not install analytics without explicit owner approval.
@@ -333,7 +333,7 @@ Lab-performance and accessibility scores will be recorded after the available to
 - Invalid required controls receive `aria-invalid="true"` and the existing live region announces one concise review message.
 - Invalid state and the announcement clear as controls become valid, including radio groups.
 - Query-driven form selection is progressive and leaves the native Formspree submission path unchanged.
-- Existing skip-link, mobile-menu focus containment, Escape/focus restoration, FAQ state, and theme support were preserved. The hero visual is decorative and hidden from assistive technology. The capability ticker has no visible Pause button, pauses when hovered or keyboard-focused, and stops under reduced-motion preferences.
+- Existing skip-link, mobile-menu focus containment, Escape/focus restoration, FAQ state, and theme support were preserved. The hero visual is decorative and hidden from assistive technology. The capability ticker has no visible Pause button, runs as a continuous loop, exposes only one semantic copy of the list, and becomes static under reduced-motion preferences.
 
 ### SEO, privacy, performance, and maintainability
 
@@ -374,8 +374,8 @@ Interaction regression checks confirmed:
 - Empty-submit focus on the first invalid field, five programmatically marked invalid controls, and the live announcement.
 - Complete clearing of invalid state after locally entering valid test values; no form was submitted.
 - Mobile menu backward/forward focus wrap, Escape closure, and focus restoration.
-- The homepage hero remains exactly three deliberate four-word lines at 1440 px. Its replacement visual contains no rendered text; the orbit, path-flow, and ticker transforms all changed during timed observation.
-- The visible marquee button is absent. Focusing the capability strip changed its animation play state to `paused`, while hover and reduced-motion behavior remain available. FAQ single-open behavior, final blog filters, linked Gabriel byline, relevant article CTAs, and matching Article taxonomy also passed.
+- The homepage hero remains exactly three deliberate four-word lines at 1440 px. Its replacement visual contains no rendered text or panel background; the orbit, satellite, core-pulse, and ticker transforms all changed during timed observation.
+- The visible marquee button is absent. Four synchronized list copies maintain full coverage through the loop, all three measured copy boundaries have a 0 px gap, and the animation remained `running` with an `infinite` iteration count after more than one complete cycle. Reduced-motion still presents one static semantic list. FAQ single-open behavior, final blog filters, linked Gabriel byline, relevant article CTAs, and matching Article taxonomy also passed.
 - The revised contact heading remains two intentional lines at desktop, 390 px, and 320 px with no horizontal overflow.
 
 JavaScript syntax and `git diff --check` passed. The latter reported only the repository’s expected Windows LF-to-CRLF notices.
@@ -384,14 +384,14 @@ JavaScript syntax and `git diff --check` passed. The latter reported only the re
 
 | Asset group | Baseline | Final | Change |
 |---|---:|---:|---:|
-| Public source payload | 1,245,018 B | 1,167,849 B | −77,169 B (−6.20%) |
-| HTML | 439,611 B | 443,640 B | +4,029 B |
-| CSS | 60,906 B | 62,760 B | +1,854 B |
+| Public source payload | 1,245,018 B | 1,165,235 B | −79,783 B (−6.41%) |
+| HTML | 439,611 B | 442,612 B | +3,001 B |
+| CSS | 60,906 B | 61,174 B | +268 B |
 | JavaScript | 13,286 B | 14,012 B | +726 B |
 | Images | 727,177 B | 643,390 B | −83,787 B |
 | Logo | 92,374 B | 8,587 B | −83,787 B (−90.71%) |
 
-Conservative uncompressed local initial payloads are 132,085 bytes for Home, 109,896 for Process, 112,420 for Contact, 107,297 for Work, and 116,159 for Pricing, each in five core requests. About is 111,853 bytes initially and 237,753 bytes after its two lazy images load. These are raw local-file comparisons, not compressed production transfer sizes.
+Conservative uncompressed local initial payloads are 129,471 bytes for Home, 108,310 for Process, 110,834 for Contact, 105,711 for Work, and 114,573 for Pricing, each in five core requests. About is 110,267 bytes initially and 236,167 bytes after its two lazy images load. These are raw local-file comparisons, not compressed production transfer sizes.
 
 Lighthouse, axe, and a standards-conformance HTML validator were not installed in the available environment, so no score, violation count, or formal conformance result is fabricated. Every HTML document was still parsed by the repository audit and subjected to its structural, metadata, schema, and link invariants. Field Core Web Vitals, INP, real-device timing, and production cache/compression behavior also require deployed or field tooling.
 

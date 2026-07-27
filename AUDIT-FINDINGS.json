@@ -161,7 +161,7 @@
     "severity": "P3 Low",
     "affected_url": "/",
     "affected_file": "index.html",
-    "evidence": "The former four-panel homepage interface was replaced with a decorative, text-free connected-signal animation. The previous Business result field and its outcome statements are no longer present, and no visible Business result label remains.",
+    "evidence": "The former four-panel homepage interface was replaced with a decorative, text-free floating orbital mark. The previous Business result field and its outcome statements are no longer present, and no visible Business result label remains.",
     "impact": "The label can sound more certain than an intended, non-guaranteed outcome.",
     "recommended_fix": "Avoid presenting an illustrative hero outcome as a guaranteed business result; use Intended outcome when such a label is needed, or remove the redundant explanatory panel.",
     "implemented": true,
