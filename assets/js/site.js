@@ -321,6 +321,69 @@
 
   /* Native form submission state */
   const contactForms = [...document.querySelectorAll("[data-contact-form]")];
+  const invalidFormMessage = "Please review the highlighted required fields.";
+  const invalidStatusFrames = new WeakMap();
+
+  function requestedInquiryIntent() {
+    try {
+      const intent = normalize(new URLSearchParams(window.location.search).get("inquiry"));
+      return intent === "project" || intent === "review" ? intent : "";
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function applyInquiryIntent(form, intent) {
+    if (!intent) return;
+    const radios = [...form.querySelectorAll('input[type="radio"][name="inquiry_type"]')];
+    const valuePattern = intent === "project"
+      ? /(^|-)project(-|$)/
+      : /(^|-)(review|audit)(-|$)/;
+    const matchingRadio = radios.find((radio) => valuePattern.test(normalize(radio.value)));
+
+    if (matchingRadio) matchingRadio.checked = true;
+  }
+
+  function announceInvalidForm(form) {
+    if (invalidStatusFrames.has(form)) return;
+    const status = form.querySelector("[data-form-status]");
+    if (!status) return;
+
+    status.textContent = "";
+    const frame = window.requestAnimationFrame(() => {
+      status.textContent = invalidFormMessage;
+      invalidStatusFrames.delete(form);
+    });
+    invalidStatusFrames.set(form, frame);
+  }
+
+  function clearInvalidFormStatus(form) {
+    if (form.querySelector('[aria-invalid="true"]')) return;
+    const pendingFrame = invalidStatusFrames.get(form);
+    if (pendingFrame !== undefined) {
+      window.cancelAnimationFrame(pendingFrame);
+      invalidStatusFrames.delete(form);
+    }
+
+    const status = form.querySelector("[data-form-status]");
+    if (status) status.textContent = "";
+  }
+
+  function clearValidControlState(form, control) {
+    if (!control.validity?.valid) return;
+
+    if (control instanceof HTMLInputElement && control.type === "radio" && control.name) {
+      [...form.elements].forEach((element) => {
+        if (element instanceof HTMLInputElement && element.type === "radio" && element.name === control.name) {
+          element.removeAttribute("aria-invalid");
+        }
+      });
+    } else {
+      control.removeAttribute("aria-invalid");
+    }
+
+    clearInvalidFormStatus(form);
+  }
 
   function restoreForm(form) {
     form.removeAttribute("aria-busy");
@@ -333,7 +396,30 @@
     if (status) status.textContent = "";
   }
 
+  const inquiryIntent = requestedInquiryIntent();
+
   contactForms.forEach((form) => {
+    applyInquiryIntent(form, inquiryIntent);
+
+    form.addEventListener(
+      "invalid",
+      (event) => {
+        const control = event.target;
+        if (!(control instanceof HTMLInputElement || control instanceof HTMLSelectElement || control instanceof HTMLTextAreaElement)) return;
+        control.setAttribute("aria-invalid", "true");
+        announceInvalidForm(form);
+      },
+      true
+    );
+
+    ["input", "change"].forEach((eventName) => {
+      form.addEventListener(eventName, (event) => {
+        const control = event.target;
+        if (!(control instanceof HTMLInputElement || control instanceof HTMLSelectElement || control instanceof HTMLTextAreaElement)) return;
+        clearValidControlState(form, control);
+      });
+    });
+
     form.addEventListener("submit", () => {
       const button = form.querySelector('[type="submit"]');
       const status = form.querySelector("[data-form-status]");

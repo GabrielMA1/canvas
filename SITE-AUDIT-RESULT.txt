@@ -1,3 +1,5 @@
+HISTORICAL REPORT: This output describes an earlier review copy and is superseded by the 2026-07-27 AUDIT-* deliverables in this repository.
+
 RielArt static site audit
 =========================
 Root: C:\Users\Gabriel\Documents\Codex\2026-07-18\are-you-able-to-search-every-2\live-rielart-working2

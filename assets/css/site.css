@@ -2481,9 +2481,12 @@ code {
 
 .contact-intro h2 {
   max-width: 16ch;
-  font-size: clamp(2.6rem, 4vw, 3.45rem);
+  font-size: clamp(2.4rem, 3.5vw, 3.1rem);
   line-height: 1.02;
-  text-wrap: pretty;
+}
+
+.contact-heading-line {
+  display: block;
 }
 
 .contact-intro .lead {
@@ -3449,6 +3452,12 @@ body:not(.home) .contact-shell {
 
   .footer-giant {
     font-size: 23vw;
+  }
+}
+
+@media (max-width: 360px) {
+  .contact-intro h2 {
+    font-size: 1.75rem;
   }
 }
 

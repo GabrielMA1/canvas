@@ -4,7 +4,7 @@ Static, dependency-free production website for RielArt. Deploy the contents of t
 
 ## Site structure
 
-- `index.html` — connected-system homepage with free-audit and project-inquiry form
+- `index.html` — connected-system homepage with free-initial-review and project-inquiry form
 - `services/` — service overview plus five detailed service routes
 - `portfolio/` — clearly labeled representative solution models
 - `process/` — five-phase delivery process and Client Portal overview
@@ -18,6 +18,9 @@ Static, dependency-free production website for RielArt. Deploy the contents of t
 - `assets/css/site.css` — consolidated site design system
 - `assets/js/site.js` — theme, navigation, FAQ, filter, reveal, and form behavior
 - `tools/site_audit.py` — local static-site audit
+- `tools/http_smoke.py` — local HTTP crawler for route, resource, and response checks
+- `AUDIT-*.md`, `AUDIT-FINDINGS.json` — current production audit evidence and handoff
+- `_config.yml` — prevents audit and development artifacts from being published by GitHub Pages
 
 ## Preserved production integrations
 
@@ -55,6 +58,12 @@ Run the repository audit with:
 python tools/site_audit.py
 ```
 
+With the local server still running, run the HTTP smoke test with:
+
+```powershell
+python tools/http_smoke.py --base-url http://127.0.0.1:4173
+```
+
 ## Publishing checklist
 
 - Review the Git diff in GitHub Desktop.
@@ -64,4 +73,4 @@ python tools/site_audit.py
 - Confirm the Client Portal, email, LinkedIn, and scheduling destinations.
 - Add only approved client proof, testimonials, and case-study results. Representative examples must remain labeled until real, permissioned work replaces them.
 
-See `IMPLEMENTATION-PLAN.md`, `CHANGELOG-RIELART-IMPROVEMENT.md`, `SITE-AUDIT-RESULT.txt`, and `FINAL-QA-REPORT.md` for this improvement pass.
+See `AUDIT-MASTER-REPORT.md`, `AUDIT-IMPLEMENTATION-LOG.md`, `AUDIT-MANUAL-REVIEW.md`, `AUDIT-MEASUREMENT-PLAN.md`, and `AUDIT-REGRESSION-REPORT.md` for the current production audit and implementation pass. These internal files remain in the repository but are excluded from the GitHub Pages build.

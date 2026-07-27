@@ -1,3 +1,5 @@
+> **Historical report:** This document describes the July 13 review and is superseded by the 2026-07-27 `AUDIT-*` deliverables in this repository.
+
 # RielArt.com Final Launch Review
 
 Reviewed: July 13, 2026

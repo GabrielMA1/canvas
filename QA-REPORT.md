@@ -1,3 +1,5 @@
+> **Historical report:** This document describes an earlier validation pass and is superseded by the 2026-07-27 `AUDIT-*` deliverables in this repository.
+
 # RielArt website redesign QA
 
 Validated before packaging:

@@ -1,3 +1,5 @@
+> **Historical report:** This document describes an earlier review copy and is superseded by the 2026-07-27 `AUDIT-*` deliverables in this repository.
+
 # Final QA Report — RielArt
 
 Date: 2026-07-26  
