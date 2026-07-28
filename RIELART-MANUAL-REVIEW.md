@@ -1,6 +1,7 @@
-# RielArt Remodel - Manual Review Register
+# RielArt Refinement - Manual Review Register
 
-**Prepared:** July 27, 2026  
+**Prepared:** July 28, 2026
+
 **Purpose:** Record legal, owner, account, privacy, and operational decisions that cannot be verified from the static repository alone.
 
 This register is an implementation handoff, not legal advice. The public Privacy Policy and Terms describe the intended operating model but require review against actual agreements, accounts, data flows, target markets, and business practices before launch.
@@ -17,6 +18,9 @@ This register is an implementation handoff, not legal advice. The public Privacy
   - Focused Ads Management - $349 USD per month with a three-month initial commitment.
 - Advertising spend is separate and is paid by the client directly to Google or Meta.
 - No public Stripe checkout or subscription link is approved for the remodeled offers.
+- The general public CTA is **Get Started**. Service-specific CTAs remain **Start Your Launch** and **Start Advertising**.
+- The pricing page exposes a separately reviewed custom-scope inquiry, not a third service. Its query maps to “I am not sure yet” while preserving `Custom scope inquiry` as form context.
+- The public site intentionally provides `hello@rielart.com` rather than publishing a street or mailing address.
 
 These facts must be rechecked against the deployed production site and relevant provider accounts before release.
 
@@ -28,12 +32,11 @@ Confirm with the owner and qualified counsel:
 
 - the legal entity or individual entering client agreements;
 - whether and how the RielArt operating name should be stated;
-- the approved use of the Richmond, British Columbia business mailing address;
-- the relationship between the Toronto operating identity and the Richmond mailing address;
+- whether any private agreement, invoice, service-of-notice process, or legally required business-identification disclosure needs an address outside the public marketing site;
 - governing law, venue, dispute process, and required business-identification disclosures;
 - whether any U.S., Canadian provincial, or selected international consumer-protection rules apply.
 
-Do not describe RielArt as U.S.-based, as having a U.S. office, or as operating from offices that do not exist. Do not add LocalBusiness schema or office claims without verified facts.
+Do not describe RielArt as U.S.-based, Canadian-office-based, or as operating from offices that do not exist. Do not add PostalAddress or LocalBusiness schema, directions, opening hours, or office claims without verified facts and an approved reason.
 
 ### 2. Brand & Website Launch agreement
 
@@ -67,6 +70,8 @@ The advertising agreement must settle, without relying on assumptions:
 - the handoff process and date on which RielArt access is removed;
 - support channel, response expectations, and the monthly review-call process;
 - approval and pricing for work outside the standard scope.
+
+The separate custom-scope inquiry does not pre-approve ongoing website support, content publishing, landing pages, extra campaigns, markets, languages, or extensive creative work. Confirm availability, boundaries, timing, and price in a separate written scope before accepting any such work.
 
 Do not imply month-to-month renewal, easy cancellation, automatic renewal, or refund rights until the agreement establishes them and counsel confirms the required disclosure and consent process.
 
@@ -301,14 +306,16 @@ Before publishing the legal updates:
 7. Confirm Google and Meta account-access procedures preserve client ownership.
 8. Confirm advertising spend is visibly separate from the RielArt fee.
 9. Confirm the three-month commitment and no-guarantee wording match the agreement.
-10. Test Formspree, the thank-you route, Calendly if retained, the Client Portal, privacy and terms links, keyboard access, mobile layout, and 200% zoom.
-11. Record the reviewer, decision date, evidence, and any accepted risk for every item closed in this register.
+10. Confirm the public site contains no street or mailing address, address schema, or empty `<address>` element.
+11. Confirm **Get Started** is the general CTA and the custom-scope inquiry remains separate from the two primary services.
+12. Test Formspree, the thank-you route, Calendly if retained, the Client Portal, privacy and terms links, keyboard access, mobile layout, and 200% zoom.
+13. Record the reviewer, decision date, evidence, and any accepted risk for every item closed in this register.
 
 ## Approval record
 
 | Area | Decision owner | Status | Evidence or decision date |
 |---|---|---|---|
-| Contracting identity and address | Owner / counsel | Open | |
+| Contracting identity and required business disclosures | Owner / counsel | Open | |
 | Brand & Website Launch agreement | Owner / counsel | Open | |
 | Focused Ads commitment and renewal | Owner / counsel | Open | |
 | Google account-access procedure | Owner | Open | |

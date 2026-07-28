@@ -9,7 +9,9 @@ RielArt presents exactly two primary services:
 - **Brand & Website Launch — $599 USD one time**
 - **Focused Ads Management — $349 USD per month**, with a three-month initial commitment
 
-Advertising spend is separate and is paid by the client directly to Google or Meta. All commercial calls to action lead to the project inquiry; there are no public Stripe checkout links.
+Advertising spend is separate and is paid by the client directly to Google or Meta. The general site CTA is **Get Started**, linking to `/contact/#project-inquiry`. Service-specific actions remain **Start Your Launch** and **Start Advertising**. There are no public Stripe checkout links.
+
+Support beyond the two standard services is available only as a separately reviewed inquiry. **Ask About a Custom Scope** links to `/contact/?service=custom-scope#project-inquiry`; it does not create a third package, price, or promise of availability.
 
 Future approved payment links have one internal configuration location: `config/payment-links.json`. Both values remain `null` until approved and tested. The `config/` directory is excluded from the GitHub Pages build.
 
@@ -19,13 +21,13 @@ Future approved payment links have one internal configuration location: `config/
 - `services/` — consolidated two-service overview
 - `services/brand-website-launch/` — detailed $599 launch scope
 - `services/focused-ads-management/` — detailed $349 monthly advertising scope, including Google and Meta explanations
-- `pricing/` — two-offer comparison and “Need both?” example
+- `pricing/` — two-offer comparison, “Need both?” example, and a discreet custom-scope inquiry
 - `process/` — four-step customer-facing process
 - `portfolio/` — accurately labelled internal work and representative concepts
 - `about/` — company approach, operating principles, ownership, and service area
 - `faq/` — detailed commercial and delivery answers
 - `blog/` — searchable Insights index and nine educational articles
-- `contact/` — canonical project inquiry with conditional advertising questions
+- `contact/` — canonical inquiry with conditional advertising questions and preserved custom-scope context
 - `privacy-policy/`, `terms/` — updated legal information pending the decisions recorded in `RIELART-MANUAL-REVIEW.md`
 - `thanks/`, `404.html` — noindex utility pages
 - `assets/css/site.css` — consolidated visual system and responsive rules
@@ -66,6 +68,7 @@ python tools/http_smoke.py --base-url http://127.0.0.1:4173/
 - Test the project form choices, conditional advertising fields, error states, Formspree delivery, and thank-you redirect.
 - Confirm the Client Portal, email, LinkedIn, and optional scheduling destinations.
 - Confirm no public Stripe link is present; connect payment links only after approval through the documented configuration.
+- Confirm no public street or mailing address, address schema, or empty `<address>` element is present; public legal questions route to `hello@rielart.com`.
 - Test representative pages at 320 px, tablet, and desktop widths in both themes, with keyboard navigation, reduced motion, and 200% zoom.
 - Keep representative concepts clearly labelled until permissioned client work is available.
 

@@ -6,12 +6,16 @@
 
 **Market line:** Serving businesses in the United States, Canada, and selected international markets.
 
-**Primary global CTA:** Start Your Project → `/contact/`
+**Primary global CTA:** Get Started → `/contact/#project-inquiry`
 
 **Service CTAs:**
 
 - Start Your Launch → `/contact/?service=brand-website-launch#project-inquiry`
 - Start Advertising → `/contact/?service=focused-ads-management#project-inquiry`
+
+**Separate inquiry CTA:** Ask About a Custom Scope → `/contact/?service=custom-scope#project-inquiry`
+
+The custom-scope route maps to “I am not sure yet” while preserving `Custom scope inquiry` in the form context. It is not a third primary service.
 
 ## Homepage
 
@@ -21,7 +25,7 @@
 
 **Lead:** RielArt creates clear brands and professional websites for growing businesses, then helps bring the right people to them through managed online advertising.
 
-**Trust line:** Clear scope. Straightforward pricing. Client-owned accounts.
+No supplemental trust line appears below the hero actions.
 
 Sections:
 
@@ -68,7 +72,15 @@ Primary content: $349 monthly fee, three-month commitment, separate ad spend, re
 
 **Lead:** Start with a professional brand and website, add focused advertising when you are ready, or begin with advertising when your existing website is ready.
 
-Use two equal offer cards, a concise “Need both?” example, and one comparison table. No checkout buttons or third card.
+Use two equal offer cards, a concise “Need both?” example, and one neutral comparison table.
+
+**Comparison eyebrow:** Compare the services
+
+**Comparison title:** What each service includes.
+
+**Comparison lead:** Choose the service that matches what your business needs now. Brand & Website Launch creates or refreshes your online foundation, while Focused Ads Management manages one active Google or Meta campaign.
+
+After the table, use one discreet **Need something beyond these scopes?** panel with **Ask About a Custom Scope**. This inquiry can mention ongoing website support, content updates, blog publishing, additional landing pages, or broader campaign requirements without creating a third package or publishing add-on prices.
 
 ## Process
 
@@ -110,7 +122,11 @@ Answer:
 
 ## Contact
 
-**Title:** Tell us about your business and who you want to reach.
+**Eyebrow:** Contact RielArt
+
+**Title:** Let’s talk about your business.
+
+**Intro:** Tell us what your business does, what needs to improve, and who you want to reach. RielArt will review the request and recommend a practical next step.
 
 The form uses exactly four service choices:
 
@@ -121,11 +137,13 @@ The form uses exactly four service choices:
 
 Advertising-specific questions appear only for Focused Ads Management or Both.
 
+The custom-scope query selects “I am not sure yet” and preserves the inquiry context in a hidden field; it does not add a fifth primary service choice.
+
 ## Thank you
 
 **Title:** Thank you. Your inquiry is ready for review.
 
-Explain review, recommendation, approval, onboarding/access/payment details, and advertising readiness without implying acceptance.
+Explain review, recommendation, fit, onboarding/access/payment details, and advertising readiness without implying acceptance.
 
 ## Blog
 
@@ -133,7 +151,7 @@ Retain useful article copy. Replace legacy promotional CTAs with one of:
 
 - Explore Brand & Website Launch
 - Explore Focused Ads Management
-- Start Your Project
+- Get Started
 
 AI articles remain educational and must not describe AI automation as a current package.
 
@@ -147,4 +165,4 @@ Columns:
 - Services: Brand & Website Launch, Focused Ads Management, Google Search Ads, Meta Ads
 - Connect: Client Portal, Email, LinkedIn
 
-Include the market line and legal links. Remove legacy service labels, AI packages, and founder-led wording.
+Include the market line and legal links. Do not publish a street or mailing address. Remove legacy service labels, AI packages, and founder-led wording.

@@ -4,6 +4,8 @@
 
 RielArt has exactly two primary public services. They can be purchased separately or sequentially.
 
+The general site CTA is **Get Started**. The two service CTAs remain **Start Your Launch** and **Start Advertising**.
+
 ## 1. Brand & Website Launch
 
 **Price:** $599 USD one time  
@@ -80,9 +82,17 @@ Public summary:
 
 This is an example sequence, not a third package. Buying Brand & Website Launch does not guarantee advertising results. A business with an existing suitable website may begin with Focused Ads Management after RielArt’s advertising-readiness review.
 
+## Separately reviewed custom scope
+
+RielArt may separately review ongoing website support, content updates, limited blog publishing, additional landing pages, or broader campaign requirements. The public action is:
+
+**Ask About a Custom Scope:** `/contact/?service=custom-scope#project-inquiry`
+
+The contact page maps this query to “I am not sure yet” and preserves `Custom scope inquiry` as form context. This is an inquiry path, not a third package, public add-on catalogue, published price, or guarantee that RielArt will accept the work.
+
 ## Inquiry and payment model
 
-All commercial calls to action lead to the project inquiry form. No public Stripe checkout or subscription link is approved for the two current offers.
+General, service-specific, and custom-scope actions all lead to the canonical inquiry form with the appropriate context. No public Stripe checkout or subscription link is approved for the two current offers.
 
 Future payment links belong in `config/payment-links.json`. That internal configuration is excluded from the published site. A link may be connected to public UI only after the offer, currency, amount, payment structure, and destination have been approved and tested.
 
@@ -92,5 +102,6 @@ Future payment links belong in `config/payment-links.json`. That internal config
 - Do not create a “most popular” label.
 - Do not publish a third bundle.
 - Do not publish add-on prices without approval.
+- Do not describe the custom-scope inquiry as a package or imply unlimited availability.
 - Do not promise leads, sales, revenue, rankings, or advertising performance.
 - Do not add public payment buttons until approved links exist.

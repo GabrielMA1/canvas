@@ -19,7 +19,7 @@ from html import unescape
 from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable
-from urllib.parse import unquote, urlsplit
+from urllib.parse import parse_qs, unquote, urlsplit
 from xml.etree import ElementTree
 
 
@@ -798,6 +798,17 @@ def iter_primary_schema_objects(value: Any) -> Iterable[dict[str, Any]]:
         for child in graph:
             if isinstance(child, dict):
                 yield child
+
+
+def iter_schema_objects(value: Any) -> Iterable[dict[str, Any]]:
+    """Yield every object in a parsed JSON-LD document, including nested ones."""
+    if isinstance(value, dict):
+        yield value
+        for child in value.values():
+            yield from iter_schema_objects(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from iter_schema_objects(child)
 
 
 def iter_schema_strings(
@@ -1830,6 +1841,223 @@ def main() -> int:
             else ""
         )
 
+    html_sources = {
+        path.relative_to(root).as_posix(): read_text(path)
+        for path in html_paths
+    }
+    forbidden_address_fragments = {
+        "street address": "135-" + "21320 Gordon Way",
+        "suite identifier": "Suite #" + "N297790",
+        "Richmond locality": "Richmond" + ", BC",
+        "postal code": "V6W" + " 1J8",
+        "mailing-address label": "Canadian mailing " + "address",
+    }
+    old_global_cta = "Start Your" + " Project"
+    old_homepage_trust_line = (
+        "Clear scope. Straightforward pricing. " + "Client-owned accounts."
+    )
+    approved_projects_phrase = "Approved " + "projects"
+    old_global_cta_pattern = re.escape(old_global_cta).replace(
+        r"\ ", r"\s+"
+    )
+    approved_projects_pattern = re.escape(approved_projects_phrase).replace(
+        r"\ ", r"\s+"
+    )
+
+    for relative, source in sorted(html_sources.items()):
+        source_folded = source.casefold()
+        visible_source = strip_html(source)
+        for label, fragment in forbidden_address_fragments.items():
+            if fragment.casefold() in source_folded:
+                critical.append(
+                    f"{relative}: removed public {label} remains"
+                )
+        for address_match in re.finditer(
+            r"<address\b[^>]*>(?P<body>.*?)</address\s*>",
+            source,
+            re.I | re.S,
+        ):
+            line = source.count("\n", 0, address_match.start()) + 1
+            if not strip_html(address_match.group("body")):
+                critical.append(
+                    f"{relative}:{line}: empty address element found"
+                )
+            else:
+                critical.append(
+                    f"{relative}:{line}: public address element remains"
+                )
+        if (
+            re.search(
+                rf"(?i)\b{old_global_cta_pattern}\b",
+                source,
+            )
+            or re.search(
+                rf"(?i)\b{old_global_cta_pattern}\b",
+                visible_source,
+            )
+        ):
+            critical.append(
+                f"{relative}: retired global CTA remains ({old_global_cta})"
+            )
+        if (
+            re.search(
+                rf"(?i)\b{approved_projects_pattern}\b",
+                source,
+            )
+            or re.search(
+                rf"(?i)\b{approved_projects_pattern}\b",
+                visible_source,
+            )
+        ):
+            critical.append(
+                f"{relative}: cold approval wording remains "
+                f"({approved_projects_phrase})"
+            )
+
+    homepage_source = page_source("index.html")
+    homepage_visible_source = strip_html(homepage_source)
+    if (
+        old_homepage_trust_line.casefold() in homepage_source.casefold()
+        or old_homepage_trust_line.casefold()
+        in homepage_visible_source.casefold()
+    ):
+        critical.append("index.html: removed homepage trust line remains")
+    if re.search(
+        r'class=["\'][^"\']*\bhero-trust-line\b',
+        homepage_source,
+        re.I,
+    ):
+        critical.append(
+            "index.html: removed homepage trust-line wrapper remains"
+        )
+
+    anchor_pattern = re.compile(
+        r"<a\b(?P<attrs>[^>]*)>(?P<body>.*?)</a\s*>",
+        re.I | re.S,
+    )
+    href_pattern = re.compile(
+        r"\bhref\s*=\s*([\"'])(?P<href>.*?)\1",
+        re.I | re.S,
+    )
+    anchor_records: list[tuple[str, str, str]] = []
+    for relative, source in sorted(html_sources.items()):
+        for anchor_match in anchor_pattern.finditer(source):
+            href_match = href_pattern.search(anchor_match.group("attrs"))
+            if not href_match:
+                continue
+            anchor_records.append(
+                (
+                    relative,
+                    unescape(href_match.group("href").strip()),
+                    strip_html(anchor_match.group("body")),
+                )
+            )
+
+    def action_text(value: str) -> str:
+        return re.sub(r"\s*[→↗]\s*$", "", value).strip()
+
+    def is_local_action_target(
+        href: str,
+        expected_path: str,
+        expected_fragment: str = "",
+        expected_service: str = "",
+    ) -> bool:
+        parsed = urlsplit(href)
+        host = (parsed.hostname or "").lower()
+        if parsed.scheme and parsed.scheme.lower() not in {"http", "https"}:
+            return False
+        if host and host not in LOCAL_HOSTS:
+            return False
+        if parsed.path.rstrip("/") != expected_path.rstrip("/"):
+            return False
+        if expected_fragment and parsed.fragment != expected_fragment:
+            return False
+        if expected_service:
+            if parse_qs(parsed.query).get("service") != [expected_service]:
+                return False
+        return True
+
+    get_started_count = 0
+    action_counts = {
+        "Start Your Launch": 0,
+        "Start Advertising": 0,
+        "See full scope": 0,
+        "View Pricing": 0,
+    }
+    full_scope_targets: set[str] = set()
+    for relative, href, raw_text in anchor_records:
+        text = action_text(raw_text)
+        if re.search(r"(?i)\bGet\s+Started\b", text):
+            get_started_count += 1
+            if text.casefold() != "get started":
+                critical.append(
+                    f"{relative}: global CTA label must be exactly "
+                    f"'Get Started' ({raw_text!r})"
+                )
+            if not is_local_action_target(
+                href,
+                "/contact/",
+                "project-inquiry",
+            ):
+                critical.append(
+                    f"{relative}: Get Started must target "
+                    f"/contact/#project-inquiry ({href})"
+                )
+        if text == "Start Your Launch":
+            action_counts[text] += 1
+            if not is_local_action_target(
+                href,
+                "/contact/",
+                "project-inquiry",
+                "brand-website-launch",
+            ):
+                critical.append(
+                    f"{relative}: Start Your Launch has the wrong target "
+                    f"({href})"
+                )
+        elif text == "Start Advertising":
+            action_counts[text] += 1
+            if not is_local_action_target(
+                href,
+                "/contact/",
+                "project-inquiry",
+                "focused-ads-management",
+            ):
+                critical.append(
+                    f"{relative}: Start Advertising has the wrong target "
+                    f"({href})"
+                )
+        elif text == "See full scope":
+            action_counts[text] += 1
+            parsed = urlsplit(href)
+            full_scope_targets.add(parsed.path)
+            if parsed.path not in {
+                "/services/brand-website-launch/",
+                "/services/focused-ads-management/",
+            }:
+                critical.append(
+                    f"{relative}: See full scope has the wrong target ({href})"
+                )
+        elif text == "View Pricing":
+            action_counts[text] += 1
+            if not is_local_action_target(href, "/pricing/"):
+                critical.append(
+                    f"{relative}: View Pricing has the wrong target ({href})"
+                )
+
+    if get_started_count == 0:
+        critical.append("public HTML is missing the global Get Started CTA")
+    for label, count in action_counts.items():
+        if count == 0:
+            critical.append(f"public HTML is missing preserved CTA {label!r}")
+    if full_scope_targets != {
+        "/services/brand-website-launch/",
+        "/services/focused-ads-management/",
+    }:
+        critical.append(
+            "See full scope links must cover both approved service pages"
+        )
+
     homepage_text = page_visible("index.html")
     approved_headline = (
         "Build your brand. Launch your website. Reach more customers."
@@ -1855,15 +2083,173 @@ def main() -> int:
         "focused-ads-management",
     ]
     for relative in ("index.html", "services/index.html", "pricing/index.html"):
+        source = page_source(relative)
         markers = re.findall(
             r'data-primary-service=["\']([^"\']+)["\']',
-            page_source(relative),
+            source,
         )
         if markers != expected_service_markers:
             critical.append(
                 f"{relative}: expected exactly two approved primary "
                 f"commercial services, found {markers}"
             )
+        offer_card_count = len(
+            re.findall(
+                r'<(?:article|div)\b[^>]*\bclass=["\'][^"\']*'
+                r'\boffer-card\b[^"\']*["\']',
+                source,
+                re.I,
+            )
+        )
+        if offer_card_count != 2:
+            critical.append(
+                f"{relative}: expected exactly two offer cards, found "
+                f"{offer_card_count}"
+            )
+
+    pricing_relative = "pricing/index.html"
+    refined_pricing_html = page_source(pricing_relative)
+    refined_pricing_text = page_visible(pricing_relative)
+    approved_comparison_intro = (
+        "Compare the services What each service includes. "
+        "Choose the service that matches what your business needs now. "
+        "Brand & Website Launch creates or refreshes your online foundation, "
+        "while Focused Ads Management manages one active Google or Meta "
+        "campaign."
+    )
+    if (
+        approved_comparison_intro.casefold()
+        not in refined_pricing_text.casefold()
+    ):
+        critical.append(
+            f"{pricing_relative}: approved neutral comparison introduction "
+            "is missing"
+        )
+    for old_comparison_phrase in (
+        "Two different jobs, one clear " + "customer journey.",
+        "Brand & Website Launch establishes the foundation.",
+        "Focused Ads Management promotes a ready offer and improves "
+        "the active campaign.",
+    ):
+        if old_comparison_phrase.casefold() in refined_pricing_text.casefold():
+            critical.append(
+                f"{pricing_relative}: retired comparison wording remains "
+                f"({old_comparison_phrase})"
+            )
+
+    comparison_match = re.search(
+        r'<table\b(?=[^>]*\bclass=["\'][^"\']*\bcomparison-table\b)'
+        r'[^>]*>(?P<body>.*?)</table\s*>',
+        refined_pricing_html,
+        re.I | re.S,
+    )
+    if not comparison_match:
+        critical.append(
+            f"{pricing_relative}: service comparison table is missing"
+        )
+        comparison_text = ""
+    else:
+        comparison_text = strip_html(comparison_match.group("body"))
+        for negative_phrase in (
+            "Not part of monthly scope",
+            "No new pages included",
+            "Not an SEO retainer",
+            "Not applicable",
+            "Not included",
+        ):
+            if re.search(
+                rf"(?i)\b{re.escape(negative_phrase)}\b",
+                comparison_text,
+            ):
+                critical.append(
+                    f"{pricing_relative}: comparison table uses retired "
+                    f"negative wording ({negative_phrase})"
+                )
+
+    required_comparison_phrases = {
+        "client brand reuse":
+            "Uses the client’s approved existing brand",
+        "existing creative direction":
+            "Uses approved existing creative direction",
+        "existing website or landing page":
+            "Works with an approved existing website or landing page",
+        "monthly page allowance":
+            "Existing pages supported within the monthly edit allowance",
+        "launch form scope":
+            "Contact or lead form included",
+        "advertising conversion path":
+            "Existing conversion path reviewed and tracked where possible",
+        "campaign landing-page recommendations":
+            "Campaign-focused landing-page recommendations",
+        "separate advertising availability":
+            "Available separately",
+        "one-platform advertising scope":
+            "One Google or Meta platform",
+        "campaign optimization":
+            "Monitoring and optimization included",
+        "launch reporting":
+            "Project delivery updates",
+        "advertising reporting":
+            "Performance summary and review call",
+        "advertising payment structure":
+            "$349 USD per month; three-month initial commitment; "
+            "advertising spend separate",
+    }
+    for label, phrase in required_comparison_phrases.items():
+        if phrase.casefold() not in comparison_text.casefold():
+            critical.append(
+                f"{pricing_relative}: comparison table is missing neutral "
+                f"{label} wording"
+            )
+
+    custom_scope_match = re.search(
+        r'<(?P<tag>aside|section|div)\b'
+        r'(?=[^>]*\bclass=["\'][^"\']*\bcustom-scope-panel\b)'
+        r'[^>]*>(?P<body>.*?)</(?P=tag)\s*>',
+        refined_pricing_html,
+        re.I | re.S,
+    )
+    if not custom_scope_match:
+        critical.append(
+            f"{pricing_relative}: custom-scope inquiry panel is missing"
+        )
+    else:
+        custom_scope_html = custom_scope_match.group(0)
+        custom_scope_text = strip_html(custom_scope_html)
+        required_custom_copy = (
+            "Need something beyond these scopes? "
+            "RielArt can review ongoing website support, content updates, "
+            "blog publishing, additional landing pages, or broader campaign "
+            "requirements separately."
+        )
+        if required_custom_copy.casefold() not in custom_scope_text.casefold():
+            critical.append(
+                f"{pricing_relative}: approved custom-scope inquiry copy "
+                "is missing"
+            )
+        if "$" in custom_scope_text:
+            critical.append(
+                f"{pricing_relative}: custom scope must not publish a price"
+            )
+        if "data-primary-service" in custom_scope_html:
+            critical.append(
+                f"{pricing_relative}: custom scope is incorrectly marked as "
+                "a primary service"
+            )
+
+    custom_scope_links = [
+        href
+        for relative, href, raw_text in anchor_records
+        if relative == pricing_relative
+        and action_text(raw_text) == "Ask About a Custom Scope"
+    ]
+    if custom_scope_links != [
+        "/contact/?service=custom-scope#project-inquiry"
+    ]:
+        critical.append(
+            f"{pricing_relative}: custom-scope CTA must use the approved "
+            f"inquiry URL ({custom_scope_links})"
+        )
 
     ads_relative = "services/focused-ads-management/index.html"
     ads_text = page_visible(ads_relative)
@@ -1897,12 +2283,60 @@ def main() -> int:
 
     contact_path = (root / "contact" / "index.html").resolve()
     contact_page = pages.get(contact_path)
+    contact_relative = "contact/index.html"
+    contact_html = page_source(contact_relative)
     approved_contact_choices = {
         "Brand & Website Launch — $599 one time",
         "Focused Ads Management — $349/month",
         "Both services",
         "I am not sure yet",
     }
+    if contact_page is not None:
+        if contact_page.title != "Contact RielArt | Brand, Website & Ads":
+            critical.append(
+                f"{contact_relative}: title must be "
+                "'Contact RielArt | Brand, Website & Ads'"
+            )
+        for meta_key in ("og:title", "twitter:title"):
+            values = [
+                value
+                for value, _line in contact_page.meta_values.get(
+                    meta_key,
+                    [],
+                )
+            ]
+            if values != ["Contact RielArt"]:
+                critical.append(
+                    f"{contact_relative}: {meta_key} must be exactly "
+                    "'Contact RielArt'"
+                )
+        if contact_page.h1_text != ["Let’s talk about your business."]:
+            critical.append(
+                f"{contact_relative}: H1 must be exactly "
+                "'Let’s talk about your business.'"
+            )
+
+        contact_schema_names: list[str] = []
+        for block in contact_page.json_ld:
+            try:
+                data = json.loads(block.text)
+            except json.JSONDecodeError:
+                continue
+            for schema_object in iter_primary_schema_objects(data):
+                if "ContactPage" not in schema_types(
+                    schema_object.get("@type")
+                ):
+                    continue
+                name = schema_object.get("name")
+                contact_schema_names.append(
+                    name if isinstance(name, str) else ""
+                )
+        if contact_schema_names != ["Contact RielArt"]:
+            critical.append(
+                f"{contact_relative}: ContactPage schema name must be "
+                f"'Contact RielArt' ({contact_schema_names})"
+            )
+
     if contact_page is None or len(contact_page.forms) != 1:
         critical.append(
             "contact/index.html: expected one canonical project inquiry form"
@@ -1920,7 +2354,20 @@ def main() -> int:
                 "contact/index.html: service choices do not exactly match "
                 f"the approved set ({sorted(service_choices)})"
             )
-        contact_html = page_source("contact/index.html")
+        context_controls = [
+            control
+            for control in form.controls
+            if control.name == "inquiry_context"
+            and control.control_type == "hidden"
+        ]
+        if (
+            len(context_controls) != 1
+            or "data-inquiry-context" not in contact_html
+        ):
+            critical.append(
+                "contact/index.html: custom-scope hidden inquiry context "
+                "field is missing"
+            )
         for required_name in (
             "preferred_platform",
             "advertising_location",
@@ -1993,6 +2440,26 @@ def main() -> int:
                 "is not wired"
             )
 
+    site_javascript = page_source("assets/js/site.js")
+    if not re.search(
+        r'["\']custom-scope["\']\s*:\s*["\']not-sure["\']',
+        site_javascript,
+    ):
+        critical.append(
+            "assets/js/site.js: custom-scope must map to the existing "
+            "not-sure contact choice"
+        )
+    for required_custom_token in (
+        "requestedInquiryContext",
+        "Custom scope inquiry",
+        "data-inquiry-context",
+    ):
+        if required_custom_token not in site_javascript:
+            critical.append(
+                "assets/js/site.js: custom-scope context preservation is "
+                f"missing {required_custom_token!r}"
+            )
+
     for legacy_name in sorted(LEGACY_SERVICE_NAMES):
         if re.search(
             rf"(?i)(?<!\w){re.escape(legacy_name)}(?!\w)",
@@ -2051,12 +2518,24 @@ def main() -> int:
         "Focused Ads Management": "349",
     }
     localbusiness_found = False
+    postal_address_pages: set[str] = set()
+    organization_address_pages: set[str] = set()
     for page in pages.values():
         for block in page.json_ld:
             try:
                 data = json.loads(block.text)
             except json.JSONDecodeError:
                 continue
+            relative = page.path.relative_to(root).as_posix()
+            for nested_object in iter_schema_objects(data):
+                nested_types = schema_types(nested_object.get("@type"))
+                if "PostalAddress" in nested_types:
+                    postal_address_pages.add(relative)
+                if (
+                    "Organization" in nested_types
+                    and "address" in nested_object
+                ):
+                    organization_address_pages.add(relative)
             for schema_object in iter_primary_schema_objects(data):
                 object_types = schema_types(schema_object.get("@type"))
                 if "LocalBusiness" in object_types:
@@ -2107,6 +2586,15 @@ def main() -> int:
         )
     if localbusiness_found:
         critical.append("unsupported LocalBusiness schema found")
+    for relative in sorted(postal_address_pages):
+        critical.append(
+            f"{relative}: public PostalAddress schema is not approved"
+        )
+    for relative in sorted(organization_address_pages):
+        critical.append(
+            f"{relative}: public Organization schema must not include an "
+            "address property"
+        )
 
     expected_redirect_targets = {
         "/services/brand-strategy-identity": "/services/brand-website-launch/",
@@ -2181,6 +2669,13 @@ def main() -> int:
             f"Approved email-link occurrences: {email_count}",
             f"Approved LinkedIn URL occurrences: {linkedin_count}",
             f"Public Stripe Payment Links found: {len(found_stripe_urls)}",
+            f"Global Get Started links checked: {get_started_count}",
+            f"Custom-scope inquiry links checked: "
+            f"{len(custom_scope_links)}",
+            f"Public PostalAddress schemas found: "
+            f"{len(postal_address_pages)}",
+            f"Organization address properties found: "
+            f"{len(organization_address_pages)}",
             f"Potential unsupported numerical claims flagged: "
             f"{numerical_claim_matches}",
             f"Warnings: {len(warnings)}",

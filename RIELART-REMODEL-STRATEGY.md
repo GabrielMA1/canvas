@@ -23,7 +23,7 @@ These services are separate. A qualified business may buy either service or both
 
 **Market statement:** Serving businesses in the United States, Canada, and selected international markets.
 
-The primary action is a project inquiry. Pricing is the secondary action.
+The primary action is **Get Started**, which opens the general inquiry. Pricing is the secondary action.
 
 ## Audience and positioning
 
@@ -38,7 +38,7 @@ RielArt will be presented as a professional company with:
 - transparent third-party costs;
 - practical measurement and reporting.
 
-The website must not imply a U.S. office, a global team, a particular team size, unsupported results, or founder-led delivery. The Canadian mailing address remains where legally or operationally appropriate and must be labelled accurately.
+The website must not imply a U.S. office, Canadian office, global team, particular team size, unsupported results, or founder-led delivery. The public site does not publish a street or mailing address and must not invent a replacement location. Legal and policy questions route to `hello@rielart.com`.
 
 ## Information architecture
 
@@ -50,7 +50,7 @@ Primary navigation:
 - Insights
 - Contact
 - Client Portal
-- Start Your Project
+- Get Started
 
 The Services dropdown is removed. `/services/` remains as the consolidated explanation page. Two detailed service routes support evaluation and search intent without creating additional offers:
 
@@ -76,6 +76,8 @@ The homepage will contain ten concise sections:
 
 The former hero tabs, capability ticker, AI-led copy, abstract service taxonomy, duplicate CTAs, and long card grids are removed.
 
+The hero contains the approved headline, supporting message, action buttons, and orbital visual without a supplemental trust line.
+
 ## Content principles
 
 - Lead with the business outcome, then explain scope.
@@ -87,6 +89,7 @@ The former hero tabs, capability ticker, AI-led copy, abstract service taxonomy,
 - Preserve useful AI articles as educational content, but remove AI as a primary offer.
 - Use one concise no-guarantee statement where it is contextually useful.
 - Avoid artificial urgency, unsupported social proof, and performance promises.
+- Present work beyond the two standard services only as a separately reviewed custom-scope inquiry, never as a third package or priced add-on catalogue.
 
 ## Visual principles
 
@@ -108,9 +111,10 @@ All commercial CTAs lead to `/contact/`.
 
 - **Start Your Launch** preselects Brand & Website Launch.
 - **Start Advertising** preselects Focused Ads Management and reveals the advertising questions.
-- **Start Your Project** opens the general inquiry form.
+- **Get Started** opens the general inquiry form.
+- **Ask About a Custom Scope** uses `/contact/?service=custom-scope#project-inquiry`, maps to “I am not sure yet,” and preserves the separate inquiry context without creating another primary service.
 
-The form submits to the existing Formspree endpoint and returns to the existing thank-you route. The thank-you page explains review, recommendation, approval, onboarding, access, and payment steps without implying automatic acceptance.
+The form submits to the existing Formspree endpoint and returns to the existing thank-you route. The thank-you page explains review, recommendation, fit, onboarding, access, and payment steps without implying automatic acceptance.
 
 ## Technical approach
 
@@ -139,4 +143,5 @@ The remodel is complete when:
 - advertising scope, limits, ownership, spend, and commitment are clear;
 - legacy routes remain intentional and non-broken;
 - metadata, structured data, canonicals, sitemap, and visible copy agree;
-- automated and manual QA results are recorded without overstating browser or tool coverage.
+- automated and manual QA results are recorded without overstating browser or tool coverage;
+- the global CTA is **Get Started**, and no public street or mailing address is present.

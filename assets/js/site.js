@@ -279,9 +279,19 @@
         "advertising": "focused-ads-management",
         "both": "both-services",
         "both-services": "both-services",
-        "not-sure": "not-sure"
+        "not-sure": "not-sure",
+        "custom-scope": "not-sure"
       };
       return aliases[requested] || "";
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function requestedInquiryContext() {
+    try {
+      const requested = normalize(new URLSearchParams(window.location.search).get("service"));
+      return requested === "custom-scope" ? "Custom scope inquiry" : "";
     } catch (error) {
       return "";
     }
@@ -363,9 +373,12 @@
   }
 
   const serviceIntent = requestedServiceIntent();
+  const inquiryContext = requestedInquiryContext();
 
   contactForms.forEach((form) => {
     applyServiceIntent(form, serviceIntent);
+    const contextField = form.querySelector("[data-inquiry-context]");
+    if (contextField instanceof HTMLInputElement) contextField.value = inquiryContext;
     updateAdvertisingFields(form);
 
     form.addEventListener(

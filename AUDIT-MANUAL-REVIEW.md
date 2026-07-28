@@ -1,3 +1,5 @@
+> **Historical report:** This register describes the pre-remodel audit state. Current commercial, copy, and release guidance is maintained in the `RIELART-*` documents.
+
 # RielArt Audit — Manual Review Register
 
 **Prepared:** 2026-07-27  
@@ -70,15 +72,9 @@ Also confirm that Gabriel’s displayed role, profile links, photo, and Person s
 
 ### 5. Location and address representation
 
-The supplied address is displayed as:
+The historical version displayed a business mailing address. The current public site intentionally omits street and mailing-address details and provides `hello@rielart.com` for questions.
 
-> Business mailing address  
-> 135-21320 Gordon Way  
-> Suite #N297790  
-> Richmond, BC V6W 1J8  
-> Canada
-
-The site says “Working with businesses internationally” and does not call this address an office. Confirm that public display is still approved. Do not add LocalBusiness schema, a Richmond office claim, a Toronto office claim, directions, opening hours, or storefront language unless deliberately approved and true.
+If a future agreement, invoice, service-of-notice process, or law requires an address, confirm the correct private or legally required disclosure with the owner and counsel. Do not add PostalAddress or LocalBusiness schema, an office claim, directions, opening hours, or storefront language unless deliberately approved and true.
 
 ### 6. Response-time promise
 

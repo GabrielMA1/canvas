@@ -1,8 +1,89 @@
-# RielArt Commercial Remodel - Implementation Log
+# RielArt Commercial Remodel and Refinement - Implementation Log
 
-**Implemented:** July 27, 2026  
-**Repository:** `live-rielart`  
+**Implemented:** July 27-28, 2026
+**Repository:** `live-rielart`
 **Deployment status:** Source implementation complete; no production deployment, commit, payment activation, or external form submission was performed.
+
+## July 28 focused refinement
+
+The follow-up pass preserved the approved two-service model and completed these focused changes:
+
+- removed the former public street/mailing location from shared footers, About, legal copy, and homepage Organization JSON-LD without inventing a replacement address;
+- changed the general site CTA from the former project-start label to **Get Started** while preserving **Start Your Launch**, **Start Advertising**, **See full scope**, **View Pricing**, **Contact**, and **Client Portal**;
+- removed the homepage hero trust line and its unused styling;
+- aligned equivalent offer and platform-card regions with shared header, note, flexible-content, footer, and action behavior rather than per-card spacing patches;
+- rewrote the pricing comparison in neutral scope language;
+- added one separately reviewed custom-scope inquiry after the comparison table without adding a package, price, Service schema, or primary offer;
+- mapped `service=custom-scope` to the existing **I am not sure yet** choice while submitting `Custom scope inquiry` in a hidden context field;
+- rebuilt the contact introduction as a contained dark card beside the existing form, with compact review/recommendation/next-step content and no split-background slab or sticky artifact;
+- updated contact metadata and ContactPage schema to **Contact RielArt**;
+- made the narrow pricing comparison a labelled, keyboard-focusable horizontal-scroll region;
+- removed obsolete address, contact-panel, and retired ticker CSS;
+- bumped shared CSS and JavaScript references to `20260728r1`.
+
+### Focused-refinement baseline and final measurements
+
+| Measure | July 28 baseline | Final |
+|---|---:|---:|
+| HTML files checked | 32 | 32 |
+| Indexable pages | 22 | 22 |
+| Sitemap URLs | 22 | 22 |
+| GitHub Pages exclusions | 26 | 27 |
+| Internal artifacts excluded | 19 | 20 |
+| Global Get Started links checked | N/A | 60 |
+| Custom-scope inquiry links checked | 0 | 1 |
+| Public PostalAddress schemas | 1 | 0 |
+| Organization address properties | 1 | 0 |
+| Static-audit warnings | 0 | 0 |
+| Static-audit critical failures | 0 | 0 |
+| HTTP routes checked | 34 | 34 |
+| Successful HTTP 200 routes | 33 | 33 |
+| Aggregate HTML response bytes | 319,743 | 317,109 |
+| Uncompressed CSS bytes | 81,847 | 78,013 |
+| Uncompressed JavaScript bytes | 15,038 | 15,551 |
+| HTTP-smoke failures | 0 | 0 |
+
+### Focused-refinement file log
+
+| File | Refinement |
+|---|---|
+| `404.html` | Updated the general CTA, removed the footer location, and bumped shared asset versions. |
+| `about/index.html` | Removed the visible location block, updated the general CTA vocabulary, and bumped assets. |
+| `assets/css/site.css` | Added robust offer/platform/contact alignment, rebuilt the contact composition, styled custom scope, improved touch sizing, and removed retired address/contact/ticker CSS. |
+| `assets/js/site.js` | Added safe `custom-scope` mapping and hidden inquiry context while preserving existing service and advertising-field logic. |
+| `blog/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/ai-chatbot-small-business/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/ai-chatbot-vs-live-chat/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/brand-identity-mistakes/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/core-web-vitals-small-business/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/local-seo-checklist-toronto/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/small-business-automation-ideas/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/website-builder-vs-wordpress/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/website-costing-you-leads/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `blog/website-maintenance-checklist/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `contact/index.html` | Updated metadata/schema, rebuilt the left card, preserved four choices/Formspree fields, added custom context, removed the footer location, and bumped assets. |
+| `faq/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `index.html` | Removed address schema and hero trust line, aligned offer cards, updated general CTAs/footer, and bumped assets. |
+| `portfolio/index.html` | Updated shared general CTAs/footer and asset versions. |
+| `pricing/index.html` | Added aligned offer regions, neutral comparison copy/table, accessible comparison region, separate custom-scope inquiry, warmer fit language, updated footer/CTA, and bumped assets. |
+| `privacy-policy/index.html` | Replaced postal-contact language with email-only contact, updated shared CTA/footer, and bumped assets. |
+| `process/index.html` | Updated the general CTA vocabulary/footer and bumped assets. |
+| `services/index.html` | Added aligned offer regions, updated general CTAs/footer, and bumped assets. |
+| `services/brand-website-launch/index.html` | Preserved the service CTA and scope while updating shared general CTAs/footer and asset versions. |
+| `services/focused-ads-management/index.html` | Preserved the service CTA and scope while updating shared general CTAs/footer and asset versions. |
+| `terms/index.html` | Replaced postal-contact language with email-only contact, updated shared CTA/footer, and bumped assets. |
+| `thanks/index.html` | Replaced cold approval wording, updated shared CTA/footer, and bumped assets. |
+| `README.md` | Documented the current CTA hierarchy, custom-scope path, and no-public-address rule. |
+| `RIELART-COPY-MAP.md` | Updated approved CTA, pricing, contact, hero, and custom-scope copy. |
+| `RIELART-REMODEL-STRATEGY.md` | Updated the current conversion path and public-location position. |
+| `RIELART-OFFER-SCOPE.md` | Recorded custom scope as a separate inquiry rather than a third offer. |
+| `RIELART-MANUAL-REVIEW.md` | Updated owner/legal checks for email-only public contact and the separate custom-scope path. |
+| `AUDIT-MANUAL-REVIEW.md` | Marked the legacy review historical and removed the retired street-location literal. |
+| `RIELART-REFINEMENT-PLAN.md` | Added the pre-implementation scope, baseline, non-goals, and validation plan. |
+| `RIELART-QA-REPORT.md` | Recorded final automated, responsive, theme, menu, form-state, and manual-review results. |
+| `RIELART-IMPLEMENTATION-LOG.md` | Added this complete refinement record and final measurements. |
+| `_config.yml` | Excluded the refinement plan from the public Pages build. |
+| `tools/site_audit.py` | Added regression rules for address/schema removal, CTA hierarchy, neutral pricing, custom scope, contact metadata, and two-offer integrity. |
 
 ## Outcome
 
@@ -90,7 +171,7 @@ The obsolete service ticker, pause control, hero priority tabs, excessive hero c
 - Rebuilt the Privacy Policy and Terms for the approved two-offer model.
 - Kept legal statements conservative about tracking, results, billing, international work, and third-party providers.
 - Documented unresolved agreement, privacy, platform-access, billing, and provider decisions in `RIELART-MANUAL-REVIEW.md`.
-- Included the approved Canadian mailing address without describing it as a public office or limiting service to one Canadian city.
+- The earlier remodel briefly included a public postal contact; the July 28 refinement removed it from the public site and retained email-only legal contact.
 
 ### Insights
 
