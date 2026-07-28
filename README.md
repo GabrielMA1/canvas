@@ -1,76 +1,72 @@
 # rielart.com
 
-Static, dependency-free production website for RielArt. Deploy the contents of this repository at the domain root.
+Static, dependency-free production website for RielArt. Deploy the repository’s public site files at the domain root.
+
+## Public commercial model
+
+RielArt presents exactly two primary services:
+
+- **Brand & Website Launch — $599 USD one time**
+- **Focused Ads Management — $349 USD per month**, with a three-month initial commitment
+
+Advertising spend is separate and is paid by the client directly to Google or Meta. All commercial calls to action lead to the project inquiry; there are no public Stripe checkout links.
+
+Future approved payment links have one internal configuration location: `config/payment-links.json`. Both values remain `null` until approved and tested. The `config/` directory is excluded from the GitHub Pages build.
 
 ## Site structure
 
-- `index.html` — connected-system homepage with free-initial-review and project-inquiry form
-- `services/` — service overview plus five detailed service routes
-- `portfolio/` — clearly labeled representative solution models
-- `process/` — five-phase delivery process and Client Portal overview
-- `pricing/` — fixed-scope projects, monthly support, comparison tables, and live Stripe Payment Links
-- `about/` — studio approach, team, and international service overview
-- `blog/` — searchable, filterable Insights index and nine articles
-- `faq/` — grouped service, process, pricing, ownership, AI, and support questions
-- `contact/` — the same inquiry form used on the homepage
-- `privacy-policy/`, `terms/` — legal pages
+- `index.html` — ten-section homepage with approved positioning, two offers, Google/Meta comparison, work, FAQ, and final inquiry CTA
+- `services/` — consolidated two-service overview
+- `services/brand-website-launch/` — detailed $599 launch scope
+- `services/focused-ads-management/` — detailed $349 monthly advertising scope, including Google and Meta explanations
+- `pricing/` — two-offer comparison and “Need both?” example
+- `process/` — four-step customer-facing process
+- `portfolio/` — accurately labelled internal work and representative concepts
+- `about/` — company approach, operating principles, ownership, and service area
+- `faq/` — detailed commercial and delivery answers
+- `blog/` — searchable Insights index and nine educational articles
+- `contact/` — canonical project inquiry with conditional advertising questions
+- `privacy-policy/`, `terms/` — updated legal information pending the decisions recorded in `RIELART-MANUAL-REVIEW.md`
 - `thanks/`, `404.html` — noindex utility pages
-- `assets/css/site.css` — consolidated site design system
-- `assets/js/site.js` — theme, navigation, FAQ, filter, reveal, and form behavior
-- `tools/site_audit.py` — local static-site audit
-- `tools/http_smoke.py` — local HTTP crawler for route, resource, and response checks
-- `AUDIT-*.md`, `AUDIT-FINDINGS.json` — current production audit evidence and handoff
-- `_config.yml` — prevents audit and development artifacts from being published by GitHub Pages
+- `assets/css/site.css` — consolidated visual system and responsive rules
+- `assets/js/site.js` — theme, navigation, FAQ, filter, reveal, conditional form, and validation behaviour
+- `tools/site_audit.py` — static-site, commercial-model, integration, metadata, schema, link, and redirect audit
+- `tools/http_smoke.py` — local HTTP crawler and response-budget check
+
+Five retired service routes and the legacy package route remain as noindex compatibility pages with direct permanent mappings in `_redirects`. See `RIELART-URL-MIGRATION.md`.
 
 ## Preserved production integrations
 
 - Client Portal: `https://portal.rielart.com`
 - Formspree: `https://formspree.io/f/xojrdoel`
 - Thank-you destination: `https://rielart.com/thanks/`
-- Consultation scheduling: `https://calendly.com/gabrielmacovei001/15min?hide_gdpr_banner=1`
+- Optional scheduling: `https://calendly.com/gabrielmacovei001/15min?hide_gdpr_banner=1`
 - Email: `hello@rielart.com`
 - LinkedIn: `https://www.linkedin.com/in/gabrielmacovei/`
 
-The Pricing page preserves six live Stripe-hosted Payment Links:
-
-- Digital Foundation — USD $497
-- Focused Automation Setup — USD $247
-- Digital Presence Care — USD $149/month
-- AI Automation Care — USD $249/month
-- Online Ads Management — USD $399/month
-- Growth Systems Partner — USD $699/month
-
-The custom Connected System remains inquiry-only.
-
 ## Local review
 
-From the repository root, run a simple static server, for example:
+Start a static server from the repository root:
 
 ```powershell
 python -m http.server 4173
 ```
 
-Then open the local address printed by the server.
-
-Run the repository audit with:
+Then run:
 
 ```powershell
 python tools/site_audit.py
+python tools/http_smoke.py --base-url http://127.0.0.1:4173/
 ```
 
-With the local server still running, run the HTTP smoke test with:
+## Pre-publish checklist
 
-```powershell
-python tools/http_smoke.py --base-url http://127.0.0.1:4173
-```
+- Review `RIELART-MANUAL-REVIEW.md` and resolve all owner/legal decisions that apply to launch.
+- Run the static audit and local HTTP smoke crawl.
+- Test the project form choices, conditional advertising fields, error states, Formspree delivery, and thank-you redirect.
+- Confirm the Client Portal, email, LinkedIn, and optional scheduling destinations.
+- Confirm no public Stripe link is present; connect payment links only after approval through the documented configuration.
+- Test representative pages at 320 px, tablet, and desktop widths in both themes, with keyboard navigation, reduced motion, and 200% zoom.
+- Keep representative concepts clearly labelled until permissioned client work is available.
 
-## Publishing checklist
-
-- Review the Git diff in GitHub Desktop.
-- Confirm current prices, scopes, billing terms, and third-party-cost notes.
-- Test all six Stripe links in the intended Stripe mode.
-- Confirm Formspree delivery and the `/thanks/` redirect.
-- Confirm the Client Portal, email, LinkedIn, and scheduling destinations.
-- Add only approved client proof, testimonials, and case-study results. Representative examples must remain labeled until real, permissioned work replaces them.
-
-See `AUDIT-MASTER-REPORT.md`, `AUDIT-IMPLEMENTATION-LOG.md`, `AUDIT-MANUAL-REVIEW.md`, `AUDIT-MEASUREMENT-PLAN.md`, and `AUDIT-REGRESSION-REPORT.md` for the current production audit and implementation pass. These internal files remain in the repository but are excluded from the GitHub Pages build.
+The `RIELART-*.md` documents record the commercial strategy, offer scope, advertising limits, migration decisions, copy map, implementation details, manual decisions, and final QA.

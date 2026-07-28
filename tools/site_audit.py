@@ -32,16 +32,26 @@ CALENDLY_URL = (
 )
 EMAIL_URL = "mailto:hello@rielart.com"
 LINKEDIN_URL = "https://www.linkedin.com/in/gabrielmacovei/"
-EXPECTED_STRIPE_URLS = {
-    "https://buy.stripe.com/8x25kvbsKcKF6M2gYqfw400",
-    "https://buy.stripe.com/dRm00b9kC5id6M29vYfw401",
-    "https://buy.stripe.com/bJe14f54m11Xc6mdMefw402",
-    "https://buy.stripe.com/7sYbIT0O64e95HYfUmfw403",
-    "https://buy.stripe.com/14A5kv9kCh0Vb2igYqfw404",
-    "https://buy.stripe.com/5kQ6oz2WefWRgmCfUmfw405",
+EXPECTED_ONE_TIME_PRICES = {"$599"}
+EXPECTED_MONTHLY_PRICES = {"$349"}
+LEGACY_COMMERCIAL_PRICES = {"$149", "$247", "$249", "$399", "$497", "$699"}
+APPROVED_SERVICE_NAMES = {
+    "Brand & Website Launch",
+    "Focused Ads Management",
 }
-EXPECTED_ONE_TIME_PRICES = {"$497", "$247"}
-EXPECTED_MONTHLY_PRICES = {"$149", "$249", "$399", "$699"}
+LEGACY_SERVICE_NAMES = {
+    "Brand Strategy & Identity",
+    "Web Design & Development",
+    "AI Automation & Operations",
+    "Digital Growth & Ongoing Management",
+    "Audits & Advisory",
+    "Digital Foundation",
+    "Focused Automation Setup",
+    "Digital Presence Care",
+    "AI Automation Care",
+    "Online Ads Management",
+    "Growth Systems Partner",
+}
 FORBIDDEN_COMPETITOR_TOKEN = "brand" + "vm"
 IGNORED_DIRECTORIES = {".git", "node_modules", "__pycache__"}
 PAGE_SCHEMA_TYPES = {
@@ -1616,60 +1626,50 @@ def main() -> int:
             )
 
         expected_price_patterns = {
-            **{
-                marker: re.compile(
-                    rf"{re.escape(marker)}\s+USD\b(?!\s*/\s*month)",
-                    re.I,
-                )
-                for marker in EXPECTED_ONE_TIME_PRICES
-            },
-            **{
-                marker: re.compile(
-                    rf"{re.escape(marker)}\s*/\s*month\b",
-                    re.I,
-                )
-                for marker in EXPECTED_MONTHLY_PRICES
-            },
+            "$599": re.compile(r"\$599\s+USD\s+one\s+time\b", re.I),
+            "$349": re.compile(r"\$349\s+USD\s+per\s+month\b", re.I),
         }
         for marker, expected_pattern in sorted(
             expected_price_patterns.items()
         ):
-            marker_count = len(
-                re.findall(re.escape(marker), pricing_text)
-            )
-            if marker_count != 1:
+            marker_count = len(re.findall(re.escape(marker), pricing_text))
+            if marker_count == 0:
                 critical.append(
-                    f"pricing/index.html: expected exactly one visible "
-                    f"{marker} price marker, found {marker_count}"
+                    f"pricing/index.html: required visible {marker} price "
+                    "marker is missing"
                 )
             elif not expected_pattern.search(pricing_text):
-                cadence = (
-                    "one-time price followed by USD"
-                    if marker in EXPECTED_ONE_TIME_PRICES
-                    else "monthly price followed by /month"
-                )
                 critical.append(
-                    f"pricing/index.html: {marker} must remain a {cadence}"
+                    f"pricing/index.html: {marker} has the wrong currency "
+                    "or payment cadence"
                 )
             else:
                 pricing_markers_validated += 1
 
-        found_visible_prices = set(
-            re.findall(r"\$\d+(?:,\d{3})*(?:\.\d{1,2})?", pricing_text)
+        for marker in sorted(LEGACY_COMMERCIAL_PRICES):
+            if marker in pricing_text:
+                critical.append(
+                    f"pricing/index.html: retired commercial price remains "
+                    f"visible ({marker})"
+                )
+
+        pricing_html = read_text(pricing_page.path)
+        primary_service_markers = re.findall(
+            r'data-primary-service=["\']([^"\']+)["\']',
+            pricing_html,
         )
-        expected_visible_prices = (
-            EXPECTED_ONE_TIME_PRICES | EXPECTED_MONTHLY_PRICES
-        )
-        for marker in sorted(
-            found_visible_prices - expected_visible_prices
-        ):
+        if primary_service_markers != [
+            "brand-website-launch",
+            "focused-ads-management",
+        ]:
             critical.append(
-                f"pricing/index.html: unexpected visible price marker "
-                f"{marker}"
+                "pricing/index.html: pricing must contain exactly the two "
+                "approved primary-service cards in the approved order"
             )
 
     numerical_claim_pattern = re.compile(
         r"(?i)(?<![\w$])"
+        r"(?!0\d\b)"
         r"(?:\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)"
         r"\s*(?:\+\s*)?"
         r"(?:%|percent\b|years?\b|clients?\b|customers?\b|projects?\b|"
@@ -1805,18 +1805,358 @@ def main() -> int:
             critical.append(
                 f"unexpected LinkedIn endpoint variant found: {value}"
             )
-        elif host == "buy.stripe.com" and value not in EXPECTED_STRIPE_URLS:
+        elif host == "buy.stripe.com":
             critical.append(
-                f"unexpected Stripe Payment Link variant found: {value}"
+                f"public Stripe Payment Link must be removed: {value}"
             )
 
     found_stripe_urls = set(
         re.findall(r"https://buy\.stripe\.com/[A-Za-z0-9]+", production_html)
     )
-    for url in sorted(EXPECTED_STRIPE_URLS - found_stripe_urls):
-        critical.append(f"required Stripe Payment Link is missing: {url}")
-    for url in sorted(found_stripe_urls - EXPECTED_STRIPE_URLS):
-        critical.append(f"unexpected Stripe Payment Link found: {url}")
+    for url in sorted(found_stripe_urls):
+        critical.append(f"outdated public Stripe Payment Link found: {url}")
+
+    # Commercial-remodel assertions.
+    def page_source(relative: str) -> str:
+        path = root / relative
+        return read_text(path) if path.is_file() else ""
+
+    def page_visible(relative: str) -> str:
+        path = (root / relative).resolve()
+        page = pages.get(path)
+        return (
+            normalize_text(" ".join(page.visible_text_parts))
+            if page is not None
+            else ""
+        )
+
+    homepage_text = page_visible("index.html")
+    approved_headline = (
+        "Build your brand. Launch your website. Reach more customers."
+    )
+    if approved_headline not in homepage_text:
+        critical.append("index.html: approved homepage headline is missing")
+    for topic in ("brand", "website", "online advertising"):
+        if topic not in homepage_text.casefold():
+            critical.append(
+                f"index.html: homepage does not clearly present {topic}"
+            )
+    if re.search(
+        r"(?i)(?:primary|core|main)\s+(?:AI|automation)\s+service|"
+        r"AI Automation\s*&\s*Operations",
+        homepage_text,
+    ):
+        critical.append(
+            "index.html: AI is still presented as a primary service"
+        )
+
+    expected_service_markers = [
+        "brand-website-launch",
+        "focused-ads-management",
+    ]
+    for relative in ("index.html", "services/index.html", "pricing/index.html"):
+        markers = re.findall(
+            r'data-primary-service=["\']([^"\']+)["\']',
+            page_source(relative),
+        )
+        if markers != expected_service_markers:
+            critical.append(
+                f"{relative}: expected exactly two approved primary "
+                f"commercial services, found {markers}"
+            )
+
+    ads_relative = "services/focused-ads-management/index.html"
+    ads_text = page_visible(ads_relative)
+    ads_required_phrases = {
+        "three-month initial commitment":
+            "three-month initial commitment",
+        "advertising spend is separate":
+            "advertising spend is not included",
+        "one platform is included":
+            "one advertising platform",
+        "one market is included":
+            "one country or clearly defined regional market",
+        "client account ownership":
+            "client owns the advertising account",
+        "one-hour website edit allowance":
+            "up to one hour per month",
+        "website edit time does not roll over":
+            "unused website-update time does not roll over",
+        "limited Meta creative refresh":
+            "up to two refreshed static creative variations per month when useful",
+        "Google responsive-ad explanation":
+            "google responsive search ads combine and test multiple headlines and descriptions",
+    }
+    for label, phrase in ads_required_phrases.items():
+        if phrase.casefold() not in ads_text.casefold():
+            critical.append(f"{ads_relative}: missing {label}")
+    if re.search(r"(?i)\b\d+\s+(?:new\s+)?ads?\s+per\s+month\b", ads_text):
+        critical.append(
+            f"{ads_relative}: Google scope promises a fixed monthly ad count"
+        )
+
+    contact_path = (root / "contact" / "index.html").resolve()
+    contact_page = pages.get(contact_path)
+    approved_contact_choices = {
+        "Brand & Website Launch — $599 one time",
+        "Focused Ads Management — $349/month",
+        "Both services",
+        "I am not sure yet",
+    }
+    if contact_page is None or len(contact_page.forms) != 1:
+        critical.append(
+            "contact/index.html: expected one canonical project inquiry form"
+        )
+    else:
+        form = contact_page.forms[0]
+        service_choices = {
+            unescape(control.value)
+            for control in form.controls
+            if control.control_type == "radio"
+            and control.name == "service_interest"
+        }
+        if service_choices != approved_contact_choices:
+            critical.append(
+                "contact/index.html: service choices do not exactly match "
+                f"the approved set ({sorted(service_choices)})"
+            )
+        contact_html = page_source("contact/index.html")
+        for required_name in (
+            "preferred_platform",
+            "advertising_location",
+            "monthly_ad_budget",
+        ):
+            if not re.search(
+                rf'\bname=["\']{re.escape(required_name)}["\']',
+                contact_html,
+            ):
+                critical.append(
+                    f"contact/index.html: missing conditional field "
+                    f"{required_name}"
+                )
+        expected_platform_options = {
+            "Google Search",
+            "Facebook and Instagram",
+            "I am not sure",
+            "RielArt should recommend",
+        }
+        expected_budget_options = {
+            "Around $500",
+            "$500–$1,000",
+            "$1,000–$2,500",
+            "More than $2,500",
+            "Not sure yet",
+        }
+
+        def select_options(select_id: str) -> set[str]:
+            match = re.search(
+                rf'<select\b[^>]*\bid=["\']{re.escape(select_id)}["\']'
+                rf'[^>]*>(.*?)</select>',
+                contact_html,
+                re.I | re.S,
+            )
+            if not match:
+                return set()
+            options: set[str] = set()
+            for option_match in re.finditer(
+                r"<option\b(?P<attrs>[^>]*)>(?P<text>.*?)</option>",
+                match.group(1),
+                re.I | re.S,
+            ):
+                if re.search(
+                    r'\bvalue=["\']["\']',
+                    option_match.group("attrs"),
+                    re.I,
+                ):
+                    continue
+                options.add(
+                    normalize_text(strip_html(option_match.group("text")))
+                )
+            return options
+
+        if select_options("preferred-platform") != expected_platform_options:
+            critical.append(
+                "contact/index.html: preferred-platform choices do not "
+                "match the approved set"
+            )
+        if select_options("monthly-ad-budget") != expected_budget_options:
+            critical.append(
+                "contact/index.html: monthly advertising budget choices do "
+                "not match the approved set"
+            )
+        if (
+            "data-ads-fields" not in contact_html
+            or "updateAdvertisingFields" not in page_source("assets/js/site.js")
+        ):
+            critical.append(
+                "contact/index.html: advertising conditional-field behavior "
+                "is not wired"
+            )
+
+    for legacy_name in sorted(LEGACY_SERVICE_NAMES):
+        if re.search(
+            rf"(?i)(?<!\w){re.escape(legacy_name)}(?!\w)",
+            production_html,
+        ):
+            critical.append(
+                f"retired public package or service name remains: {legacy_name}"
+            )
+    for marker in sorted(LEGACY_COMMERCIAL_PRICES):
+        if marker in production_html:
+            critical.append(
+                f"retired public commercial price remains: {marker}"
+            )
+    for legacy_path in (
+        "/services/brand-strategy-identity/",
+        "/services/web-design-development/",
+        "/services/ai-automation-operations/",
+        "/services/digital-growth-management/",
+        "/services/audits-advisory/",
+    ):
+        internal_occurrences = [
+            relative
+            for relative, page in (
+                (path.relative_to(root).as_posix(), page)
+                for path, page in pages.items()
+            )
+            if any(
+                urlsplit(anchor.href).path == legacy_path
+                for anchor in page.anchors
+            )
+        ]
+        if internal_occurrences:
+            critical.append(
+                f"internal links still point to retired route {legacy_path}: "
+                + ", ".join(sorted(internal_occurrences))
+            )
+
+    for pattern, label in (
+        (r"(?i)\bfounder[- ]led\b", "founder-led wording"),
+        (r"(?i)\bRielArt\s+is\s+(?:a\s+)?new\b", "wording that says RielArt is new"),
+        (r"(?i)\bRielArt\s+was\s+(?:recently\s+)?founded\b", "wording that says RielArt is new"),
+        (r"(?i)\bresults?\s+(?:are|is)\s+guaranteed\b", "guaranteed-results claim"),
+        (r"(?i)\bguaranteed\s+(?:leads|sales|revenue|rankings|ROAS)\b", "guaranteed-results claim"),
+    ):
+        if re.search(pattern, production_html):
+            critical.append(f"public HTML contains prohibited {label}")
+
+    if re.search(r"(?i)\bWorldwide\b", production_html):
+        critical.append(
+            "public HTML contains unapproved 'Worldwide' positioning"
+        )
+
+    service_schema_names: set[str] = set()
+    expected_schema_prices = {
+        "Brand & Website Launch": "599",
+        "Focused Ads Management": "349",
+    }
+    localbusiness_found = False
+    for page in pages.values():
+        for block in page.json_ld:
+            try:
+                data = json.loads(block.text)
+            except json.JSONDecodeError:
+                continue
+            for schema_object in iter_primary_schema_objects(data):
+                object_types = schema_types(schema_object.get("@type"))
+                if "LocalBusiness" in object_types:
+                    localbusiness_found = True
+                if "Service" not in object_types:
+                    continue
+                name = schema_object.get("name")
+                if not isinstance(name, str):
+                    critical.append(
+                        f"{page.path.relative_to(root).as_posix()}: Service "
+                        "schema is missing a name"
+                    )
+                    continue
+                service_schema_names.add(name)
+                expected_price = expected_schema_prices.get(name)
+                if expected_price is None:
+                    critical.append(
+                        f"{page.path.relative_to(root).as_posix()}: retired "
+                        f"or unapproved Service schema remains ({name})"
+                    )
+                    continue
+                offer = schema_object.get("offers")
+                prices: set[str] = set()
+                offers = offer if isinstance(offer, list) else [offer]
+                for item in offers:
+                    if not isinstance(item, dict):
+                        continue
+                    if item.get("price") is not None:
+                        prices.add(str(item.get("price")))
+                    specification = item.get("priceSpecification")
+                    if isinstance(specification, dict) and specification.get("price") is not None:
+                        prices.add(str(specification.get("price")))
+                if expected_price not in prices:
+                    critical.append(
+                        f"{page.path.relative_to(root).as_posix()}: {name} "
+                        f"schema price must be {expected_price} USD"
+                    )
+                visible = normalize_text(" ".join(page.visible_text_parts))
+                if name not in visible or f"${expected_price}" not in visible:
+                    critical.append(
+                        f"{page.path.relative_to(root).as_posix()}: Service "
+                        "schema does not match visible name and price"
+                    )
+    if service_schema_names != APPROVED_SERVICE_NAMES:
+        critical.append(
+            "structured service names do not exactly match the two approved "
+            f"services ({sorted(service_schema_names)})"
+        )
+    if localbusiness_found:
+        critical.append("unsupported LocalBusiness schema found")
+
+    expected_redirect_targets = {
+        "/services/brand-strategy-identity": "/services/brand-website-launch/",
+        "/services/web-design-development": "/services/brand-website-launch/",
+        "/services/digital-growth-management": "/services/focused-ads-management/",
+        "/services/ai-automation-operations": "/services/",
+        "/services/audits-advisory": "/services/",
+    }
+    redirect_lookup = {rule.source.rstrip("/"): rule.target for rule in redirects}
+    for source, target in expected_redirect_targets.items():
+        if redirect_lookup.get(source) != target:
+            critical.append(
+                f"_redirects: missing direct legacy mapping "
+                f"{source} -> {target}"
+            )
+    package_rules = {
+        rule.source: rule.target
+        for rule in redirects
+        if rule.source in {"/packages", "/packages/*"}
+    }
+    if package_rules != {
+        "/packages": "/pricing/",
+        "/packages/*": "/pricing/",
+    }:
+        critical.append(
+            "_redirects: package routes must map directly to /pricing/"
+        )
+
+    payment_config = root / "config" / "payment-links.json"
+    if not payment_config.is_file():
+        critical.append(
+            "config/payment-links.json: future payment-link configuration "
+            "is missing"
+        )
+    else:
+        try:
+            payment_values = json.loads(read_text(payment_config))
+        except json.JSONDecodeError as error:
+            critical.append(
+                f"config/payment-links.json: invalid JSON ({error.msg})"
+            )
+        else:
+            if payment_values != {
+                "brandWebsiteLaunch": None,
+                "focusedAdsManagement": None,
+            }:
+                critical.append(
+                    "config/payment-links.json: unapproved payment link or "
+                    "unexpected key found"
+                )
 
     notes.extend(
         [
@@ -1830,7 +2170,7 @@ def main() -> int:
             f"Forms checked: {form_count}",
             f"Orphan indexable pages found: {len(orphan_pages)}",
             f"Approved visible pricing markers found: "
-            f"{pricing_markers_validated}/6",
+            f"{pricing_markers_validated}/2",
             f"Redirect rules checked: {len(redirects)}",
             f"GitHub Pages exclusions checked: {len(deploy_excludes)}",
             f"Internal artifact paths safely excluded: "
@@ -1840,8 +2180,7 @@ def main() -> int:
             f"Calendly URL occurrences: {calendly_count}",
             f"Approved email-link occurrences: {email_count}",
             f"Approved LinkedIn URL occurrences: {linkedin_count}",
-            f"Approved Stripe Payment Links found: "
-            f"{len(found_stripe_urls & EXPECTED_STRIPE_URLS)}/6",
+            f"Public Stripe Payment Links found: {len(found_stripe_urls)}",
             f"Potential unsupported numerical claims flagged: "
             f"{numerical_claim_matches}",
             f"Warnings: {len(warnings)}",

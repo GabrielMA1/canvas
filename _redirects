@@ -1,5 +1,16 @@
 /privacy-policy.html /privacy-policy/ 301
 /terms.html /terms/ 301
 
-/packages/* /pricing/:splat 301
+/packages/* /pricing/ 301
 /packages /pricing/ 301
+
+/services/brand-strategy-identity/ /services/brand-website-launch/ 301
+/services/brand-strategy-identity /services/brand-website-launch/ 301
+/services/web-design-development/ /services/brand-website-launch/ 301
+/services/web-design-development /services/brand-website-launch/ 301
+/services/digital-growth-management/ /services/focused-ads-management/ 301
+/services/digital-growth-management /services/focused-ads-management/ 301
+/services/ai-automation-operations/ /services/ 301
+/services/ai-automation-operations /services/ 301
+/services/audits-advisory/ /services/ 301
+/services/audits-advisory /services/ 301

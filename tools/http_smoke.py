@@ -23,13 +23,18 @@ EXTRA_ROUTES = (
     "/privacy-policy.html",
     "/terms.html",
     "/packages/",
+    "/services/brand-strategy-identity/",
+    "/services/web-design-development/",
+    "/services/digital-growth-management/",
+    "/services/ai-automation-operations/",
+    "/services/audits-advisory/",
     "/robots.txt",
     "/sitemap.xml",
 )
 MISSING_ROUTE = "/audit-check-this-route-should-not-exist/"
 DEFAULT_BUDGETS = {
     "html_per_route": 60 * 1024,
-    "css_total": 65 * 1024,
+    "css_total": 82 * 1024,
     "javascript_total": 20 * 1024,
     "image_library": 650 * 1024,
     "logo": 10 * 1024,

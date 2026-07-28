@@ -269,24 +269,45 @@
   const invalidFormMessage = "Please review the highlighted required fields.";
   const invalidStatusFrames = new WeakMap();
 
-  function requestedInquiryIntent() {
+  function requestedServiceIntent() {
     try {
-      const intent = normalize(new URLSearchParams(window.location.search).get("inquiry"));
-      return intent === "project" || intent === "review" ? intent : "";
+      const requested = normalize(new URLSearchParams(window.location.search).get("service"));
+      const aliases = {
+        "brand-website-launch": "brand-website-launch",
+        "focused-ads-management": "focused-ads-management",
+        "focused-ads": "focused-ads-management",
+        "advertising": "focused-ads-management",
+        "both": "both-services",
+        "both-services": "both-services",
+        "not-sure": "not-sure"
+      };
+      return aliases[requested] || "";
     } catch (error) {
       return "";
     }
   }
 
-  function applyInquiryIntent(form, intent) {
+  function applyServiceIntent(form, intent) {
     if (!intent) return;
-    const radios = [...form.querySelectorAll('input[type="radio"][name="inquiry_type"]')];
-    const valuePattern = intent === "project"
-      ? /(^|-)project(-|$)/
-      : /(^|-)(review|audit)(-|$)/;
-    const matchingRadio = radios.find((radio) => valuePattern.test(normalize(radio.value)));
+    const radios = [...form.querySelectorAll('input[type="radio"][name="service_interest"]')];
+    const matchingRadio = radios.find((radio) => normalize(radio.dataset.serviceValue) === intent);
 
     if (matchingRadio) matchingRadio.checked = true;
+  }
+
+  function updateAdvertisingFields(form) {
+    const fields = form.querySelector("[data-ads-fields]");
+    if (!fields) return;
+
+    const selected = form.querySelector('input[type="radio"][name="service_interest"]:checked');
+    const selectedValue = normalize(selected?.dataset.serviceValue);
+    const shouldShow = selectedValue === "focused-ads-management" || selectedValue === "both-services";
+
+    fields.hidden = !shouldShow;
+    fields.querySelectorAll("input, select, textarea").forEach((control) => {
+      control.disabled = !shouldShow;
+      if (!shouldShow) control.removeAttribute("aria-invalid");
+    });
   }
 
   function announceInvalidForm(form) {
@@ -341,10 +362,11 @@
     if (status) status.textContent = "";
   }
 
-  const inquiryIntent = requestedInquiryIntent();
+  const serviceIntent = requestedServiceIntent();
 
   contactForms.forEach((form) => {
-    applyInquiryIntent(form, inquiryIntent);
+    applyServiceIntent(form, serviceIntent);
+    updateAdvertisingFields(form);
 
     form.addEventListener(
       "invalid",
@@ -361,6 +383,9 @@
       form.addEventListener(eventName, (event) => {
         const control = event.target;
         if (!(control instanceof HTMLInputElement || control instanceof HTMLSelectElement || control instanceof HTMLTextAreaElement)) return;
+        if (control instanceof HTMLInputElement && control.name === "service_interest") {
+          updateAdvertisingFields(form);
+        }
         clearValidControlState(form, control);
       });
     });
