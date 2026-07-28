@@ -4,6 +4,89 @@
 **Repository:** `live-rielart`
 **Deployment status:** Source implementation complete; no production deployment, commit, payment activation, or external form submission was performed.
 
+## July 28 content-consistency and Insights refinement
+
+This narrow pass preserved the approved design, navigation, CTA hierarchy,
+forms, integrations, URL architecture, and two-service commercial model.
+
+### Public copy and editorial changes
+
+- Replaced the two outdated AI-primary sentences on `404.html` with approved
+  brand, website, and online-advertising language.
+- Updated the Insights title, meta description, Open Graph metadata, Twitter
+  metadata, Blog structured data, introduction, and social image around Brand,
+  Websites, Advertising, and Practical Technology.
+- Changed the featured guide from the automation article to the real published
+  article **5 Signs Your Website Is Costing You Leads**, using its existing
+  `/images/og-website-leads.jpg` image and canonical article URL.
+- Reordered the editorial sequence to begin with website conversion, brand
+  credibility, local customer acquisition, and practical automation.
+- Consolidated index filters and article categories to **Brand**, **Websites**,
+  and **Practical Technology**. No empty Advertising filter and no invented
+  advertising article were added.
+- Preserved all nine real articles and all original publication and
+  modification dates.
+- Kept the three AI/automation articles as accessible supporting editorial
+  content under Practical Technology; no AI commercial package, form choice,
+  navigation item, footer service, pricing offer, or Service schema was added.
+- Left the homepage FAQ intact. Any future reduction remains a post-traffic
+  optimization requiring visitor-behavior evidence.
+
+### Layout and technical consistency
+
+- Added the real featured-article image to the Insights card with intrinsic
+  dimensions, descriptive alt text, and an explicit accessible link label.
+- Kept article actions bottom-aligned in multi-column layouts, retained
+  comparable heading regions, and reset article minimum heights at the mobile
+  breakpoint so cards stack at natural content height without clipping.
+- Updated the Insights sitemap `lastmod` to `2026-07-28`; canonical URLs and
+  article dates were not changed.
+- Advanced all 24 full-page stylesheet references from `20260728r3` to
+  `20260728r4`.
+- Added regression assertions for the approved 404 copy, complete Insights
+  metadata, featured article, editorial sequence, filters, all nine Blog schema
+  entries, article sections, image, and continued article accessibility.
+- Confirmed that no RSS or feed file exists, so no feed update was required.
+
+### Files modified by this pass
+
+- Public content: `404.html`, `blog/index.html`, and all nine
+  `blog/*/index.html` article files.
+- Presentation and discovery: `assets/css/site.css`, `sitemap.xml`, and the
+  shared CSS cache reference in all 24 full public HTML pages.
+- Audit and documentation: `tools/site_audit.py`,
+  `PRE-PUBLISH-RELEASE-REPORT.md`, `RIELART-QA-REPORT.md`,
+  `RIELART-IMPLEMENTATION-LOG.md`, and `RIELART-COPY-MAP.md`.
+
+### Validation results
+
+- Exact `python -B tools/site_audit.py`: attempted; unavailable because
+  `python` is not on this machine's `PATH`.
+- Bundled Python static audit: PASS — 32 HTML files, 22 indexable/sitemap URLs,
+  216 asset references, 52 images, 32 JSON-LD blocks, two approved 404
+  statements, nine Insights entries, 24/24 current shared CSS references, zero
+  warnings, and zero critical failures.
+- Bundled Python local HTTP smoke crawl: PASS — 34 routes, 33 expected HTTP
+  200 responses, the intentional missing-route 404, 317,723 aggregate HTML
+  bytes, 80,143 CSS bytes, and zero failures.
+- `node --check assets/js/site.js`: PASS.
+- `git diff --check`: PASS; Git emitted only working-copy line-ending
+  advisories.
+- Browser checks: PASS at 1440 × 900, 390 × 844, and 320 × 568 for the changed
+  Insights and 404 surfaces. Both themes, filters, mobile menu focus/Escape
+  behavior, natural card stacking, aligned desktop card actions, broken-image
+  checks, clipping, and page-level overflow passed. Browser console warnings
+  and errors: 0.
+- One supporting AI article was opened at its canonical route and retained one
+  H1, the Practical Technology category, no broken image, and no overflow.
+
+### Remaining manual decisions
+
+The pre-existing owner/legal review, one authorized production Formspree
+submission, real 200% browser zoom, assistive-technology checks, Safari/iOS,
+Lighthouse, external-account ownership checks, and post-publication exclusion
+probes remain open. No new blocker was introduced by this pass.
+
 ## July 28 focused refinement
 
 The follow-up pass preserved the approved two-service model and completed these focused changes:

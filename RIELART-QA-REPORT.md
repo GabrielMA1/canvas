@@ -2,9 +2,143 @@
 
 **QA date:** July 28, 2026
 **Environment:** Local static server, repository audit tools, and Codex in-app browser
-**Result:** Final source passes the static audit, local HTTP crawl, JavaScript syntax check, and diff check. The previously completed rendered matrix remains evidence for unchanged layouts; the later pricing inclusion-list follow-up was not re-run in the browser and remains a focused visual-review item.
+**Result:** Final source passes the content-consistency assertions, static audit, local HTTP crawl, JavaScript syntax check, diff check, and focused browser validation. The previously open rendered pricing-inclusion review was completed in the later release-gate report; the current Insights/404 changes were separately rendered and verified below.
 
-## Automated static-site audit
+## July 28 content-consistency release-gate recheck
+
+### Static audit
+
+The exact requested command was attempted:
+
+```powershell
+python -B tools/site_audit.py
+```
+
+It could not start because `python` is not available on this machine's
+`PATH`. The same script was then run with the bundled Python executable.
+
+| Check | Final result |
+|---|---:|
+| HTML files | 32 |
+| Indexable pages | 22 |
+| Sitemap URLs and last-modified values | 22 |
+| Asset references | 216 |
+| Images checked for alt text and dimensions | 52 |
+| JSON-LD blocks | 32 |
+| Forms | 1 |
+| Orphan indexable pages | 0 |
+| Approved visible pricing markers | 2/2 |
+| Redirect rules | 14 |
+| GitHub Pages exclusions | 30 |
+| Internal artifacts excluded | 23 |
+| Public Stripe Payment Links | 0 |
+| Global Get Started links checked | 60 |
+| Custom-scope inquiry links checked | 1 |
+| Approved 404 positioning statements | 2 |
+| Insights editorial entries | 9 |
+| Current shared CSS cache references | 24/24 |
+| Warnings | 0 |
+| Critical failures | 0 |
+
+**Status: PASS**
+
+New assertions verify:
+
+- both approved 404 sentences and the absence of the two retired AI-primary
+  phrases;
+- exact Insights title, description, Open Graph, Twitter, image, canonical,
+  Blog schema description, Blog schema image, and nine-item schema order;
+- the website-leads feature image, title, URL, category, alt text, and
+  accessible link label;
+- the absence of the automation article from the featured card;
+- the visible eight-card index order following the featured article;
+- the All, Brand, Websites, and Practical Technology filters;
+- matching visible and structured categories for all nine real articles;
+- continued access to every AI/automation article;
+- exactly two public commercial services and unchanged prices, Formspree,
+  Client Portal, CTA hierarchy, schema, canonicals, sitemap, and no-Stripe
+  state.
+
+No RSS or feed file exists in the repository, so no feed update was required.
+
+### Local HTTP smoke crawl
+
+The local server ran at `http://127.0.0.1:4173/`.
+
+| Check | Final result |
+|---|---:|
+| Routes checked | 34 |
+| Successful HTTP 200 routes | 33 |
+| Intentional missing-route HTTP 404 | 1 |
+| HTML routes | 31 |
+| Aggregate HTML response bytes | 317,723 |
+| Maximum HTML allowed per route | 61,440 bytes |
+| CSS | 80,143 / 83,968 bytes |
+| JavaScript | 15,551 / 20,480 bytes |
+| Images | 643,390 / 665,600 bytes |
+| Logo | 8,587 / 10,240 bytes |
+| Failures | 0 |
+
+**Status: PASS**
+
+Additional source checks:
+
+- `node --check assets/js/site.js`: PASS
+- `git diff --check`: PASS; only Git line-ending advisories were printed
+- all 24 full pages use CSS `20260728r4`; no `r3` reference remains
+- targeted public-source scans found no retired 404 phrases, legacy package
+  name, legacy price, public Stripe link, founder-led wording, or global
+  `Start Your Project` action
+
+### Focused rendered browser QA
+
+Actual browser checks covered the changed Insights and 404 surfaces at:
+
+- 1440 × 900
+- 390 × 844
+- 320 × 568
+
+Verified:
+
+- light and dark themes update the root state, toggle label, pressed state, and
+  rendered colors;
+- the featured website guide has one responsive image, correct accessible
+  label, no clipping, and no broken media;
+- desktop Insights cards align by row, share bottom action positions, and keep
+  comparable heading/description regions;
+- mobile cards use natural content height with no fixed-height clipping;
+- the category filter returns the expected four Website articles and updates
+  its live status to `4 articles shown.`;
+- the 320-pixel filter row fits without horizontal scrolling;
+- mobile navigation opens, moves focus to the first link, closes with Escape,
+  and returns focus to the menu button;
+- the refined 404 copy is visible in both themes and all three destination
+  cards reflow without clipping;
+- one AI supporting article opened at its canonical route with one H1,
+  Practical Technology categorization, no broken image, and no overflow;
+- page-level horizontal overflow failures: 0;
+- broken-image failures: 0;
+- clipped-card failures: 0;
+- browser console warnings/errors: 0.
+
+The browser environment does not provide true 200-percent zoom, Safari/iOS,
+NVDA, VoiceOver, or Lighthouse. Those results are not claimed.
+
+### Content decisions recorded
+
+- The website-leads article was chosen over automation because it is a real,
+  commercially aligned article and the brief ranked it first.
+- Local SEO is the third editorial entry because it addresses customer
+  acquisition; it remains categorized as Websites rather than being
+  misleadingly labelled Advertising.
+- No Advertising filter or article was fabricated because the repository has
+  no published advertising article.
+- AI and automation articles remain accessible supporting content under
+  Practical Technology.
+- The homepage FAQ was not shortened. Future reduction remains a post-traffic
+  optimization.
+
+## Earlier focused-refinement static audit (superseded)
 
 Command:
 
@@ -44,7 +178,7 @@ python -B tools/site_audit.py
 
 The refinement assertions cover retired location fragments and `<address>` elements, CTA labels and targets, unchanged service-specific CTAs, removed hero copy, exact two-offer integrity, neutral pricing language, custom-scope behavior, exact contact metadata/schema/H1, the four preserved form choices, hidden custom context, prices, commitments, integrations, canonicals, sitemap, redirects, and schema parsing.
 
-## Local HTTP smoke crawl
+## Earlier focused-refinement HTTP smoke crawl (superseded)
 
 Command:
 
@@ -227,7 +361,8 @@ Not claimed as runtime passes:
 3. Run a specifically authorized Formspree production submission and confirm mailbox delivery, all fields, hidden custom context, spam handling, and `/thanks/`.
 4. Open and verify the production Client Portal, Calendly, email, LinkedIn, privacy, and terms destinations.
 5. Test current Edge, Firefox, and Safari.
-6. Complete full keyboard-only traversal and visually verify the new pricing inclusion columns at desktop, tablet, mobile, and 200-percent zoom.
+6. Complete full keyboard-only traversal and verify the pricing inclusion
+   columns at true 200-percent browser zoom.
 7. Test at actual 200-percent browser zoom.
 8. Test with the operating system/browser reduced-motion preference enabled.
 9. Run a screen reader and, if desired, axe and Lighthouse.

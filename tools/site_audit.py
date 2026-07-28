@@ -1934,6 +1934,320 @@ def main() -> int:
             "index.html: removed homepage trust-line wrapper remains"
         )
 
+    not_found_relative = "404.html"
+    not_found_text = page_visible(not_found_relative)
+    approved_not_found_copy = (
+        "Review how brand, website, and online advertising can be structured "
+        "around practical business needs.",
+        "Learn more about services, process, pricing, ownership, advertising, "
+        "and the Client Portal.",
+    )
+    for phrase in approved_not_found_copy:
+        if phrase.casefold() not in not_found_text.casefold():
+            critical.append(
+                f"{not_found_relative}: approved positioning is missing "
+                f"({phrase})"
+            )
+    for phrase in (
+        "Review how brand, web, and AI work can be structured",
+        "ownership, support, AI, and the Client Portal",
+    ):
+        if phrase.casefold() in not_found_text.casefold():
+            critical.append(
+                f"{not_found_relative}: outdated AI-primary positioning "
+                f"remains ({phrase})"
+            )
+
+    insights_relative = "blog/index.html"
+    insights_source = page_source(insights_relative)
+    insights_page = pages.get((root / insights_relative).resolve())
+    insights_title = (
+        "RielArt Insights | Brand, Websites, Advertising & "
+        "Practical Technology"
+    )
+    insights_description = (
+        "Practical insights from RielArt about business branding, websites, "
+        "Google and Meta advertising, digital credibility, automation, and "
+        "useful technology."
+    )
+    insights_image = f"{SITE_ORIGIN}/images/og-website-leads.jpg"
+    if insights_page is None:
+        critical.append(f"{insights_relative}: Insights page is missing")
+    else:
+        if insights_page.title != insights_title:
+            critical.append(
+                f"{insights_relative}: title does not match the approved "
+                "editorial positioning"
+            )
+        if insights_page.description != insights_description:
+            critical.append(
+                f"{insights_relative}: meta description does not match the "
+                "approved editorial positioning"
+            )
+        for meta_key, expected_value in (
+            ("og:title", insights_title),
+            ("og:description", insights_description),
+            ("og:image", insights_image),
+            ("twitter:title", insights_title),
+            ("twitter:description", insights_description),
+            ("twitter:image", insights_image),
+        ):
+            values = insights_page.meta_values.get(meta_key, [])
+            if len(values) != 1 or values[0][0] != expected_value:
+                critical.append(
+                    f"{insights_relative}: {meta_key} must match the "
+                    "approved Insights metadata"
+                )
+
+    expected_insights_posts = [
+        (
+            "5 Signs Your Website Is Costing You Leads",
+            f"{SITE_ORIGIN}/blog/website-costing-you-leads/",
+            "Websites",
+        ),
+        (
+            "3 Brand Identity Mistakes That Kill Credibility",
+            f"{SITE_ORIGIN}/blog/brand-identity-mistakes/",
+            "Brand",
+        ),
+        (
+            "Local SEO Checklist for Toronto Small Businesses",
+            f"{SITE_ORIGIN}/blog/local-seo-checklist-toronto/",
+            "Websites",
+        ),
+        (
+            "10 Small Business Automation Ideas That Save Time in 2026",
+            f"{SITE_ORIGIN}/blog/small-business-automation-ideas/",
+            "Practical Technology",
+        ),
+        (
+            "Website Builder vs WordPress: Which Approach Fits Your Business?",
+            f"{SITE_ORIGIN}/blog/website-builder-vs-wordpress/",
+            "Websites",
+        ),
+        (
+            "Core Web Vitals for Small Business Websites: What to Fix First",
+            f"{SITE_ORIGIN}/blog/core-web-vitals-small-business/",
+            "Websites",
+        ),
+        (
+            "Monthly Website Maintenance Checklist for Small Businesses",
+            f"{SITE_ORIGIN}/blog/website-maintenance-checklist/",
+            "Websites",
+        ),
+        (
+            "How Small Businesses Can Implement AI Chatbots Without Code",
+            f"{SITE_ORIGIN}/blog/ai-chatbot-small-business/",
+            "Practical Technology",
+        ),
+        (
+            "AI Chatbot vs Live Chat: Which Is Better for a Small Business?",
+            f"{SITE_ORIGIN}/blog/ai-chatbot-vs-live-chat/",
+            "Practical Technology",
+        ),
+    ]
+    insights_blog_schema: dict[str, Any] | None = None
+    if insights_page is not None:
+        for block in insights_page.json_ld:
+            try:
+                data = json.loads(block.text)
+            except json.JSONDecodeError:
+                continue
+            for schema_object in iter_primary_schema_objects(data):
+                if "Blog" in schema_types(schema_object.get("@type")):
+                    insights_blog_schema = schema_object
+                    break
+            if insights_blog_schema is not None:
+                break
+    if insights_blog_schema is None:
+        critical.append(
+            f"{insights_relative}: Blog structured data is missing"
+        )
+    else:
+        if insights_blog_schema.get("description") != insights_description:
+            critical.append(
+                f"{insights_relative}: Blog schema description is outdated"
+            )
+        if insights_blog_schema.get("image") != insights_image:
+            critical.append(
+                f"{insights_relative}: Blog schema image must match the "
+                "featured website guide"
+            )
+        structured_posts = insights_blog_schema.get("blogPost")
+        actual_insights_posts: list[tuple[Any, Any, Any]] = []
+        if isinstance(structured_posts, list):
+            actual_insights_posts = [
+                (
+                    post.get("headline"),
+                    post.get("url"),
+                    post.get("articleSection"),
+                )
+                for post in structured_posts
+                if isinstance(post, dict)
+            ]
+        if actual_insights_posts != expected_insights_posts:
+            critical.append(
+                f"{insights_relative}: Blog schema post order or categories "
+                "do not match the approved Insights index"
+            )
+
+    featured_match = re.search(
+        r'<article\b(?=[^>]*\bclass=["\'][^"\']*'
+        r'\bfeatured-article\b)[^>]*>(?P<body>.*?)</article\s*>',
+        insights_source,
+        re.I | re.S,
+    )
+    if not featured_match:
+        critical.append(
+            f"{insights_relative}: featured article card is missing"
+        )
+    else:
+        featured_html = featured_match.group("body")
+        required_featured_tokens = (
+            "5 Signs Your Website Is Costing You Leads",
+            "/blog/website-costing-you-leads/",
+            "/images/og-website-leads.jpg",
+            'alt="5 Signs Your Website Is Costing You Leads article cover"',
+            "Websites",
+        )
+        for token in required_featured_tokens:
+            if token not in featured_html:
+                critical.append(
+                    f"{insights_relative}: featured website guide is missing "
+                    f"{token!r}"
+                )
+        if "/blog/small-business-automation-ideas/" in featured_html:
+            critical.append(
+                f"{insights_relative}: automation article remains featured"
+            )
+
+    grid_start = insights_source.find('<div class="blog-grid">')
+    grid_source = insights_source[grid_start:] if grid_start >= 0 else ""
+    grid_records = [
+        (category, strip_html(title))
+        for category, title in re.findall(
+            r'<article\b(?=[^>]*\bclass=["\'][^"\']*\barticle-card\b)'
+            r'(?=[^>]*\bdata-category=["\']([^"\']+)["\'])'
+            r'[^>]*>.*?<h2>(.*?)</h2>',
+            grid_source,
+            re.I | re.S,
+        )
+    ]
+    expected_grid_records = [
+        ("brand", "3 Brand Identity Mistakes That Kill Credibility"),
+        ("websites", "Local SEO Checklist for Toronto Small Businesses"),
+        (
+            "practical-technology",
+            "10 Small Business Automation Ideas That Save Time in 2026",
+        ),
+        (
+            "websites",
+            "Website Builder vs WordPress: Which Approach Fits Your Business?",
+        ),
+        (
+            "websites",
+            "Core Web Vitals for Small Business Websites: What to Fix First",
+        ),
+        (
+            "websites",
+            "Monthly Website Maintenance Checklist for Small Businesses",
+        ),
+        (
+            "practical-technology",
+            "How Small Businesses Can Implement AI Chatbots Without Code",
+        ),
+        (
+            "practical-technology",
+            "AI Chatbot vs Live Chat: Which Is Better for a Small Business?",
+        ),
+    ]
+    if grid_records != expected_grid_records:
+        critical.append(
+            f"{insights_relative}: visible article order or category "
+            "attributes do not match the approved editorial sequence"
+        )
+    expected_filter_records = [
+        ("all", "All"),
+        ("brand", "Brand"),
+        ("websites", "Websites"),
+        ("practical-technology", "Practical Technology"),
+    ]
+    filter_records = [
+        (filter_name, strip_html(label))
+        for filter_name, label in re.findall(
+            r'<button\b(?=[^>]*\bclass=["\'][^"\']*\bfilter-btn\b)'
+            r'(?=[^>]*\bdata-filter=["\']([^"\']+)["\'])'
+            r'[^>]*>(.*?)</button\s*>',
+            insights_source,
+            re.I | re.S,
+        )
+    ]
+    if filter_records != expected_filter_records:
+        critical.append(
+            f"{insights_relative}: article filters must use the approved "
+            "simple category system"
+        )
+
+    expected_article_sections = {
+        "blog/website-costing-you-leads/index.html": "Websites",
+        "blog/brand-identity-mistakes/index.html": "Brand",
+        "blog/local-seo-checklist-toronto/index.html": "Websites",
+        "blog/small-business-automation-ideas/index.html":
+            "Practical Technology",
+        "blog/website-builder-vs-wordpress/index.html": "Websites",
+        "blog/core-web-vitals-small-business/index.html": "Websites",
+        "blog/website-maintenance-checklist/index.html": "Websites",
+        "blog/ai-chatbot-small-business/index.html":
+            "Practical Technology",
+        "blog/ai-chatbot-vs-live-chat/index.html":
+            "Practical Technology",
+    }
+    for relative, expected_section in expected_article_sections.items():
+        article_page = pages.get((root / relative).resolve())
+        if article_page is None:
+            critical.append(f"{relative}: published article is missing")
+            continue
+        article_sections: list[str] = []
+        for block in article_page.json_ld:
+            try:
+                data = json.loads(block.text)
+            except json.JSONDecodeError:
+                continue
+            for schema_object in iter_primary_schema_objects(data):
+                if "BlogPosting" not in schema_types(
+                    schema_object.get("@type")
+                ):
+                    continue
+                section = schema_object.get("articleSection")
+                if isinstance(section, str):
+                    article_sections.append(section)
+        if article_sections != [expected_section]:
+            critical.append(
+                f"{relative}: articleSection must be {expected_section!r} "
+                f"({article_sections})"
+            )
+        if expected_section not in page_visible(relative):
+            critical.append(
+                f"{relative}: visible article category must be "
+                f"{expected_section!r}"
+            )
+
+    current_css_cache_reference = "site.css?v=20260728r4"
+    previous_css_cache_reference = "site.css?v=20260728r3"
+    css_cache_reference_count = production_html.count(
+        current_css_cache_reference
+    )
+    if css_cache_reference_count != 24:
+        critical.append(
+            "public HTML must contain exactly 24 current shared CSS cache "
+            f"references ({css_cache_reference_count})"
+        )
+    if previous_css_cache_reference in production_html:
+        critical.append(
+            "public HTML still contains the retired shared CSS cache key "
+            f"({previous_css_cache_reference})"
+        )
+
     anchor_pattern = re.compile(
         r"<a\b(?P<attrs>[^>]*)>(?P<body>.*?)</a\s*>",
         re.I | re.S,
@@ -2701,6 +3015,12 @@ def main() -> int:
             f"Global Get Started links checked: {get_started_count}",
             f"Custom-scope inquiry links checked: "
             f"{len(custom_scope_links)}",
+            f"Approved 404 positioning statements checked: "
+            f"{len(approved_not_found_copy)}",
+            f"Insights editorial entries checked: "
+            f"{len(expected_insights_posts)}",
+            f"Current shared CSS cache references checked: "
+            f"{css_cache_reference_count}/24",
             f"Public PostalAddress schemas found: "
             f"{len(postal_address_pages)}",
             f"Organization address properties found: "

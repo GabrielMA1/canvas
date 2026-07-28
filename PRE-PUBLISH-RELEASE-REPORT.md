@@ -3,23 +3,25 @@
 **Audit date:** July 28, 2026  
 **Target:** `https://rielart.com/` on GitHub Pages  
 **Base commit audited:** `2cbd4cc7000ca9bf6a2790a534fe54247b07c66f`  
-**Final disposition:** **CONDITIONAL PASS — READY AFTER LISTED MANUAL CHECKS**
+**Final disposition:** **CONDITIONAL PASS — READY AFTER LISTED CHECKS**
 
 ## 1. Final release disposition
 
 The source candidate has no remaining automated P0 or P1 release defect after
-the two narrow fixes documented in section 16. Commercial integrity, local
-routes, metadata, structured data, assets, form behavior, responsive layout,
-browser console behavior, deployment exclusions, and exposed-file checks pass.
+the two narrow fixes documented in section 16 and the approved content-
+consistency pass documented in section 18. Commercial integrity, local routes,
+metadata, structured data, assets, form behavior, responsive layout, browser
+console behavior, deployment exclusions, and exposed-file checks pass.
 
 Publication remains conditional because legal/owner approvals, one authorized
 production Formspree submission, real assistive-technology/200% zoom checks,
 and Lighthouse metrics cannot be completed safely or fully from this
 repository-only environment.
 
-No speculative redesign, messaging rewrite, pricing change, offer change,
-navigation change, CTA change, analytics addition, dependency addition, or
-integration change was performed.
+No speculative redesign, pricing change, offer change, navigation change, CTA
+change, analytics addition, dependency addition, or integration change was
+performed. The only public messaging changes are the explicitly approved 404
+and Insights refinements documented in section 18.
 
 ## 2. Commands executed
 
@@ -72,8 +74,8 @@ The pre-fix static audit completed with:
 - Indexable pages checked: 22
 - Sitemap URLs checked: 22
 - Sitemap `lastmod` values checked: 22
-- Local and remote asset references checked: 214
-- Images checked for alt text and dimensions: 51
+- Local and remote asset references checked: 216
+- Images checked for alt text and dimensions: 52
 - JSON-LD blocks checked: 32
 - Forms checked: 1
 - Orphan indexable pages: 0
@@ -84,6 +86,9 @@ The pre-fix static audit completed with:
 - Public Stripe Payment Links: 0
 - Global `Get Started` links checked: 60
 - Custom-scope links checked: 1
+- Approved 404 positioning statements checked: 2
+- Insights editorial entries checked: 9
+- Current shared CSS cache references checked: 24/24
 - PostalAddress schemas: 0
 - Organization address properties: 0
 - Unsupported numerical claims: 0
@@ -103,9 +108,9 @@ The final crawl completed with:
 - Expected HTTP 200 routes: 33
 - HTML routes: 31
 - Expected missing-route HTTP 404: pass
-- Aggregate HTML response bytes: 317,227
+- Aggregate HTML response bytes: 317,723
 - HTML budget: no route above 61,440 bytes
-- CSS: 79,278 / 83,968 bytes
+- CSS: 80,143 / 83,968 bytes
 - JavaScript: 15,551 / 20,480 bytes
 - Image library: 643,390 / 665,600 bytes
 - Logo: 8,587 / 10,240 bytes
@@ -116,7 +121,7 @@ Additional final checks:
 - `node --check assets/js/site.js`: pass.
 - `git diff --check`: pass with line-ending advisories only.
 - `PRE-PUBLISH-BLOCKERS.json`: valid JSON.
-- CSS cache references: 24 at `20260728r3`, 0 at `20260728r2`.
+- CSS cache references: 24 at `20260728r4`, 0 at `20260728r3`.
 - Manifest public include lines: 48.
 
 ### Browser matrix
@@ -425,7 +430,7 @@ Available static performance evidence:
 - Third-party script tags: 0.
 - Source maps: 0.
 - Mixed-content asset references: 0.
-- CSS cache key advanced to `20260728r3`.
+- CSS cache key advanced to `20260728r4`.
 - JavaScript cache key remains `20260728r1` because JavaScript did not change.
 
 Run Lighthouse mobile and desktop on the homepage, pricing, contact, Focused
@@ -498,7 +503,7 @@ the Client Portal, theme behavior, or future approved payment flows.
 6. Run real 200% zoom, keyboard-only, Safari/iOS, NVDA or VoiceOver, and touch
    checks.
 7. Run Lighthouse mobile and desktop on the five routes listed in section 10.
-8. After publication, verify CSS `20260728r3`, the custom 404 status, and HTTP
+8. After publication, verify CSS `20260728r4`, the custom 404 status, and HTTP
    404 for all three release-gate artifacts.
 
 ## 14. Manual tasks required before accepting payment or starting client work
@@ -551,7 +556,8 @@ the Client Portal, theme behavior, or future approved payment flows.
 - **Modification:** `--blue` changed from `#2468ee` to `#2162df`;
   `.optional` changed from `#687991` to `var(--muted)`.
 - **Related modification:** 24 full public HTML pages now reference
-  `site.css?v=20260728r3`.
+  `site.css?v=20260728r4`; the later content-consistency pass advanced the
+  cache key after the Insights card styles changed.
 - **Validation:** Computed colours confirmed in both themes; targeted 390-pixel
   homepage/contact checks retained no overflow.
 - **Remaining risk:** Real device, gradient-aware scanner, and assistive
@@ -581,10 +587,109 @@ The exact manual publication gates are listed in section 13 and in
 
 ## 17. Scope confirmation
 
-No speculative redesign was performed. Approved positioning, prices, service
-scopes, navigation, CTA hierarchy, page structure, Formspree, Calendly, Client
-Portal, privacy text, and commercial terms were not changed. Only the two
-confirmed P1 release defects and their cache/exclusion validation were
-modified.
+No speculative redesign was performed. Approved prices, service scopes,
+navigation, CTA hierarchy, page structure, Formspree, Calendly, Client Portal,
+privacy text, and commercial terms were not changed. The two confirmed P1
+release defects were fixed, followed by the explicitly approved 404 and
+Insights content-consistency refinements in section 18.
+
+## 18. Content-consistency and Insights refinement
+
+### Public outdated phrases changed
+
+Only two outdated public commercial phrases were found:
+
+1. `404.html`
+   - Removed: “Review how brand, web, and AI work can be structured around
+     practical business needs.”
+   - Added: “Review how brand, website, and online advertising can be
+     structured around practical business needs.”
+2. `404.html`
+   - Removed: “Learn more about services, process, pricing, ownership, support,
+     AI, and the Client Portal.”
+   - Added: “Learn more about services, process, pricing, ownership,
+     advertising, and the Client Portal.”
+
+The full public-source search classified the remaining AI/automation
+occurrences as useful educational article content. No AI package, price,
+navigation service, homepage pillar, contact choice, footer service, or
+commercial Service schema remains.
+
+### Insights decision and metadata
+
+- Final title, Open Graph title, and Twitter title:
+  `RielArt Insights | Brand, Websites, Advertising & Practical Technology`.
+- Final meta, Open Graph, Twitter, and Blog schema description:
+  `Practical insights from RielArt about business branding, websites, Google
+  and Meta advertising, digital credibility, automation, and useful
+  technology.`
+- Social and Blog schema image:
+  `https://rielart.com/images/og-website-leads.jpg`.
+- Featured guide: **5 Signs Your Website Is Costing You Leads**.
+- Featured URL: `/blog/website-costing-you-leads/`.
+- Featured category: **Websites**.
+- Featured image includes intrinsic dimensions, descriptive alt text, and an
+  explicit accessible link label.
+- No article publication or modification date changed.
+
+The final editorial order is:
+
+1. Website conversion — featured website-leads article
+2. Brand credibility — brand-identity mistakes
+3. Customer acquisition — local SEO checklist
+4. Practical automation — automation ideas
+5. Website platform choice
+6. Website performance
+7. Website maintenance
+8. Practical AI chatbots
+9. Practical AI versus live chat
+
+Index filters are All, Brand, Websites, and Practical Technology. No empty
+Advertising filter and no fabricated advertising article were added.
+
+### Files modified
+
+- `404.html`
+- `blog/index.html`
+- all nine existing `blog/*/index.html` article files
+- `assets/css/site.css`
+- `sitemap.xml`
+- all 24 full public HTML pages for CSS cache key `20260728r4`
+- `tools/site_audit.py`
+- `PRE-PUBLISH-RELEASE-REPORT.md`
+- `RIELART-QA-REPORT.md`
+- `RIELART-IMPLEMENTATION-LOG.md`
+- `RIELART-COPY-MAP.md`
+
+No RSS or feed file exists, so no feed update was required.
+
+### Validation
+
+- Exact `python -B tools/site_audit.py`: attempted; `python` is unavailable on
+  `PATH`.
+- Bundled Python `tools/site_audit.py`: PASS with 32 HTML files, 22 indexable
+  and sitemap URLs, 216 asset references, 52 images, 32 JSON-LD blocks, two
+  approved 404 statements, nine Insights entries, zero warnings, and zero
+  critical failures; all 24 shared CSS cache references were current.
+- Local server and bundled Python HTTP smoke: PASS with 34 routes, 33 expected
+  HTTP 200 responses, the intentional 404, 317,723 aggregate HTML bytes,
+  80,143 CSS bytes, and zero failures.
+- `node --check assets/js/site.js`: PASS.
+- `git diff --check`: PASS with line-ending advisories only.
+- Focused browser checks at 1440 × 900, 390 × 844, and 320 × 568: PASS for
+  light/dark themes, featured image, filters, desktop card/action alignment,
+  natural mobile stacking, mobile-menu focus and Escape close, broken images,
+  clipping, and page-level overflow.
+- Supporting AI article canonical route: PASS.
+- Browser console warnings/errors: 0.
+
+### Remaining manual decisions
+
+The homepage FAQ was not shortened; future reduction is a post-traffic
+optimization. The pre-existing owner/legal approvals, one authorized
+production Formspree test, real 200% zoom, assistive technology, Safari/iOS,
+Lighthouse, external-account verification, and post-publication artifact
+exclusion probes remain required. These are the listed manual checks behind the
+conditional disposition and are not new content-pass defects.
 
 **The source is ready after the following manual checks.**

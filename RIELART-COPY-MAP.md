@@ -122,6 +122,10 @@ Answer:
 - Can RielArt guarantee leads or sales?
 - Do you work with businesses outside the United States?
 
+No homepage FAQ question was removed during the July 28 content-consistency
+pass. Revisit FAQ length only after real traffic or interaction data identifies
+a conversion problem; treat any future reduction as post-traffic optimization.
+
 ## Contact
 
 **Eyebrow:** Contact RielArt
@@ -147,7 +151,37 @@ The custom-scope query selects “I am not sure yet” and preserves the inquiry
 
 Explain review, recommendation, fit, onboarding/access/payment details, and advertising readiness without implying acceptance.
 
-## Blog
+## Insights
+
+**Metadata title:** RielArt Insights | Brand, Websites, Advertising & Practical Technology
+
+**Metadata description:** Practical insights from RielArt about business branding, websites, Google and Meta advertising, digital credibility, automation, and useful technology.
+
+**Page title:** Practical guidance for stronger brands, websites, and customer growth.
+
+**Featured guide:** 5 Signs Your Website Is Costing You Leads
+
+- Category: Websites
+- Image: `/images/og-website-leads.jpg`
+- Destination: `/blog/website-costing-you-leads/`
+- Publication date remains unchanged.
+
+The initial editorial sequence is:
+
+1. 5 Signs Your Website Is Costing You Leads — Websites — featured
+2. 3 Brand Identity Mistakes That Kill Credibility — Brand
+3. Local SEO Checklist for Toronto Small Businesses — Websites / customer acquisition
+4. 10 Small Business Automation Ideas That Save Time in 2026 — Practical Technology
+5. Website Builder vs WordPress: Which Approach Fits Your Business? — Websites
+6. Core Web Vitals for Small Business Websites: What to Fix First — Websites
+7. Monthly Website Maintenance Checklist for Small Businesses — Websites
+8. How Small Businesses Can Implement AI Chatbots Without Code — Practical Technology
+9. AI Chatbot vs Live Chat: Which Is Better for a Small Business? — Practical Technology
+
+The active index filters are **All**, **Brand**, **Websites**, and **Practical
+Technology**. No empty Advertising category or fabricated advertising article
+is shown. Advertising remains part of the page's primary metadata and
+introduction until a real advertising article is published.
 
 Retain useful article copy. Replace legacy promotional CTAs with one of:
 
@@ -155,7 +189,20 @@ Retain useful article copy. Replace legacy promotional CTAs with one of:
 - Explore Focused Ads Management
 - Get Started
 
-AI articles remain educational and must not describe AI automation as a current package.
+AI articles remain educational under **Practical Technology** and must not
+describe AI automation as a current package.
+
+## 404
+
+**Work description:** Review how brand, website, and online advertising can be
+structured around practical business needs.
+
+**FAQ description:** Learn more about services, process, pricing, ownership,
+advertising, and the Client Portal.
+
+These replace the two former AI-primary commercial references. The page remains
+`noindex,follow` and retains its existing destinations, navigation, footer,
+theme behavior, accessibility, and responsive structure.
 
 ## Footer
 
