@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-07-28",
+  "timezone": "America/New_York",
+  "disposition": "CONDITIONAL PASS — READY AFTER LISTED MANUAL CHECKS",
+  "baseCommit": "2cbd4cc7000ca9bf6a2790a534fe54247b07c66f",
+  "automatedReleaseBlockers": [],
+  "fixedReleaseFindings": [
+    {
+      "id": "P1-A11Y-CONTRAST-001",
+      "severity": "P1",
+      "finding": "The light-theme accent token fell below 4.5:1 on the softest light surfaces, and optional form text fell below 4.5:1 in both themes.",
+      "evidence": {
+        "oldAccent": "#2468ee",
+        "oldAccentContrastOnBgSoft": "4.38:1",
+        "oldOptionalLightContrast": "4.44:1",
+        "oldOptionalDarkContrast": "3.69:1"
+      },
+      "files": [
+        "assets/css/site.css",
+        "24 public HTML files using the shared CSS cache key"
+      ],
+      "modification": "Changed the light accent token to #2162df, changed .optional to var(--muted), and advanced the CSS cache key to 20260728r3.",
+      "validation": "Computed colours are now rgb(33, 98, 223), rgb(83, 103, 130) in light mode, and rgb(170, 187, 208) in dark mode. The narrow contact and homepage checks retained zero horizontal overflow.",
+      "remainingRisk": "Gradient and real-device rendering still require the listed manual visual and assistive-technology checks."
+    },
+    {
+      "id": "P1-DEPLOY-EXCLUSION-001",
+      "severity": "P1",
+      "finding": "The three newly required release-gate artifacts did not yet have explicit GitHub Pages exclusion entries.",
+      "evidence": {
+        "files": [
+          "PRE-PUBLISH-RELEASE-REPORT.md",
+          "PRE-PUBLISH-BLOCKERS.json",
+          "DEPLOYMENT-FILE-MANIFEST.txt"
+        ]
+      },
+      "files": [
+        "_config.yml",
+        "tools/site_audit.py"
+      ],
+      "modification": "Added all three files to the Jekyll exclude list and to the audit's internal-artifact names.",
+      "validation": "The final static audit ran with all three artifacts present and reported 30 GitHub Pages exclusions, 23 safely excluded internal artifact paths, zero warnings, zero critical failures, and PASS.",
+      "remainingRisk": "After publication, confirm all three public URLs return HTTP 404."
+    }
+  ],
+  "requiredBeforeMarketingPublication": [
+    {
+      "id": "MANUAL-PUBLISH-LEGAL-001",
+      "owner": "RielArt owner and qualified counsel",
+      "task": "Approve the contracting identity, required business disclosures, Privacy Policy, Terms, governing-law approach, target-market obligations, and the absence of a public mailing address.",
+      "status": "open"
+    },
+    {
+      "id": "MANUAL-PUBLISH-IDENTITY-002",
+      "owner": "RielArt owner",
+      "task": "Verify Gabriel Macovei's public name, photograph, biography, author attribution, LinkedIn destination, and every internal/representative work label.",
+      "status": "open"
+    },
+    {
+      "id": "MANUAL-PUBLISH-INTEGRATIONS-003",
+      "owner": "RielArt owner",
+      "task": "Perform one controlled production Formspree submission, verify mailbox delivery and /thanks/ routing, and confirm ownership/configuration of Calendly, Client Portal, email, and LinkedIn.",
+      "status": "open"
+    },
+    {
+      "id": "MANUAL-PUBLISH-BROWSER-004",
+      "owner": "RielArt owner or QA reviewer",
+      "task": "Complete real-browser 200% zoom, Safari/iOS, NVDA or VoiceOver, and a Lighthouse mobile/desktop run because those capabilities were unavailable in the audit environment.",
+      "status": "open"
+    },
+    {
+      "id": "MANUAL-PUBLISH-DEPLOYMENT-005",
+      "owner": "RielArt owner",
+      "task": "After committing and publishing this release-gate patch, confirm GitHub Pages succeeds, the CSS r3 asset is live, all three release artifacts return 404, and the custom 404 still returns HTTP 404.",
+      "status": "open"
+    }
+  ],
+  "requiredBeforePaymentOrClientWork": [
+    "Approve the Brand & Website Launch agreement, including payment timing, taxes, refunds, cancellations, revisions, schedule triggers, handoff, ownership, licensing, third-party costs, and change control.",
+    "Approve the Focused Ads Management agreement, including the three-month commitment, billing timing, renewal, cancellation, pauses, failed payments, refunds, disputes, early termination, access removal, support, and out-of-scope work.",
+    "Document Google and Meta account ownership, access, verification, billing, funding, failed-charge, recovery, and offboarding procedures without requesting client passwords.",
+    "Define the monthly website-edit allowance, effort measurement, reset, no-rollover rule, prioritization, backups, rollback, platform limitations, and additional-work approval.",
+    "Approve privacy roles, data-processing terms, retention, security, incident handling, tracking/consent controls, reporting/attribution definitions, and advanced-conversion restrictions.",
+    "Approve regulated-industry, sensitive-advertising, claims, asset-licensing, campaign-approval, international-market, and client-data acceptance procedures.",
+    "Configure and test any future Stripe link only after agreement acceptance, product, price, cadence, tax, refund, cancellation, receipt, success, and account-ownership decisions are approved."
+  ],
+  "postLaunchTasks": [
+    "Configure Search Console and Bing Webmaster Tools.",
+    "Implement analytics only after approval, consent, and policy work.",
+    "Collect field Core Web Vitals and real conversion data.",
+    "Add only verified case studies and permissioned testimonials.",
+    "Evaluate hosting-level CSP, Referrer-Policy, Permissions-Policy, frame protection, and X-Content-Type-Options without breaking approved integrations."
+  ]
+}

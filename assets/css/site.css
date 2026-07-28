@@ -15,7 +15,7 @@
   --line-strong: rgba(16, 48, 83, 0.24);
   --navy: #071d3a;
   --navy-2: #0c2a50;
-  --blue: #2468ee;
+  --blue: #2162df;
   --blue-dark: #164fc8;
   --cyan: #45b8ff;
   --cyan-soft: #dff3ff;
@@ -2508,7 +2508,7 @@ code {
 }
 
 .optional {
-  color: #687991;
+  color: var(--muted);
   font-weight: 580;
 }
 

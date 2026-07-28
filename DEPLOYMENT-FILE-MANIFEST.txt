@@ -1,0 +1,148 @@
+RIELART PRODUCTION DEPLOYMENT FILE MANIFEST
+Generated: 2026-07-28
+Target: GitHub Pages, repository root, Jekyll processing enabled
+
+DISPOSITION
+The production artifact must contain only the 48 public files listed under
+INCLUDE. Everything under EXCLUDE must remain outside the generated site.
+
+INCLUDE — PUBLIC PRODUCTION FILES (48)
+404.html
+about/index.html
+assets/css/site.css
+assets/js/site.js
+blog/ai-chatbot-small-business/index.html
+blog/ai-chatbot-vs-live-chat/index.html
+blog/brand-identity-mistakes/index.html
+blog/core-web-vitals-small-business/index.html
+blog/index.html
+blog/local-seo-checklist-toronto/index.html
+blog/small-business-automation-ideas/index.html
+blog/website-builder-vs-wordpress/index.html
+blog/website-costing-you-leads/index.html
+blog/website-maintenance-checklist/index.html
+CNAME
+contact/index.html
+faq/index.html
+images/apple-touch-icon.png
+images/automation-workspace.webp
+images/favicon.png
+images/gabriel-macovei.webp
+images/logo.png
+images/og-ai-chatbots.jpg
+images/og-brand-mistakes.jpg
+images/og-website-leads.jpg
+images/og-website-platform.jpg
+images/rielart-og.jpg
+images/rielart-web-team.webp
+index.html
+packages/index.html
+portfolio/index.html
+pricing/index.html
+privacy-policy.html
+privacy-policy/index.html
+process/index.html
+robots.txt
+services/ai-automation-operations/index.html
+services/audits-advisory/index.html
+services/brand-strategy-identity/index.html
+services/brand-website-launch/index.html
+services/digital-growth-management/index.html
+services/focused-ads-management/index.html
+services/index.html
+services/web-design-development/index.html
+sitemap.xml
+terms.html
+terms/index.html
+thanks/index.html
+
+EXCLUDE — SOURCE CONTROL AND JEKYLL CONTROL FILES
+.git/
+  Mechanism: GitHub Pages publishes a generated site artifact, not repository
+  history. The live exposure check returned HTTP 404 for /.git/HEAD and
+  /.git/config.
+.gitattributes
+.gitignore
+  Mechanism: explicitly listed in _config.yml exclude and also omitted by
+  Jekyll's default dotfile behavior.
+_config.yml
+_redirects
+  Mechanism: Jekyll omits files beginning with "_" by default. _config.yml is
+  build configuration. GitHub Pages does not use the Netlify-style _redirects
+  file; the public legacy HTML compatibility pages provide noindex redirects.
+
+EXCLUDE — INTERNAL DIRECTORIES
+config/
+tools/
+  Mechanism: explicitly listed in _config.yml exclude. This removes
+  config/payment-links.json, tools/site_audit.py, and tools/http_smoke.py.
+
+EXCLUDE — INTERNAL JSON AND TEXT FILES
+AUDIT-FINDINGS.json
+DEPLOYMENT-FILE-MANIFEST.txt
+PRE-PUBLISH-BLOCKERS.json
+SITE-AUDIT-RESULT.txt
+  Mechanism: explicitly listed in _config.yml exclude.
+
+EXCLUDE — INTERNAL MARKDOWN FILES
+AUDIT-IMPLEMENTATION-LOG.md
+AUDIT-MANUAL-REVIEW.md
+AUDIT-MASTER-REPORT.md
+AUDIT-MEASUREMENT-PLAN.md
+AUDIT-REGRESSION-REPORT.md
+CHANGELOG-RIELART-IMPROVEMENT.md
+FINAL-QA-REPORT.md
+IMPLEMENTATION-PLAN.md
+LAUNCH-REVIEW.md
+PRE-PUBLISH-RELEASE-REPORT.md
+QA-REPORT.md
+README.md
+REDESIGN-NOTES.md
+RIELART-ADS-SERVICE-SCOPE.md
+RIELART-COPY-MAP.md
+RIELART-IMPLEMENTATION-LOG.md
+RIELART-MANUAL-REVIEW.md
+RIELART-OFFER-SCOPE.md
+RIELART-QA-REPORT.md
+RIELART-REFINEMENT-PLAN.md
+RIELART-REMODEL-STRATEGY.md
+RIELART-URL-MIGRATION.md
+  Mechanism: explicitly listed in _config.yml exclude.
+
+EXCLUDE — MUST NOT BE ADDED TO A RELEASE
+.env
+.env.*
+*.bak
+*.log
+*.map
+*.old
+*.orig
+*.pem
+*.pfx
+*.p12
+*.pyc
+*.swp
+*.tmp
+*~
+__pycache__/
+coverage/
+node_modules/
+vendor/
+  Mechanism: these files and directories are absent from the audited
+  repository. Dotfiles, node_modules, vendor, underscore-prefixed paths, and
+  tilde backups also receive Jekyll default exclusion where applicable.
+  tools/site_audit.py flags common development artifacts if they appear.
+
+VERIFICATION
+- GitHub Pages/Jekyll is the actual host/build path: CNAME is rielart.com,
+  the live Server header is GitHub.com, and no .nojekyll file is present.
+- The official GitHub Pages Jekyll rules omit dot-prefixed,
+  underscore-prefixed, tilde-suffixed, and configured exclude paths.
+- Existing live probes for .git, .env, README.md, internal reports, config,
+  tools, source maps, backup files, _config.yml, _redirects, and directory
+  indexes returned HTTP 404.
+- tools/site_audit.py validates the configured exclusions on every release run.
+- After publication, repeat HTTP 404 checks for:
+  /PRE-PUBLISH-RELEASE-REPORT.md
+  /PRE-PUBLISH-BLOCKERS.json
+  /DEPLOYMENT-FILE-MANIFEST.txt

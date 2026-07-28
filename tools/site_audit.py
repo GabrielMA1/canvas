@@ -102,6 +102,9 @@ BUILD_ARTIFACT_NAMES = {
     ".env.production",
     ".gitattributes",
     ".gitignore",
+    "DEPLOYMENT-FILE-MANIFEST.txt",
+    "PRE-PUBLISH-BLOCKERS.json",
+    "PRE-PUBLISH-RELEASE-REPORT.md",
     "desktop.ini",
     "Thumbs.db",
 }
