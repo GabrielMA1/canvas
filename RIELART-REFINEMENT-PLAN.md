@@ -94,23 +94,23 @@ Primary targets:
 
 - homepage and services/pricing offer cards;
 - homepage Google and Meta platform panels;
-- pricing comparison and custom-scope panel;
+- pricing inclusion columns and custom-scope panel;
 - contact service-selection cards;
 - comparable work and process card groups.
 
-### 5. Pricing comparison
+### 5. Pricing inclusion section
 
-Use the approved neutral introduction:
+Use the approved independent-scope introduction:
 
 - **Eyebrow:** Compare the services
 - **Headline:** What each service includes.
-- **Supporting copy:** Choose the service that matches what your business needs now. Brand & Website Launch creates or refreshes your online foundation, while Focused Ads Management manages one active Google or Meta campaign.
+- **Supporting copy:** Each service has its own focused scope. Choose the one your business needs now, or choose both to receive everything listed in both scopes.
 
-Rewrite each comparison cell as a factual scope statement without suggesting that either service is incomplete or automatically dependent on the other.
+Use two independent columns. One lists only the complete Brand & Website Launch scope; the other lists only the complete Focused Ads Management scope. Do not use a shared item column or row-by-row cross-service cells. Clarify that choosing both means receiving everything listed in both columns.
 
 ### 6. Custom-support inquiry
 
-Add one discreet section after the comparison table:
+Add one discreet section after the inclusion columns:
 
 - **Headline:** Need something beyond these scopes?
 - **Body:** RielArt can review ongoing website support, content updates, blog publishing, additional landing pages, or broader campaign requirements separately.
@@ -156,7 +156,7 @@ Update:
 - `tools/site_audit.py`
 - `tools/http_smoke.py` only if final response-weight changes require a justified budget adjustment
 
-New audit assertions will cover the removed address, empty `<address>` elements, approved CTA hierarchy, removed hero trust line, neutral comparison copy, custom-scope inquiry behavior, unchanged service-specific CTAs/prices/integrations, and the absence of a third primary offer.
+New audit assertions will cover the removed address, empty `<address>` elements, approved CTA hierarchy, removed hero trust line, independent service-inclusion copy, custom-scope inquiry behavior, unchanged service-specific CTAs/prices/integrations, and the absence of a third primary offer.
 
 ## Validation plan
 

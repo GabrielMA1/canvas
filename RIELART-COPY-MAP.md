@@ -72,15 +72,17 @@ Primary content: $349 monthly fee, three-month commitment, separate ad spend, re
 
 **Lead:** Start with a professional brand and website, add focused advertising when you are ready, or begin with advertising when your existing website is ready.
 
-Use two equal offer cards, a concise “Need both?” example, and one neutral comparison table.
+Use two equal offer cards, a concise “Need both?” example, and one shared two-column inclusion section.
 
-**Comparison eyebrow:** Compare the services
+**Inclusion eyebrow:** Compare the services
 
-**Comparison title:** What each service includes.
+**Inclusion title:** What each service includes.
 
-**Comparison lead:** Choose the service that matches what your business needs now. Brand & Website Launch creates or refreshes your online foundation, while Focused Ads Management manages one active Google or Meta campaign.
+**Inclusion lead:** Each service has its own focused scope. Choose the one your business needs now, or choose both to receive everything listed in both scopes.
 
-After the table, use one discreet **Need something beyond these scopes?** panel with **Ask About a Custom Scope**. This inquiry can mention ongoing website support, content updates, blog publishing, additional landing pages, or broader campaign requirements without creating a third package or publishing add-on prices.
+Each column lists only what its own service includes. Do not restore a shared item-label column, row-by-row cross-service comparisons, or “available separately” cells. Add the clarification: **Choosing both services? You receive everything listed in both columns, delivered in the appropriate sequence for your business.**
+
+After the inclusion section, use one discreet **Need something beyond these scopes?** panel with **Ask About a Custom Scope**. This inquiry can mention ongoing website support, content updates, blog publishing, additional landing pages, or broader campaign requirements without creating a third package or publishing add-on prices.
 
 ## Process
 

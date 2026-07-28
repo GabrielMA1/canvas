@@ -2110,19 +2110,17 @@ def main() -> int:
     pricing_relative = "pricing/index.html"
     refined_pricing_html = page_source(pricing_relative)
     refined_pricing_text = page_visible(pricing_relative)
-    approved_comparison_intro = (
+    approved_inclusions_intro = (
         "Compare the services What each service includes. "
-        "Choose the service that matches what your business needs now. "
-        "Brand & Website Launch creates or refreshes your online foundation, "
-        "while Focused Ads Management manages one active Google or Meta "
-        "campaign."
+        "Each service has its own focused scope. Choose the one your business "
+        "needs now, or choose both to receive everything listed in both scopes."
     )
     if (
-        approved_comparison_intro.casefold()
+        approved_inclusions_intro.casefold()
         not in refined_pricing_text.casefold()
     ):
         critical.append(
-            f"{pricing_relative}: approved neutral comparison introduction "
+            f"{pricing_relative}: approved independent-scope introduction "
             "is missing"
         )
     for old_comparison_phrase in (
@@ -2130,6 +2128,7 @@ def main() -> int:
         "Brand & Website Launch establishes the foundation.",
         "Focused Ads Management promotes a ready offer and improves "
         "the active campaign.",
+        "Choose the service that matches what your business needs now.",
     ):
         if old_comparison_phrase.casefold() in refined_pricing_text.casefold():
             critical.append(
@@ -2137,69 +2136,96 @@ def main() -> int:
                 f"({old_comparison_phrase})"
             )
 
-    comparison_match = re.search(
-        r'<table\b(?=[^>]*\bclass=["\'][^"\']*\bcomparison-table\b)'
-        r'[^>]*>(?P<body>.*?)</table\s*>',
+    if re.search(
+        r'<table\b(?=[^>]*\bclass=["\'][^"\']*\bcomparison-table\b)',
         refined_pricing_html,
-        re.I | re.S,
-    )
-    if not comparison_match:
+        re.I,
+    ):
         critical.append(
-            f"{pricing_relative}: service comparison table is missing"
+            f"{pricing_relative}: retired row-by-row comparison table remains"
         )
-        comparison_text = ""
-    else:
-        comparison_text = strip_html(comparison_match.group("body"))
-        for negative_phrase in (
-            "Not part of monthly scope",
-            "No new pages included",
-            "Not an SEO retainer",
-            "Not applicable",
-            "Not included",
-        ):
-            if re.search(
-                rf"(?i)\b{re.escape(negative_phrase)}\b",
-                comparison_text,
-            ):
+    if re.search(r"(?i)\bIncluded item\b", refined_pricing_text):
+        critical.append(
+            f"{pricing_relative}: retired comparison item column remains"
+        )
+
+    inclusion_matches = list(
+        re.finditer(
+            r'<article\b'
+            r'(?=[^>]*\bclass=["\'][^"\']*\bservice-inclusions-column\b)'
+            r'(?=[^>]*\bdata-inclusion-service=["\']'
+            r'(?P<service>[^"\']+)["\'])'
+            r'[^>]*>(?P<body>.*?)</article\s*>',
+            refined_pricing_html,
+            re.I | re.S,
+        )
+    )
+    inclusion_services = [
+        match.group("service") for match in inclusion_matches
+    ]
+    if inclusion_services != expected_service_markers:
+        critical.append(
+            f"{pricing_relative}: expected two independent inclusion columns "
+            f"for {expected_service_markers}, found {inclusion_services}"
+        )
+
+    required_inclusion_phrases = {
+        "brand-website-launch": (
+            "Brand & Website Launch",
+            "$599 USD one time",
+            "One focused project from brand direction through launch and "
+            "handoff.",
+            "Practical brand direction and visual identity",
+            "Responsive website with up to four core pages",
+            "Contact or lead form",
+            "Basic on-page SEO",
+            "Analytics and conversion-tracking foundation",
+            "One organized revision round",
+            "Launch assistance and handoff",
+        ),
+        "focused-ads-management": (
+            "Focused Ads Management",
+            "$349 USD per month",
+            "Three-month initial commitment. Advertising spend separate.",
+            "One Google or Meta advertising platform",
+            "One business, website, defined market, language, and primary "
+            "offer",
+            "Campaign strategy, setup, and copy",
+            "Basic active-campaign tracking where supported",
+            "Monitoring and optimization",
+            "Monthly performance summary and review call",
+            "Up to one hour monthly for campaign-related website changes",
+        ),
+    }
+    for match in inclusion_matches:
+        service = match.group("service")
+        inclusion_text = strip_html(match.group("body"))
+        for phrase in required_inclusion_phrases.get(service, ()):
+            if phrase.casefold() not in inclusion_text.casefold():
                 critical.append(
-                    f"{pricing_relative}: comparison table uses retired "
-                    f"negative wording ({negative_phrase})"
+                    f"{pricing_relative}: {service} inclusion column is "
+                    f"missing approved wording ({phrase})"
                 )
 
-    required_comparison_phrases = {
-        "client brand reuse":
-            "Uses the client’s approved existing brand",
-        "existing creative direction":
-            "Uses approved existing creative direction",
-        "existing website or landing page":
-            "Works with an approved existing website or landing page",
-        "monthly page allowance":
-            "Existing pages supported within the monthly edit allowance",
-        "launch form scope":
-            "Contact or lead form included",
-        "advertising conversion path":
-            "Existing conversion path reviewed and tracked where possible",
-        "campaign landing-page recommendations":
-            "Campaign-focused landing-page recommendations",
-        "separate advertising availability":
-            "Available separately",
-        "one-platform advertising scope":
-            "One Google or Meta platform",
-        "campaign optimization":
-            "Monitoring and optimization included",
-        "launch reporting":
-            "Project delivery updates",
-        "advertising reporting":
-            "Performance summary and review call",
-        "advertising payment structure":
-            "$349 USD per month; three-month initial commitment; "
-            "advertising spend separate",
-    }
-    for label, phrase in required_comparison_phrases.items():
-        if phrase.casefold() not in comparison_text.casefold():
+    combined_scope_copy = (
+        "Choosing both services? You receive everything listed in both "
+        "columns, delivered in the appropriate sequence for your business."
+    )
+    if combined_scope_copy.casefold() not in refined_pricing_text.casefold():
+        critical.append(
+            f"{pricing_relative}: combined-scope clarification is missing"
+        )
+    for retired_cell_phrase in (
+        "Available separately",
+        "Uses the client’s approved existing brand",
+        "Uses approved existing creative direction",
+        "Works with an approved existing website or landing page",
+        "Existing pages supported within the monthly edit allowance",
+    ):
+        if retired_cell_phrase.casefold() in refined_pricing_text.casefold():
             critical.append(
-                f"{pricing_relative}: comparison table is missing neutral "
-                f"{label} wording"
+                f"{pricing_relative}: retired cross-service comparison "
+                f"wording remains ({retired_cell_phrase})"
             )
 
     custom_scope_match = re.search(

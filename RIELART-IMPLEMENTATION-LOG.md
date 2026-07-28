@@ -12,14 +12,14 @@ The follow-up pass preserved the approved two-service model and completed these 
 - changed the general site CTA from the former project-start label to **Get Started** while preserving **Start Your Launch**, **Start Advertising**, **See full scope**, **View Pricing**, **Contact**, and **Client Portal**;
 - removed the homepage hero trust line and its unused styling;
 - aligned equivalent offer and platform-card regions with shared header, note, flexible-content, footer, and action behavior rather than per-card spacing patches;
-- rewrote the pricing comparison in neutral scope language;
-- added one separately reviewed custom-scope inquiry after the comparison table without adding a package, price, Service schema, or primary offer;
+- replaced the row-by-row pricing comparison with two independent service-inclusion columns so neither service is described through what the other contains;
+- added one separately reviewed custom-scope inquiry after the inclusion section without adding a package, price, Service schema, or primary offer;
 - mapped `service=custom-scope` to the existing **I am not sure yet** choice while submitting `Custom scope inquiry` in a hidden context field;
 - rebuilt the contact introduction as a contained dark card beside the existing form, with compact review/recommendation/next-step content and no split-background slab or sticky artifact;
 - updated contact metadata and ContactPage schema to **Contact RielArt**;
-- made the narrow pricing comparison a labelled, keyboard-focusable horizontal-scroll region;
+- replaced the narrow horizontal-scroll comparison with semantic service articles and lists that stack naturally on smaller screens;
 - removed obsolete address, contact-panel, and retired ticker CSS;
-- bumped shared CSS and JavaScript references to `20260728r1`.
+- retained JavaScript at `20260728r1` and bumped shared CSS references to `20260728r2` for the independent-inclusion layout.
 
 ### Focused-refinement baseline and final measurements
 
@@ -38,8 +38,8 @@ The follow-up pass preserved the approved two-service model and completed these 
 | Static-audit critical failures | 0 | 0 |
 | HTTP routes checked | 34 | 34 |
 | Successful HTTP 200 routes | 33 | 33 |
-| Aggregate HTML response bytes | 319,743 | 317,109 |
-| Uncompressed CSS bytes | 81,847 | 78,013 |
+| Aggregate HTML response bytes | 319,743 | 317,224 |
+| Uncompressed CSS bytes | 81,847 | 79,273 |
 | Uncompressed JavaScript bytes | 15,038 | 15,551 |
 | HTTP-smoke failures | 0 | 0 |
 
@@ -65,7 +65,7 @@ The follow-up pass preserved the approved two-service model and completed these 
 | `faq/index.html` | Updated shared general CTAs/footer and asset versions. |
 | `index.html` | Removed address schema and hero trust line, aligned offer cards, updated general CTAs/footer, and bumped assets. |
 | `portfolio/index.html` | Updated shared general CTAs/footer and asset versions. |
-| `pricing/index.html` | Added aligned offer regions, neutral comparison copy/table, accessible comparison region, separate custom-scope inquiry, warmer fit language, updated footer/CTA, and bumped assets. |
+| `pricing/index.html` | Added aligned offer regions, two independent service-inclusion columns, a combined-scope clarification, separate custom-scope inquiry, warmer fit language, updated footer/CTA, and bumped assets. |
 | `privacy-policy/index.html` | Replaced postal-contact language with email-only contact, updated shared CTA/footer, and bumped assets. |
 | `process/index.html` | Updated the general CTA vocabulary/footer and bumped assets. |
 | `services/index.html` | Added aligned offer regions, updated general CTAs/footer, and bumped assets. |
@@ -143,7 +143,7 @@ The obsolete service ticker, pause control, hero priority tabs, excessive hero c
 - Rebuilt `/services/` as a two-service overview.
 - Added `/services/brand-website-launch/` with scope, exclusions, client responsibilities, timeline, ownership, and inquiry path.
 - Added `/services/focused-ads-management/` with platform selection guidance, readiness criteria, included work, boundaries, commitment, ad-spend separation, and reporting expectations.
-- Rebuilt `/pricing/` with two equal-height desktop offer cards, a direct comparison table, and a clearly labelled `$948` three-month fee example that excludes ad spend.
+- Rebuilt `/pricing/` with two equal-height desktop offer cards, independent two-column inclusion lists, and a clearly labelled `$948` three-month fee example that excludes ad spend.
 - Kept checkout disabled; every purchase-oriented action routes to the inquiry form.
 
 ### Process, work, about, and FAQ
@@ -184,7 +184,7 @@ The obsolete service ticker, pause control, hero priority tabs, excessive hero c
 ## Visual system and responsive implementation
 
 - Preserved the RielArt logo, blue palette, typography direction, light/dark theme, and core interaction patterns.
-- Added a more restrained editorial/component system for offer cards, scope sections, comparisons, FAQ rows, contact choices, and process steps.
+- Added a more restrained editorial/component system for offer cards, scope sections, service-inclusion lists, FAQ rows, contact choices, and process steps.
 - Normalized spacing, card structure, heading placement, action placement, and desktop card heights.
 - Rebalanced hero and contact headings to avoid one- or two-word orphan lines.
 - Kept the homepage hero headline to exactly three phrase lines at 320, 768, and 1440 pixel QA widths.

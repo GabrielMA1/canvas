@@ -2,7 +2,7 @@
 
 **QA date:** July 28, 2026
 **Environment:** Local static server, repository audit tools, and Codex in-app browser
-**Result:** Final source passes the static audit, local HTTP crawl, JavaScript syntax check, diff check, and the rendered responsive matrix. Production-only, external-delivery, cross-browser, 200-percent zoom, and runtime reduced-motion checks remain explicitly open.
+**Result:** Final source passes the static audit, local HTTP crawl, JavaScript syntax check, and diff check. The previously completed rendered matrix remains evidence for unchanged layouts; the later pricing inclusion-list follow-up was not re-run in the browser and remains a focused visual-review item.
 
 ## Automated static-site audit
 
@@ -58,9 +58,9 @@ python -B tools/http_smoke.py --base-url http://127.0.0.1:4173
 | Successful HTTP 200 routes | 33 |
 | Intentional 404 route | 1 |
 | HTML routes | 31 |
-| Aggregate HTML response bytes | 317,109 |
+| Aggregate HTML response bytes | 317,224 |
 | Maximum HTML allowed per route | 61,440 bytes |
-| CSS | 78,013 / 83,968 bytes |
+| CSS | 79,273 / 83,968 bytes |
 | JavaScript | 15,551 / 20,480 bytes |
 | Images | 643,390 / 665,600 bytes |
 | Logo | 8,587 / 10,240 bytes |
@@ -72,10 +72,12 @@ Additional source checks:
 
 - `node --check assets/js/site.js`: PASS
 - `git diff --check`: PASS; only normal Git line-ending advisories were printed
-- targeted public-HTML searches for the retired CTA, street-location fragments, hero trust line, old comparison headline, and “Approved projects”: no matches
-- shared asset references: all 24 full pages use `20260728r1`
+- targeted public-HTML searches for the retired CTA, street-location fragments, hero trust line, old comparison headline, “Included item,” the retired comparison table, and “Approved projects”: no matches
+- shared asset references: all 24 full pages use CSS `20260728r2`; JavaScript remains `20260728r1`
 
 ## Rendered responsive QA
+
+The matrix below was completed for the preceding focused refinement before the row-by-row pricing table was replaced. It remains valid for unchanged routes and components. The new two-column pricing inclusion component was validated through source assertions and the HTTP crawl, but no new browser-rendered pass is claimed for it.
 
 The local site was rendered at every requested viewport:
 
@@ -123,7 +125,7 @@ Results:
 - the four contact service choices render at equal height in their two-column layout;
 - offer and platform cards return to natural height when stacked;
 - practical button targets are at least 44 pixels high in the final CSS;
-- the pricing table remains inside its own 720-pixel scroll surface at narrow widths rather than widening the page.
+- the former pricing-table result is superseded by the new independent inclusion-list layout and is not claimed as a current browser result.
 
 Representative visual screenshots were inspected for:
 
@@ -131,7 +133,7 @@ Representative visual screenshots were inspected for:
 - dark homepage at 1440 × 900;
 - contact composition at 1440 × 900;
 - contact composition at 320 × 568;
-- pricing hero and aligned offer actions at 1440 × 900.
+- pricing hero and aligned offer actions at 1440 × 900 before the inclusion-list follow-up.
 
 ## Theme, navigation, and focus QA
 
@@ -152,7 +154,7 @@ Representative visual screenshots were inspected for:
 
 - The skip link is first in DOM order and points to a focusable `#main-content`.
 - Global `:focus-visible` styling remains in place.
-- The narrow pricing comparison is a focusable `region` named **Service comparison**; at 320 pixels it measured 271 pixels wide with 720 pixels of scrollable table content and successfully received focus.
+- The current pricing inclusions use two semantic articles with ordinary unordered lists; no focusable horizontal-scroll region remains.
 - Full keyboard traversal, native Enter/Space activation, and arrow-key scrolling could not be conclusively exercised through the available automation key surface and remain manual checks.
 
 ## Contact-form QA
@@ -185,7 +187,7 @@ Preserved integration facts:
 
 ## Browser console
 
-After the responsive, theme, menu, comparison, and contact-state checks, the browser console returned:
+After the preceding responsive, theme, menu, and contact-state checks, the browser console returned:
 
 - errors: 0
 - warnings: 0
@@ -202,7 +204,7 @@ Verified:
 - descriptive contact links and secure external-link attributes;
 - logical contact DOM order;
 - no duplicated or screen-reader-announced filler copy in offer-card spacing;
-- labelled horizontal comparison region;
+- semantic, independently labelled pricing inclusion articles and lists;
 - responsive reflow down to 320 pixels.
 
 Static implementation only:
@@ -225,7 +227,7 @@ Not claimed as runtime passes:
 3. Run a specifically authorized Formspree production submission and confirm mailbox delivery, all fields, hidden custom context, spam handling, and `/thanks/`.
 4. Open and verify the production Client Portal, Calendly, email, LinkedIn, privacy, and terms destinations.
 5. Test current Edge, Firefox, and Safari.
-6. Complete full keyboard-only traversal, Enter/Space activation, and horizontal table scrolling.
+6. Complete full keyboard-only traversal and visually verify the new pricing inclusion columns at desktop, tablet, mobile, and 200-percent zoom.
 7. Test at actual 200-percent browser zoom.
 8. Test with the operating system/browser reduced-motion preference enabled.
 9. Run a screen reader and, if desired, axe and Lighthouse.
