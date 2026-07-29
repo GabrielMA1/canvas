@@ -693,3 +693,48 @@ exclusion probes remain required. These are the listed manual checks behind the
 conditional disposition and are not new content-pass defects.
 
 **The source is ready after the following manual checks.**
+
+## 19. Inline Contact-form release gate — July 29, 2026
+
+### Root cause and correction
+
+The previous Contact submit listener entered a visual sending state but did
+not prevent native navigation or submit through `fetch()`. Formspree therefore
+returned its generic hosted thank-you page. The scoped correction now sends
+the unchanged form action with `FormData` and `Accept: application/json`,
+keeps the visitor on Contact, and reveals the RielArt success card only after
+an HTTP `response.ok`.
+
+Error responses and network failures keep the form and every entered value
+visible, restore the submit control, remove the busy state, focus the existing
+polite status region, and permit retry. Native validation and the
+double-submission guard remain active.
+
+### Release evidence
+
+- Static audit: PASS, zero warnings and zero critical failures.
+- JavaScript syntax: PASS.
+- Diff whitespace validation: PASS, with line-ending advisories only.
+- Local HTTP smoke: four scoped routes/assets returned HTTP 200.
+- Mocked browser success, Formspree error, network error, validation,
+  retry, and pending double-submit paths: PASS.
+- 320-pixel, 200%/400%-equivalent reflow, light/dark, focus, live-region,
+  sticky-header alignment, and horizontal-overflow checks: PASS.
+- Browser console errors/warnings: 0.
+- Formspree endpoint: unchanged at `https://formspree.io/f/xojrdoel`.
+- `/thanks/index.html`: unchanged.
+- No real Formspree submission, deployment, backend, dependency, external
+  account change, or unrelated public-page modification was performed.
+
+### Required owner action
+
+Owner action required in Formspree: Set the form's Thank You redirect to
+`https://rielart.com/thanks/` so non-JavaScript submissions also remain within
+the RielArt website. Codex cannot configure the external Formspree dashboard.
+
+After that setting is saved, publish the scoped files and run one controlled,
+owner-authorized production submission. Confirm the inline JavaScript success
+state, Formspree acceptance/mail delivery, and the no-JavaScript fallback
+redirect.
+
+**PASS — READY AFTER FORMSPREE REDIRECT SETTING AND ONE CONTROLLED PRODUCTION TEST**

@@ -9,7 +9,7 @@
   <link rel="canonical" href="https://rielart.com/contact/">
   <meta property="og:type" content="website"><meta property="og:site_name" content="RielArt"><meta property="og:title" content="Contact RielArt"><meta property="og:description" content="Tell RielArt what your business does, what needs to improve, and who you want to reach."><meta property="og:url" content="https://rielart.com/contact/"><meta property="og:image" content="https://rielart.com/images/rielart-og.jpg">
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Contact RielArt"><meta name="twitter:description" content="Ask about a brand and website launch, focused advertising, both services, or another separately reviewed scope."><meta name="twitter:image" content="https://rielart.com/images/rielart-og.jpg">
-  <link rel="icon" href="/images/favicon.png" type="image/png"><link rel="apple-touch-icon" href="/images/apple-touch-icon.png"><link rel="stylesheet" href="/assets/css/site.css?v=20260728r4">
+  <link rel="icon" href="/images/favicon.png" type="image/png"><link rel="apple-touch-icon" href="/images/apple-touch-icon.png"><link rel="stylesheet" href="/assets/css/site.css?v=20260729r1">
   <script>try{document.documentElement.dataset.theme=localStorage.getItem("theme")==="dark"?"dark":"light"}catch(error){document.documentElement.dataset.theme="light"}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"ContactPage","name":"Contact RielArt","url":"https://rielart.com/contact/","description":"Inquiry page for RielArt Brand & Website Launch, Focused Ads Management, and separately reviewed custom support."},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://rielart.com/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://rielart.com/contact/"}]}]}</script>
 </head>
@@ -57,49 +57,62 @@
         </div>
 
         <div class="contact-form-panel" id="project-inquiry">
-          <div class="form-guidance"><strong>Required fields are marked with an asterisk.</strong> You do not need to choose Google or Meta before inquiring.</div>
-          <form class="contact-form" action="https://formspree.io/f/xojrdoel" method="post" data-contact-form>
-            <input type="hidden" name="_next" value="https://rielart.com/thanks/">
-            <input type="hidden" name="_subject" value="New RielArt project inquiry">
-            <input type="hidden" name="inquiry_context" value="" data-inquiry-context>
-            <div class="sr-only" aria-hidden="true"><label>Leave this field empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+          <div data-form-content>
+            <div class="form-guidance"><strong>Required fields are marked with an asterisk.</strong> You do not need to choose Google or Meta before inquiring.</div>
+            <form class="contact-form" action="https://formspree.io/f/xojrdoel" method="post" data-contact-form>
+              <input type="hidden" name="_subject" value="New RielArt project inquiry">
+              <input type="hidden" name="inquiry_context" value="" data-inquiry-context>
+              <div class="sr-only" aria-hidden="true"><label>Leave this field empty <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
 
-            <fieldset class="form-choice service-choice" data-service-choice>
-              <legend>Which service are you interested in? *</legend>
-              <label><input type="radio" name="service_interest" value="Brand &amp; Website Launch — $599 one time" data-service-value="brand-website-launch" required><span><strong>Brand &amp; Website Launch</strong><small>$599 one time</small></span></label>
-              <label><input type="radio" name="service_interest" value="Focused Ads Management — $349/month" data-service-value="focused-ads-management" required><span><strong>Focused Ads Management</strong><small>$349/month</small></span></label>
-              <label><input type="radio" name="service_interest" value="Both services" data-service-value="both-services" required><span><strong>Both services</strong><small>Website first, then advertising when ready</small></span></label>
-              <label><input type="radio" name="service_interest" value="I am not sure yet" data-service-value="not-sure" required><span><strong>I am not sure yet</strong><small>RielArt can recommend a starting point</small></span></label>
-            </fieldset>
+              <fieldset class="form-choice service-choice" data-service-choice>
+                <legend>Which service are you interested in? *</legend>
+                <label><input type="radio" name="service_interest" value="Brand &amp; Website Launch — $599 one time" data-service-value="brand-website-launch" required><span><strong>Brand &amp; Website Launch</strong><small>$599 one time</small></span></label>
+                <label><input type="radio" name="service_interest" value="Focused Ads Management — $349/month" data-service-value="focused-ads-management" required><span><strong>Focused Ads Management</strong><small>$349/month</small></span></label>
+                <label><input type="radio" name="service_interest" value="Both services" data-service-value="both-services" required><span><strong>Both services</strong><small>Website first, then advertising when ready</small></span></label>
+                <label><input type="radio" name="service_interest" value="I am not sure yet" data-service-value="not-sure" required><span><strong>I am not sure yet</strong><small>RielArt can recommend a starting point</small></span></label>
+              </fieldset>
 
-            <div class="form-grid">
-              <div class="form-field"><label for="name">Name *</label><input id="name" name="name" type="text" autocomplete="name" required></div>
-              <div class="form-field"><label for="business-name">Business name *</label><input id="business-name" name="business_name" type="text" autocomplete="organization" required></div>
-              <div class="form-field"><label for="email">Work email *</label><input id="email" name="email" type="email" autocomplete="email" required></div>
-              <div class="form-field"><label for="country">Country *</label><input id="country" name="country" type="text" autocomplete="country-name" required></div>
-              <div class="form-field full"><label for="website">Website <span class="optional">(optional)</span></label><input id="website" name="website" type="url" inputmode="url" placeholder="https://yourwebsite.com"></div>
-              <div class="form-field full"><label for="business-description">What does your business do? *</label><textarea id="business-description" name="business_description" rows="4" placeholder="Describe the primary service, customer, and location." required></textarea></div>
-              <div class="form-field full"><label for="improvement-goal">What would you like to improve? *</label><textarea id="improvement-goal" name="improvement_goal" rows="4" placeholder="What should look clearer, work better, or attract more of the right customers?" required></textarea></div>
-              <div class="form-field"><label for="target-market">Which market do you want to reach? *</label><input id="target-market" name="target_market" type="text" placeholder="Country, region, or city" required></div>
-              <div class="form-field"><label for="timeline">Desired timeline *</label><select id="timeline" name="desired_timeline" required><option value="">Select a range</option><option>As soon as scope allows</option><option>Within 1 month</option><option>Within 2–3 months</option><option>More than 3 months away</option><option>I am not sure yet</option></select></div>
-            </div>
-
-            <fieldset class="ads-fields" data-ads-fields hidden aria-describedby="ads-fields-note">
-              <legend>Advertising details</legend>
-              <p id="ads-fields-note">These questions help RielArt review platform fit. “Not sure” is a valid answer.</p>
               <div class="form-grid">
-                <div class="form-field"><label for="preferred-platform">Where do you think customers are most likely to respond?</label><select id="preferred-platform" name="preferred_platform" disabled><option value="">Select an option</option><option>Google Search</option><option>Facebook and Instagram</option><option>I am not sure</option><option>RielArt should recommend</option></select></div>
-                <div class="form-field"><label for="advertising-location">Intended advertising location</label><input id="advertising-location" name="advertising_location" type="text" placeholder="Country or defined region" disabled></div>
-                <div class="form-field full"><label for="monthly-ad-budget">Approximate monthly advertising budget</label><select id="monthly-ad-budget" name="monthly_ad_budget" disabled><option value="">Select a range</option><option>Around $500</option><option>$500–$1,000</option><option>$1,000–$2,500</option><option>More than $2,500</option><option>Not sure yet</option></select></div>
+                <div class="form-field"><label for="name">Name *</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+                <div class="form-field"><label for="business-name">Business name *</label><input id="business-name" name="business_name" type="text" autocomplete="organization" required></div>
+                <div class="form-field"><label for="email">Work email *</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+                <div class="form-field"><label for="country">Country *</label><input id="country" name="country" type="text" autocomplete="country-name" required></div>
+                <div class="form-field full"><label for="website">Website <span class="optional">(optional)</span></label><input id="website" name="website" type="url" inputmode="url" placeholder="https://yourwebsite.com"></div>
+                <div class="form-field full"><label for="business-description">What does your business do? *</label><textarea id="business-description" name="business_description" rows="4" placeholder="Describe the primary service, customer, and location." required></textarea></div>
+                <div class="form-field full"><label for="improvement-goal">What would you like to improve? *</label><textarea id="improvement-goal" name="improvement_goal" rows="4" placeholder="What should look clearer, work better, or attract more of the right customers?" required></textarea></div>
+                <div class="form-field"><label for="target-market">Which market do you want to reach? *</label><input id="target-market" name="target_market" type="text" placeholder="Country, region, or city" required></div>
+                <div class="form-field"><label for="timeline">Desired timeline *</label><select id="timeline" name="desired_timeline" required><option value="">Select a range</option><option>As soon as scope allows</option><option>Within 1 month</option><option>Within 2–3 months</option><option>More than 3 months away</option><option>I am not sure yet</option></select></div>
               </div>
-            </fieldset>
 
-            <div class="form-grid form-final-fields">
-              <div class="form-field full"><label for="message">Message or additional context *</label><textarea id="message" name="message" rows="5" placeholder="Add source material, access considerations, campaign history, or other useful context." required></textarea></div>
-              <div class="form-field full consent-field"><label><input type="checkbox" name="privacy_consent" value="I agree" required><span>I agree that RielArt may use these details to review and respond to this inquiry, as described in the <a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. *</span></label></div>
-              <div class="form-field full"><p class="form-provider-note">RielArt uses Formspree to deliver this form. Your submission is transmitted to Formspree and RielArt so the inquiry can be reviewed and answered.</p><button class="btn btn-primary submit-button" type="submit">Send My Inquiry <span aria-hidden="true">→</span></button><p class="form-status" data-form-status role="status" aria-live="polite"></p></div>
+              <fieldset class="ads-fields" data-ads-fields hidden aria-describedby="ads-fields-note">
+                <legend>Advertising details</legend>
+                <p id="ads-fields-note">These questions help RielArt review platform fit. “Not sure” is a valid answer.</p>
+                <div class="form-grid">
+                  <div class="form-field"><label for="preferred-platform">Where do you think customers are most likely to respond?</label><select id="preferred-platform" name="preferred_platform" disabled><option value="">Select an option</option><option>Google Search</option><option>Facebook and Instagram</option><option>I am not sure</option><option>RielArt should recommend</option></select></div>
+                  <div class="form-field"><label for="advertising-location">Intended advertising location</label><input id="advertising-location" name="advertising_location" type="text" placeholder="Country or defined region" disabled></div>
+                  <div class="form-field full"><label for="monthly-ad-budget">Approximate monthly advertising budget</label><select id="monthly-ad-budget" name="monthly_ad_budget" disabled><option value="">Select a range</option><option>Around $500</option><option>$500–$1,000</option><option>$1,000–$2,500</option><option>More than $2,500</option><option>Not sure yet</option></select></div>
+                </div>
+              </fieldset>
+
+              <div class="form-grid form-final-fields">
+                <div class="form-field full"><label for="message">Message or additional context *</label><textarea id="message" name="message" rows="5" placeholder="Add source material, access considerations, campaign history, or other useful context." required></textarea></div>
+                <div class="form-field full consent-field"><label><input type="checkbox" name="privacy_consent" value="I agree" required><span>I agree that RielArt may use these details to review and respond to this inquiry, as described in the <a href="/privacy-policy/" target="_blank" rel="noopener noreferrer">Privacy Policy</a>. *</span></label></div>
+                <div class="form-field full"><p class="form-provider-note">RielArt uses Formspree to deliver this form. Your submission is transmitted to Formspree and RielArt so the inquiry can be reviewed and answered.</p><button class="btn btn-primary submit-button" type="submit">Send My Inquiry <span aria-hidden="true">→</span></button><p class="form-status" data-form-status role="status" aria-live="polite" tabindex="-1"></p></div>
+              </div>
+            </form>
+          </div>
+
+          <section class="contact-success-card" data-contact-success role="status" aria-live="polite" aria-atomic="true" aria-labelledby="contact-success-title" tabindex="-1" hidden>
+            <div class="status-orb" aria-hidden="true">✓</div>
+            <span class="eyebrow">Inquiry received</span>
+            <h2 id="contact-success-title">Thank you — your inquiry has been sent.</h2>
+            <p>RielArt will review your business, website, market, and selected service, then reply to the work email you provided with the recommended next step.</p>
+            <p class="contact-success-note">Submitting an inquiry does not automatically accept a project.</p>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="/">Return Home</a>
+              <a class="btn btn-secondary" href="/pricing/">View Pricing</a>
             </div>
-          </form>
+          </section>
         </div>
       </div>
     </section>
@@ -113,6 +126,6 @@
     </div>
     <div class="container footer-bottom"><p>© <span data-year>2026</span> RielArt. All rights reserved.</p><p><a href="/privacy-policy/">Privacy</a> <a href="/terms/">Terms</a></p></div>
   </footer>
-<script src="/assets/js/site.js?v=20260728r1" defer></script>
+<script src="/assets/js/site.js?v=20260729r1" defer></script>
 </body>
 </html>

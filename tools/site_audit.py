@@ -1097,27 +1097,11 @@ def main() -> int:
                 for control in form.controls
                 if control.name == "_next"
             ]
-            if len(next_controls) != 1:
+            if next_controls:
                 critical.append(
-                    f"{relative}:{form.line}: form must contain exactly one "
-                    f"_next success destination"
+                    f"{relative}:{form.line}: source-controlled forms must "
+                    f"not include a Formspree _next field"
                 )
-            else:
-                next_control = next_controls[0]
-                parsed_next = urlsplit(next_control.value)
-                if (
-                    parsed_next.scheme.lower() != "https"
-                    or (parsed_next.hostname or "").lower() not in LOCAL_HOSTS
-                ):
-                    critical.append(
-                        f"{relative}:{next_control.line}: _next must be an "
-                        f"HTTPS RielArt URL ({next_control.value})"
-                    )
-                elif route_file(root, parsed_next.path) is None:
-                    critical.append(
-                        f"{relative}:{next_control.line}: _next destination "
-                        f"does not exist ({next_control.value})"
-                    )
 
             privacy_controls = [
                 control
@@ -2233,14 +2217,27 @@ def main() -> int:
             )
 
     current_css_cache_reference = "site.css?v=20260728r4"
+    contact_css_cache_reference = "site.css?v=20260729r1"
+    contact_js_cache_reference = "site.js?v=20260729r1"
     previous_css_cache_reference = "site.css?v=20260728r3"
     css_cache_reference_count = production_html.count(
         current_css_cache_reference
     )
-    if css_cache_reference_count != 24:
+    if css_cache_reference_count != 23:
         critical.append(
-            "public HTML must contain exactly 24 current shared CSS cache "
+            "public HTML must contain exactly 23 unchanged shared CSS cache "
             f"references ({css_cache_reference_count})"
+        )
+    contact_cache_html = page_source("contact/index.html")
+    if contact_cache_html.count(contact_css_cache_reference) != 1:
+        critical.append(
+            "contact/index.html must contain exactly one contact CSS cache "
+            f"reference ({contact_css_cache_reference})"
+        )
+    if contact_cache_html.count(contact_js_cache_reference) != 1:
+        critical.append(
+            "contact/index.html must contain exactly one contact JS cache "
+            f"reference ({contact_js_cache_reference})"
         )
     if previous_css_cache_reference in production_html:
         critical.append(
@@ -2628,6 +2625,12 @@ def main() -> int:
     contact_page = pages.get(contact_path)
     contact_relative = "contact/index.html"
     contact_html = page_source(contact_relative)
+    thanks_path = root / "thanks" / "index.html"
+    if not thanks_path.is_file():
+        critical.append(
+            "thanks/index.html: no-JavaScript Formspree redirect target is "
+            "missing"
+        )
     approved_contact_choices = {
         "Brand & Website Launch — $599 one time",
         "Focused Ads Management — $349/month",
@@ -2686,6 +2689,37 @@ def main() -> int:
         )
     else:
         form = contact_page.forms[0]
+        required_contact_fields = {
+            "_subject",
+            "inquiry_context",
+            "_gotcha",
+            "service_interest",
+            "name",
+            "business_name",
+            "email",
+            "country",
+            "website",
+            "business_description",
+            "improvement_goal",
+            "target_market",
+            "desired_timeline",
+            "preferred_platform",
+            "advertising_location",
+            "monthly_ad_budget",
+            "message",
+            "privacy_consent",
+        }
+        contact_field_names = {
+            control.name for control in form.controls if control.name
+        }
+        missing_contact_fields = sorted(
+            required_contact_fields - contact_field_names
+        )
+        if missing_contact_fields:
+            critical.append(
+                "contact/index.html: existing form field(s) are missing: "
+                + ", ".join(missing_contact_fields)
+            )
         service_choices = {
             unescape(control.value)
             for control in form.controls
@@ -2782,8 +2816,102 @@ def main() -> int:
                 "contact/index.html: advertising conditional-field behavior "
                 "is not wired"
             )
+        formspree_disclosure = (
+            "RielArt uses Formspree to deliver this form. Your submission is "
+            "transmitted to Formspree and RielArt so the inquiry can be "
+            "reviewed and answered."
+        )
+        if formspree_disclosure not in contact_html:
+            critical.append(
+                "contact/index.html: existing Formspree disclosure is missing"
+            )
 
     site_javascript = page_source("assets/js/site.js")
+    dependency_manifests = (
+        "package.json",
+        "package-lock.json",
+        "pnpm-lock.yaml",
+        "yarn.lock",
+        "bun.lock",
+        "deno.json",
+    )
+    unexpected_manifests = [
+        item for item in dependency_manifests if (root / item).exists()
+    ]
+    if unexpected_manifests:
+        critical.append(
+            "static form implementation must not add dependency manifests: "
+            + ", ".join(unexpected_manifests)
+        )
+    if production_html.count("data-contact-success") != 1:
+        critical.append(
+            "public HTML must contain exactly one inline contact success card"
+        )
+    success_card_match = re.search(
+        r"<section\b"
+        r"(?=[^>]*\bdata-contact-success\b)"
+        r"(?=[^>]*\bhidden\b)"
+        r"(?=[^>]*\brole=[\"']status[\"'])"
+        r"(?=[^>]*\baria-live=[\"']polite[\"'])"
+        r"(?=[^>]*\baria-atomic=[\"']true[\"'])"
+        r"(?=[^>]*\baria-labelledby=[\"']contact-success-title[\"'])"
+        r"(?=[^>]*\btabindex=[\"']-1[\"'])"
+        r"[^>]*>(?P<body>.*?)</section>",
+        contact_html,
+        re.I | re.S,
+    )
+    if success_card_match is None:
+        critical.append(
+            "contact/index.html: inline success card is missing its initial "
+            "hidden state or accessible status contract"
+        )
+    else:
+        success_body = success_card_match.group("body")
+        for required_success_fragment in (
+            'id="contact-success-title"',
+            "Thank you — your inquiry has been sent.",
+            "RielArt will review your business, website, market, and selected "
+            "service, then reply to the work email you provided with the "
+            "recommended next step.",
+            "Submitting an inquiry does not automatically accept a project.",
+            'href="/"',
+            'href="/pricing/"',
+        ):
+            if required_success_fragment not in success_body:
+                critical.append(
+                    "contact/index.html: inline success card is missing "
+                    f"{required_success_fragment!r}"
+                )
+
+    if re.search(r'\bname=["\']_next["\']', contact_html, re.I):
+        critical.append(
+            "contact/index.html: retired Formspree _next field is present"
+        )
+
+    for required_submission_token in (
+        'event.preventDefault()',
+        'form.checkValidity()',
+        'form.reportValidity()',
+        'form.dataset.submitting',
+        'form.setAttribute("aria-busy", "true")',
+        'button.disabled = true',
+        'button.textContent = "Sending…"',
+        'fetch(form.action',
+        'method: form.method',
+        'body: new FormData(form)',
+        'Accept: "application/json"',
+        'if (!response.ok)',
+        'data-form-content',
+        'data-contact-success',
+        'form.reset()',
+        'successCard.focus({ preventScroll: true })',
+        'email hello@rielart.com',
+    ):
+        if required_submission_token not in site_javascript:
+            critical.append(
+                "assets/js/site.js: inline form-submission contract is "
+                f"missing {required_submission_token!r}"
+            )
     if not re.search(
         r'["\']custom-scope["\']\s*:\s*["\']not-sure["\']',
         site_javascript,
@@ -3019,8 +3147,12 @@ def main() -> int:
             f"{len(approved_not_found_copy)}",
             f"Insights editorial entries checked: "
             f"{len(expected_insights_posts)}",
-            f"Current shared CSS cache references checked: "
-            f"{css_cache_reference_count}/24",
+            f"Unchanged shared CSS cache references checked: "
+            f"{css_cache_reference_count}/23",
+            "Contact-specific CSS and JS cache references checked: 2/2",
+            "Inline contact success cards checked: "
+            f"{production_html.count('data-contact-success')}/1",
+            "Source-controlled Formspree _next fields found: 0",
             f"Public PostalAddress schemas found: "
             f"{len(postal_address_pages)}",
             f"Organization address properties found: "

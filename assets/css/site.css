@@ -3476,6 +3476,48 @@ select:focus {
   color: var(--muted-strong);
 }
 
+.contact-success-card {
+  display: grid;
+  min-height: clamp(440px, 56vh, 610px);
+  align-content: center;
+  padding: clamp(24px, 3.5vw, 40px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(69, 184, 255, 0.13), transparent 18rem),
+    var(--surface-soft);
+}
+
+.contact-success-card .status-orb {
+  margin-bottom: 22px;
+}
+
+.contact-success-card .eyebrow {
+  margin-bottom: 18px;
+}
+
+.contact-success-card h2 {
+  max-width: 15ch;
+  margin: 0 0 18px;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.04;
+}
+
+.contact-success-card > p {
+  max-width: 56ch;
+  color: var(--muted);
+}
+
+.contact-success-note {
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+.contact-success-card .btn-row {
+  margin-top: 28px;
+}
+
 @media (max-width: 1080px) {
   .contact-remodel {
     background: var(--bg);
@@ -3513,6 +3555,11 @@ select:focus {
 
   .contact-form-panel {
     padding: 24px 18px;
+  }
+
+  .contact-success-card {
+    min-height: 0;
+    padding: 26px 18px;
   }
 
   .service-choice,

@@ -371,3 +371,69 @@ Not claimed as runtime passes:
 ## Final QA disposition
 
 The focused refinement is ready in local source for owner/legal review and a controlled release. Pricing, offers, Formspree, Client Portal, Calendly, URLs, and the static architecture were preserved. No deployment, external submission, account mutation, payment action, or production-only validation was performed or implied.
+
+## July 29, 2026 — inline Contact submission QA
+
+No real Formspree request was sent. The browser test server injected a local
+`fetch` mock before the unchanged production JavaScript and recorded the
+request contract in the local test document.
+
+### Automated results
+
+| Scenario | Result |
+|---|---|
+| Successful HTTP response with an empty/malformed JSON body | One intercepted request; URL remained `/contact/?mock=empty`; form content hidden; success card shown and focused; form reset; busy/submitting state cleared; button restored; Home and Pricing links correct |
+| Formspree validation error | Form remained visible; values remained intact; success stayed hidden; button and label restored; `aria-busy` removed; concise status focused; retry sent a second mocked request |
+| Network failure | Same recovery behavior; the approved general error was shown without technical output |
+| Empty-form validation | Zero fetch requests; 14 invalid controls marked by the existing handler; existing validation status announced |
+| Double submission while pending | One request only after click plus a second Enter attempt; `aria-busy="true"`, disabled `Sending…` button, and `Your request is being sent.` status remained intact |
+| Native no-JavaScript contract | Action remains `https://formspree.io/f/xojrdoel`; method remains POST; `_next` is absent; `/thanks/index.html` remains present |
+
+The mocked successful request contained the unchanged endpoint, POST method,
+`Accept: application/json`, and the expected `FormData` field names. It did
+not contain advertising fields when the non-advertising choice kept those
+conditional controls disabled.
+
+### Accessibility and responsive checks
+
+- Success card starts with `hidden`, `role="status"`, `aria-live="polite"`,
+  `aria-atomic="true"`, an `aria-labelledby` heading relationship, and
+  `tabindex="-1"`.
+- Focus moved to the revealed card; the form's disabled state was removed
+  after success; logical link order is Return Home then View Pricing.
+- At 320 × 568, the card used natural height, both actions filled the
+  available width, the heading aligned below the sticky header, and page-level
+  horizontal overflow was false.
+- The same state reflowed without horizontal overflow at effective 720- and
+  360-CSS-pixel widths, representing 200% and 400% layout reflow from a
+  1440-pixel viewport. The explicit 320-pixel check is narrower than the
+  400%-equivalent case.
+- Light and dark computed surfaces/text were checked. The dark success
+  heading was white and supporting text used the existing muted dark-theme
+  token.
+- The reveal uses no animation and scrolls with `behavior: "auto"`, preserving
+  reduced-motion behavior.
+- Browser console warnings/errors after the mocked matrix: 0.
+
+### Command and HTTP results
+
+- `python -B tools/site_audit.py`: unavailable because `python` is not on this
+  workstation's PATH.
+- Bundled Python `-B tools/site_audit.py .`: PASS with 32 HTML files, 22
+  indexable and sitemap URLs, 216 asset references, 52 images, 32 JSON-LD
+  blocks, one form, zero warnings, and zero critical failures.
+- Local HTTP smoke: `/contact/`, `/assets/js/site.js`,
+  `/assets/css/site.css`, and `/thanks/` all returned HTTP 200.
+- `node --check assets/js/site.js`: PASS.
+- `git diff --check`: PASS apart from Git's existing line-ending advisories.
+
+### Required production step
+
+Owner action required in Formspree: Set the form's Thank You redirect to
+`https://rielart.com/thanks/` so non-JavaScript submissions also remain within
+the RielArt website. Codex cannot configure the external Formspree dashboard.
+
+After publication, send one controlled, owner-authorized production inquiry
+to verify Formspree acceptance, mailbox delivery, the JavaScript inline state,
+and the configured no-JavaScript redirect. No production submission was sent
+during this QA pass.

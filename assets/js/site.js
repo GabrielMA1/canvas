@@ -335,6 +335,7 @@
 
   function clearInvalidFormStatus(form) {
     if (form.querySelector('[aria-invalid="true"]')) return;
+    if (form.dataset.submitting === "true") return;
     const pendingFrame = invalidStatusFrames.get(form);
     if (pendingFrame !== undefined) {
       window.cancelAnimationFrame(pendingFrame);
@@ -342,7 +343,10 @@
     }
 
     const status = form.querySelector("[data-form-status]");
-    if (status) status.textContent = "";
+    if (status) {
+      status.textContent = "";
+      delete status.dataset.state;
+    }
   }
 
   function clearValidControlState(form, control) {
@@ -361,15 +365,73 @@
     clearInvalidFormStatus(form);
   }
 
-  function restoreForm(form) {
+  function restoreForm(form, { clearStatus = true } = {}) {
     form.removeAttribute("aria-busy");
+    delete form.dataset.submitting;
     const button = form.querySelector('[type="submit"]');
     const status = form.querySelector("[data-form-status]");
     if (button) {
       button.disabled = false;
       if (button.dataset.originalLabel) button.innerHTML = button.dataset.originalLabel;
     }
-    if (status) status.textContent = "";
+    if (status && clearStatus) {
+      status.textContent = "";
+      delete status.dataset.state;
+    }
+  }
+
+  function setFormStatus(form, message, { focus = false, state = "" } = {}) {
+    const status = form.querySelector("[data-form-status]");
+    if (!status) return;
+
+    status.textContent = message;
+    if (state) status.dataset.state = state;
+    else delete status.dataset.state;
+
+    if (focus) status.focus({ preventScroll: true });
+  }
+
+  async function readFormspreePayload(response) {
+    try {
+      return typeof response.json === "function" ? await response.json() : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function formspreeErrorMessage(payload) {
+    if (Array.isArray(payload?.errors) && payload.errors.length > 0) {
+      return "Please review the form details and try again. If the problem continues, email hello@rielart.com.";
+    }
+
+    return "We could not send your inquiry right now. Please try again, or email hello@rielart.com.";
+  }
+
+  function showContactSuccess(form) {
+    const panel = form.closest(".contact-form-panel");
+    const formContent = panel?.querySelector("[data-form-content]");
+    const successCard = panel?.querySelector("[data-contact-success]");
+
+    if (!formContent || !successCard) return false;
+
+    form.reset();
+    updateAdvertisingFields(form);
+    restoreForm(form);
+    formContent.hidden = true;
+    successCard.hidden = false;
+    successCard.focus({ preventScroll: true });
+
+    const successBounds = successCard.getBoundingClientRect();
+    const headerHeight =
+      document.querySelector(".site-header")?.getBoundingClientRect().height || 0;
+    if (
+      successBounds.top < headerHeight ||
+      successBounds.top >= window.innerHeight
+    ) {
+      successCard.scrollIntoView({ block: "start", behavior: "auto" });
+    }
+
+    return true;
   }
 
   const serviceIntent = requestedServiceIntent();
@@ -403,17 +465,67 @@
       });
     });
 
-    form.addEventListener("submit", () => {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      if (form.dataset.submitting === "true") return;
+
       const button = form.querySelector('[type="submit"]');
-      const status = form.querySelector("[data-form-status]");
+      if (!button) return;
+
+      form.dataset.submitting = "true";
       form.setAttribute("aria-busy", "true");
 
-      if (button) {
+      if (!button.dataset.originalLabel) {
         button.dataset.originalLabel = button.innerHTML;
-        button.disabled = true;
-        button.textContent = "Sending…";
       }
-      if (status) status.textContent = "Your request is being sent.";
+
+      button.disabled = true;
+      button.textContent = "Sending…";
+      setFormStatus(form, "Your request is being sent.", { state: "sending" });
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+          headers: {
+            Accept: "application/json"
+          }
+        });
+        const payload = await readFormspreePayload(response);
+
+        if (!response.ok) {
+          restoreForm(form, { clearStatus: false });
+          setFormStatus(form, formspreeErrorMessage(payload), {
+            focus: true,
+            state: "error"
+          });
+          return;
+        }
+
+        if (!showContactSuccess(form)) {
+          restoreForm(form, { clearStatus: false });
+          setFormStatus(form, "Thank you — your inquiry has been sent.", {
+            focus: true,
+            state: "success"
+          });
+        }
+      } catch {
+        restoreForm(form, { clearStatus: false });
+        setFormStatus(
+          form,
+          "We could not send your inquiry right now. Please try again, or email hello@rielart.com.",
+          {
+            focus: true,
+            state: "error"
+          }
+        );
+      }
     });
   });
 

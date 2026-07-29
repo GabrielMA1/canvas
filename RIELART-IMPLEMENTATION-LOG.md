@@ -366,3 +366,58 @@ No public page contains an active Stripe checkout link. Future links require own
 ## Release status
 
 The source remodel and local QA are complete. Production deployment, production redirect verification, a real Formspree delivery, cross-browser testing, legal approval, and payment-link activation remain explicit owner/manual steps documented in the QA and manual-review reports.
+
+## July 29, 2026 — inline Contact-form success state
+
+### Root cause
+
+The Contact form already had a submit listener, but that listener only applied
+the busy state and disabled the button. It did not prevent the form's native
+navigation or submit with `fetch()`. JavaScript-enabled visitors therefore
+followed Formspree's normal POST response to its generic thank-you page.
+
+### Production implementation
+
+- Kept the approved action `https://formspree.io/f/xojrdoel` and
+  `method="post"` unchanged.
+- Wrapped the existing guidance and form in one initial-state container.
+- Added one initially hidden, focusable, polite live-region success card as
+  its sibling inside the existing `.contact-form-panel`.
+- Replaced only the Contact submit listener with `fetch(form.action)` using
+  `FormData` and `Accept: application/json`.
+- Preserved native validation, invalid-field handling, the sending
+  announcement, `aria-busy`, the disabled button, and the duplicate-request
+  guard.
+- Reveals the success card only after `response.ok`; empty or malformed JSON
+  on a successful HTTP response is handled safely.
+- Resets the form only after success, restores its busy state, moves focus to
+  the success card, and scrolls its beginning below the sticky header only
+  when needed.
+- On Formspree or network failure, preserves every entry, restores the
+  original button, removes the busy state, focuses the existing accessible
+  status region, and allows retry.
+- Removed the source-controlled `_next` field. The existing `/thanks/` page
+  was not modified.
+- Advanced the Contact page's CSS and JavaScript cache keys only.
+
+Public production files changed:
+
+- `contact/index.html`
+- `assets/js/site.js`
+- `assets/css/site.css`
+
+Testing and documentation files changed:
+
+- `tools/site_audit.py`
+- `RIELART-IMPLEMENTATION-LOG.md`
+- `RIELART-QA-REPORT.md`
+- `PRE-PUBLISH-RELEASE-REPORT.md`
+
+No framework, package, dependency manifest, backend, analytics storage, or
+unrelated public-page change was introduced.
+
+### Progressive fallback owner action
+
+Owner action required in Formspree: Set the form's Thank You redirect to
+`https://rielart.com/thanks/` so non-JavaScript submissions also remain within
+the RielArt website. Codex cannot configure the external Formspree dashboard.
