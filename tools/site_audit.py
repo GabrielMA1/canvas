@@ -2216,35 +2216,54 @@ def main() -> int:
                 f"{expected_section!r}"
             )
 
-    current_css_cache_reference = "site.css?v=20260728r4"
-    contact_css_cache_reference = "site.css?v=20260729r1"
-    contact_js_cache_reference = "site.js?v=20260729r1"
-    previous_css_cache_reference = "site.css?v=20260728r3"
+    current_css_cache_reference = "site.css?v=20260731nav1"
+    current_js_cache_reference = "site.js?v=20260731nav1"
+    retired_cache_references = (
+        "site.css?v=20260728r3",
+        "site.css?v=20260728r4",
+        "site.css?v=20260729r1",
+        "site.js?v=20260728r1",
+        "site.js?v=20260729r1",
+    )
     css_cache_reference_count = production_html.count(
         current_css_cache_reference
     )
-    if css_cache_reference_count != 23:
+    js_cache_reference_count = production_html.count(
+        current_js_cache_reference
+    )
+    if css_cache_reference_count != 24:
         critical.append(
-            "public HTML must contain exactly 23 unchanged shared CSS cache "
+            "public HTML must contain exactly 24 current shared CSS cache "
             f"references ({css_cache_reference_count})"
         )
-    contact_cache_html = page_source("contact/index.html")
-    if contact_cache_html.count(contact_css_cache_reference) != 1:
+    if js_cache_reference_count != 24:
         critical.append(
-            "contact/index.html must contain exactly one contact CSS cache "
-            f"reference ({contact_css_cache_reference})"
+            "public HTML must contain exactly 24 current shared JS cache "
+            f"references ({js_cache_reference_count})"
         )
-    if contact_cache_html.count(contact_js_cache_reference) != 1:
-        critical.append(
-            "contact/index.html must contain exactly one contact JS cache "
-            f"reference ({contact_js_cache_reference})"
-        )
-    if previous_css_cache_reference in production_html:
-        critical.append(
-            "public HTML still contains the retired shared CSS cache key "
-            f"({previous_css_cache_reference})"
-        )
+    for retired_cache_reference in retired_cache_references:
+        if retired_cache_reference in production_html:
+            critical.append(
+                "public HTML still contains a retired shared cache key "
+                f"({retired_cache_reference})"
+            )
 
+    services_dropdown_count = production_html.count(
+        'class="nav-dropdown" data-services-dropdown'
+    )
+    mobile_services_group_count = production_html.count(
+        'class="mobile-nav-services"'
+    )
+    if services_dropdown_count != 24:
+        critical.append(
+            "public HTML must contain exactly 24 desktop Services "
+            f"dropdowns ({services_dropdown_count})"
+        )
+    if mobile_services_group_count != 24:
+        critical.append(
+            "public HTML must contain exactly 24 mobile Services groups "
+            f"({mobile_services_group_count})"
+        )
     anchor_pattern = re.compile(
         r"<a\b(?P<attrs>[^>]*)>(?P<body>.*?)</a\s*>",
         re.I | re.S,
@@ -3230,10 +3249,14 @@ def main() -> int:
             f"{len(approved_not_found_copy)}",
             f"Insights editorial entries checked: "
             f"{len(expected_insights_posts)}",
-            f"Unchanged shared CSS cache references checked: "
-            f"{css_cache_reference_count}/23",
-            "Contact-specific CSS and JS cache references checked: 2/2",
-            "Inline contact success cards checked: "
+            f"Current shared CSS cache references checked: "
+            f"{css_cache_reference_count}/24",
+            f"Current shared JS cache references checked: "
+            f"{js_cache_reference_count}/24",
+            f"Desktop Services dropdowns checked: "
+            f"{services_dropdown_count}/24",
+            f"Mobile Services groups checked: "
+            f"{mobile_services_group_count}/24",            "Inline contact success cards checked: "
             f"{production_html.count('data-contact-success')}/1",
             "Source-controlled Formspree _next fields found: 0",
             f"Public PostalAddress schemas found: "

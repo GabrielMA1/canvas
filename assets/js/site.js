@@ -38,6 +38,7 @@
   /* Mobile navigation */
   const menuButton = document.querySelector("[data-menu-toggle]");
   const mobileMenu = document.querySelector("[data-mobile-menu]");
+  const servicesDropdown = document.querySelector("[data-services-dropdown]");
   let previouslyFocused = null;
 
   function menuFocusableElements() {
@@ -106,13 +107,37 @@
     }
   });
 
-  const resetMenuForDesktop = (event) => {
+  /* Desktop services dropdown */
+  function closeServices(restoreFocus = false) {
+    if (!servicesDropdown?.open) return;
+    servicesDropdown.removeAttribute("open");
+    if (restoreFocus) servicesDropdown.querySelector("summary")?.focus();
+  }
+
+  servicesDropdown?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => closeServices());
+  });
+
+  document.addEventListener("click", (event) => {
+    if (servicesDropdown?.open && !servicesDropdown.contains(event.target)) {
+      closeServices();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && servicesDropdown?.open) {
+      event.preventDefault();
+      closeServices(true);
+    }
+  });
+
+  const resetNavigationForViewport = (event) => {
     if (event.matches) closeMenu({ restoreFocus: false });
+    else closeServices();
   };
 
-  desktopNavigation.addEventListener?.("change", resetMenuForDesktop);
-  resetMenuForDesktop(desktopNavigation);
-
+  desktopNavigation.addEventListener?.("change", resetNavigationForViewport);
+  resetNavigationForViewport(desktopNavigation);
   /* Accessible single-open FAQ groups */
   const faqTimers = new WeakMap();
 
