@@ -2501,14 +2501,15 @@ def main() -> int:
             "Focused Ads Management",
             "$349 USD per month",
             "Three-month initial commitment. Advertising spend separate.",
-            "One Google or Meta advertising platform",
-            "One business, website, defined market, language, and primary "
-            "offer",
-            "Campaign strategy, setup, and copy",
-            "Basic active-campaign tracking where supported",
+            "One platform and one primary campaign",
+            "Campaign setup and conversion tracking",
+            "Ad copy and platform-appropriate campaign creative",
             "Monitoring and optimization",
-            "Monthly performance summary and review call",
-            "Up to one hour monthly for campaign-related website changes",
+            "Monthly reporting and review",
+            "Up to one hour of campaign-related website changes",
+            "For Meta campaigns, the monthly creative allowance includes "
+            "up to two refreshed variations when useful. One may be a "
+            "short-form video ad.",
         ),
     }
     for match in inclusion_matches:
@@ -2609,7 +2610,27 @@ def main() -> int:
         "website edit time does not roll over":
             "unused website-update time does not roll over",
         "limited Meta creative refresh":
-            "up to two refreshed static creative variations per month when useful",
+            "up to two refreshed creative variations per month when useful",
+        "Meta creative material sources":
+            "campaign creative using approved client media, licensed stock "
+            "assets, website content, brand graphics, motion typography, or "
+            "other suitable materials",
+        "Meta initial creative range":
+            "meta campaigns normally begin with approximately three to five "
+            "ad variations built around a focused set of creative concepts",
+        "video included within the two-variation allowance":
+            "one of those two variations may be a short-form video ad",
+        "short-form video production limits":
+            "included short-form videos are typically focused 10–15 second "
+            "edits created for the campaign",
+        "video is not an additional creative":
+            "a video counts as one of the two included variations; it is not "
+            "an additional third creative",
+        "creative is refreshed based on need":
+            "creative is refreshed based on campaign needs rather than "
+            "produced unnecessarily",
+        "Google excludes monthly video production":
+            "google search campaigns do not include monthly video production",
         "Google responsive-ad explanation":
             "google responsive search ads combine and test multiple headlines and descriptions",
     }
@@ -2620,6 +2641,68 @@ def main() -> int:
         critical.append(
             f"{ads_relative}: Google scope promises a fixed monthly ad count"
         )
+
+    for retired_static_phrase in (
+        "Basic static creative using approved client-provided assets",
+        "Up to two refreshed static creative variations per month when useful",
+        "up to two refreshed static variations per month when useful",
+    ):
+        if retired_static_phrase.casefold() in ads_text.casefold():
+            critical.append(
+                f"{ads_relative}: retired static-only Meta wording remains "
+                f"({retired_static_phrase})"
+            )
+
+    homepage_relative = "index.html"
+    homepage_text = page_visible(homepage_relative)
+    homepage_html = page_source(homepage_relative)
+    homepage_ads_phrases = (
+        "Ad copy and campaign creative",
+        "The practical parts of advertising, handled together.",
+        "without taking ownership of your advertising accounts or charging "
+        "a percentage of your ad spend",
+        "Ad copy and Meta creative included",
+        "Campaign messaging and practical creative refreshes are handled "
+        "together, including short-form video when appropriate.",
+    )
+    for phrase in homepage_ads_phrases:
+        if phrase.casefold() not in homepage_text.casefold():
+            critical.append(
+                f"{homepage_relative}: missing approved advertising benefit "
+                f"wording ({phrase})"
+            )
+    if homepage_html.count('id="why-rielart"') != 1:
+        critical.append(
+            f"{homepage_relative}: expected exactly one Why RielArt section"
+        )
+
+    approved_ad_count_answer = (
+        "The standard service includes one advertising platform and one "
+        "primary campaign. Google Search campaigns use focused ad groups "
+        "with responsive ad copy variations. Meta campaigns normally begin "
+        "with approximately three to five ad variations and include up to "
+        "two refreshed creative variations per month when useful. One "
+        "refreshed variation may be a short-form video ad."
+    )
+    video_faq_answer = (
+        "Yes. For suitable Meta campaigns, the standard service may include "
+        "up to one short-form video variation per month within the "
+        "two-creative monthly allowance. Videos are generally created from "
+        "approved client media, licensed stock assets, website content, "
+        "brand graphics, motion typography, or other suitable materials. "
+        "On-location filming, actors, UGC creators, professional voice "
+        "talent, advanced animation, and larger production requirements are "
+        "quoted separately."
+    )
+    faq_relative = "faq/index.html"
+    faq_text = page_visible(faq_relative)
+    for label, phrase in (
+        ("updated How many ads answer", approved_ad_count_answer),
+        ("video ads question", "Do you create video ads?"),
+        ("video ads answer", video_faq_answer),
+    ):
+        if phrase.casefold() not in faq_text.casefold():
+            critical.append(f"{faq_relative}: missing {label}")
 
     contact_path = (root / "contact" / "index.html").resolve()
     contact_page = pages.get(contact_path)
