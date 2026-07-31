@@ -842,7 +842,8 @@ code {
 }
 
 .mobile-menu nav > a:not(.btn),
-.mobile-nav-services a {
+.mobile-nav-services a,
+.mobile-nav-learn a {
   display: flex;
   min-height: 52px;
   align-items: center;
@@ -857,7 +858,8 @@ code {
   color: var(--blue);
 }
 
-.mobile-nav-services {
+.mobile-nav-services,
+.mobile-nav-learn {
   display: grid;
   margin-bottom: 8px;
   padding: 8px;

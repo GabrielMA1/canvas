@@ -21,7 +21,7 @@
   <meta name="twitter:image" content="https://rielart.com/images/rielart-og.jpg">
   <link rel="icon" href="/images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20260731nav1">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260731nav2">
   <script>
     try {
       document.documentElement.dataset.theme = localStorage.getItem("theme") === "dark" ? "dark" : "light";
@@ -78,7 +78,7 @@
     <div class="container header-inner">
       <a class="brand" href="/" aria-label="RielArt home"><img src="/images/logo.png" width="34" height="34" alt=""><span>RielArt</span></a>
       <nav class="nav" aria-label="Primary navigation">
-        <details class="nav-dropdown" data-services-dropdown>
+        <details class="nav-dropdown" data-services-dropdown data-nav-dropdown>
           <summary>Services<span class="nav-caret" aria-hidden="true"></span></summary>
           <div class="nav-dropdown-panel">
             <a href="/services/"><span>All Services</span><small>Compare the ways to work together</small></a>
@@ -89,7 +89,19 @@
             <div class="nav-dropdown-subgrid"><a href="/services/focused-ads-management/#google-search-ads">Google Search Ads</a><a href="/services/focused-ads-management/#meta-ads">Meta Ads</a></div>
           </div>
         </details>
-        <a href="/portfolio/">Work</a><a href="/process/">How It Works</a><a href="/pricing/">Pricing</a><a href="/blog/">Insights</a><a href="/about/">About</a><a href="/contact/">Contact</a>
+        <a href="/portfolio/">Work</a><a href="/pricing/">Pricing</a>
+        <details class="nav-dropdown" data-learn-dropdown data-nav-dropdown>
+          <summary>Learn<span class="nav-caret" aria-hidden="true"></span></summary>
+          <div class="nav-dropdown-panel">
+            <p class="nav-dropdown-label">Working with RielArt</p>
+            <a href="/process/"><span>How It Works</span><small>See the process from first conversation to launch</small></a>
+            <a href="/about/"><span>About RielArt</span><small>Learn what the studio focuses on and how it works</small></a>
+            <p class="nav-dropdown-label">Guides and answers</p>
+            <a href="/blog/"><span>Insights</span><small>Practical guidance for growing businesses</small></a>
+            <a href="/faq/"><span>FAQ</span><small>Answers about projects, pricing, and support</small></a>
+          </div>
+        </details>
+        <a href="/contact/">Contact</a>
       </nav>
       <div class="header-actions">
         <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"><span class="theme-glyph sun" aria-hidden="true">☼</span><span class="theme-glyph moon" aria-hidden="true">☾</span></button>
@@ -109,7 +121,15 @@
         <p class="mobile-nav-sublabel">Advertising options</p>
         <div class="mobile-nav-subgrid"><a href="/services/focused-ads-management/#google-search-ads">Google Search Ads</a><a href="/services/focused-ads-management/#meta-ads">Meta Ads</a></div>
       </div>
-      <a href="/portfolio/">Work</a><a href="/process/">How It Works</a><a href="/pricing/">Pricing</a><a href="/blog/">Insights</a><a href="/about/">About</a><a href="/contact/">Contact</a>
+      <a href="/portfolio/">Work</a><a href="/pricing/">Pricing</a>
+      <div class="mobile-nav-learn">
+        <p class="mobile-nav-label">Learn</p>
+        <a href="/process/">How It Works</a>
+        <a href="/about/">About RielArt</a>
+        <a href="/blog/">Insights</a>
+        <a href="/faq/">FAQ</a>
+      </div>
+      <a href="/contact/">Contact</a>
       <a href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
       <a class="btn btn-primary" href="/contact/#project-inquiry">Get Started</a>
     </nav>
@@ -278,6 +298,6 @@
     </div>
     <div class="container footer-bottom"><p>© <span data-year>2026</span> RielArt. All rights reserved.</p><p><a href="/privacy-policy/">Privacy</a> <a href="/terms/">Terms</a></p></div>
   </footer>
-  <script src="/assets/js/site.js?v=20260731nav1" defer></script>
+  <script src="/assets/js/site.js?v=20260731nav2" defer></script>
 </body>
 </html>

@@ -2216,14 +2216,16 @@ def main() -> int:
                 f"{expected_section!r}"
             )
 
-    current_css_cache_reference = "site.css?v=20260731nav1"
-    current_js_cache_reference = "site.js?v=20260731nav1"
+    current_css_cache_reference = "site.css?v=20260731nav2"
+    current_js_cache_reference = "site.js?v=20260731nav2"
     retired_cache_references = (
         "site.css?v=20260728r3",
         "site.css?v=20260728r4",
         "site.css?v=20260729r1",
         "site.js?v=20260728r1",
         "site.js?v=20260729r1",
+        "site.css?v=20260731nav1",
+        "site.js?v=20260731nav1",
     )
     css_cache_reference_count = production_html.count(
         current_css_cache_reference
@@ -2251,18 +2253,34 @@ def main() -> int:
     services_dropdown_count = production_html.count(
         'class="nav-dropdown" data-services-dropdown'
     )
+    learn_dropdown_count = production_html.count(
+        'class="nav-dropdown" data-learn-dropdown'
+    )
     mobile_services_group_count = production_html.count(
         'class="mobile-nav-services"'
+    )
+    mobile_learn_group_count = production_html.count(
+        'class="mobile-nav-learn"'
     )
     if services_dropdown_count != 24:
         critical.append(
             "public HTML must contain exactly 24 desktop Services "
             f"dropdowns ({services_dropdown_count})"
         )
+    if learn_dropdown_count != 24:
+        critical.append(
+            "public HTML must contain exactly 24 desktop Learn "
+            f"dropdowns ({learn_dropdown_count})"
+        )
     if mobile_services_group_count != 24:
         critical.append(
             "public HTML must contain exactly 24 mobile Services groups "
             f"({mobile_services_group_count})"
+        )
+    if mobile_learn_group_count != 24:
+        critical.append(
+            "public HTML must contain exactly 24 mobile Learn groups "
+            f"({mobile_learn_group_count})"
         )
     anchor_pattern = re.compile(
         r"<a\b(?P<attrs>[^>]*)>(?P<body>.*?)</a\s*>",
@@ -3255,8 +3273,12 @@ def main() -> int:
             f"{js_cache_reference_count}/24",
             f"Desktop Services dropdowns checked: "
             f"{services_dropdown_count}/24",
+            f"Desktop Learn dropdowns checked: "
+            f"{learn_dropdown_count}/24",
             f"Mobile Services groups checked: "
-            f"{mobile_services_group_count}/24",            "Inline contact success cards checked: "
+            f"{mobile_services_group_count}/24",
+            f"Mobile Learn groups checked: "
+            f"{mobile_learn_group_count}/24",            "Inline contact success cards checked: "
             f"{production_html.count('data-contact-success')}/1",
             "Source-controlled Formspree _next fields found: 0",
             f"Public PostalAddress schemas found: "

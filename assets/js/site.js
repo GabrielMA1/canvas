@@ -38,7 +38,7 @@
   /* Mobile navigation */
   const menuButton = document.querySelector("[data-menu-toggle]");
   const mobileMenu = document.querySelector("[data-mobile-menu]");
-  const servicesDropdown = document.querySelector("[data-services-dropdown]");
+  const desktopDropdowns = [...document.querySelectorAll("[data-nav-dropdown]")];
   let previouslyFocused = null;
 
   function menuFocusableElements() {
@@ -107,33 +107,36 @@
     }
   });
 
-  /* Desktop services dropdown */
-  function closeServices(restoreFocus = false) {
-    if (!servicesDropdown?.open) return;
-    servicesDropdown.removeAttribute("open");
-    if (restoreFocus) servicesDropdown.querySelector("summary")?.focus();
+  function closeDropdowns(except = null, restoreFocus = false) {
+    desktopDropdowns.forEach((dropdown) => {
+      if (dropdown === except || !dropdown.open) return;
+      dropdown.removeAttribute("open");
+      if (restoreFocus) dropdown.querySelector("summary")?.focus();
+    });
   }
 
-  servicesDropdown?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => closeServices());
+  desktopDropdowns.forEach((dropdown) => {
+    dropdown.addEventListener("toggle", () => dropdown.open && closeDropdowns(dropdown));
+    dropdown.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => closeDropdowns()));
   });
 
   document.addEventListener("click", (event) => {
-    if (servicesDropdown?.open && !servicesDropdown.contains(event.target)) {
-      closeServices();
+    if (!desktopDropdowns.some((dropdown) => dropdown.contains(event.target))) {
+      closeDropdowns();
     }
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && servicesDropdown?.open) {
-      event.preventDefault();
-      closeServices(true);
-    }
+    if (event.key !== "Escape") return;
+    const openDropdown = desktopDropdowns.find((dropdown) => dropdown.open);
+    if (!openDropdown) return;
+    event.preventDefault();
+    closeDropdowns(null, true);
   });
 
   const resetNavigationForViewport = (event) => {
     if (event.matches) closeMenu({ restoreFocus: false });
-    else closeServices();
+    else closeDropdowns();
   };
 
   desktopNavigation.addEventListener?.("change", resetNavigationForViewport);
