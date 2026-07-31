@@ -32,14 +32,6 @@ CALENDLY_URL = (
 )
 EMAIL_URL = "mailto:hello@rielart.com"
 LINKEDIN_URL = "https://www.linkedin.com/in/gabrielmacovei/"
-APPROVED_PUBLIC_ADDRESS = (
-    "Gabriel Macovei Unit 75815 808 Commerce Park Drive "
-    "Ogdensburg, NY 13669-2208 USA"
-)
-PUBLIC_ADDRESS_LEGAL_EXCLUSIONS = {
-    "privacy-policy/index.html",
-    "terms/index.html",
-}
 EXPECTED_ONE_TIME_PRICES = {"$599"}
 EXPECTED_MONTHLY_PRICES = {"$349"}
 LEGACY_COMMERCIAL_PRICES = {"$149", "$247", "$249", "$399", "$497", "$699"}
@@ -1859,8 +1851,6 @@ def main() -> int:
         r"\ ", r"\s+"
     )
 
-    approved_public_address_total = 0
-
     for relative, source in sorted(html_sources.items()):
         source_folded = source.casefold()
         visible_source = strip_html(source)
@@ -1869,39 +1859,20 @@ def main() -> int:
                 critical.append(
                     f"{relative}: removed public {label} remains"
                 )
-        approved_public_address_count = 0
         for address_match in re.finditer(
             r"<address\b[^>]*>(?P<body>.*?)</address\s*>",
             source,
             re.I | re.S,
         ):
             line = source.count("\n", 0, address_match.start()) + 1
-            address_text = strip_html(address_match.group("body"))
-            if not address_text:
+            if not strip_html(address_match.group("body")):
                 critical.append(
                     f"{relative}:{line}: empty address element found"
                 )
-            elif address_text != APPROVED_PUBLIC_ADDRESS:
-                critical.append(
-                    f"{relative}:{line}: unapproved public address found"
-                )
             else:
-                approved_public_address_count += 1
-                approved_public_address_total += 1
-        expected_public_address_count = 0
-        if (
-            relative not in PUBLIC_ADDRESS_LEGAL_EXCLUSIONS
-            and 'aria-label="Connect"' in source
-        ):
-            expected_public_address_count += 1
-        if relative == "contact/index.html":
-            expected_public_address_count += 1
-        if approved_public_address_count != expected_public_address_count:
-            critical.append(
-                f"{relative}: approved public address count is "
-                f"{approved_public_address_count}; expected "
-                f"{expected_public_address_count}"
-            )
+                critical.append(
+                    f"{relative}:{line}: public address element remains"
+                )
         if (
             re.search(
                 rf"(?i)\b{old_global_cta_pattern}\b",
@@ -3182,8 +3153,6 @@ def main() -> int:
             "Inline contact success cards checked: "
             f"{production_html.count('data-contact-success')}/1",
             "Source-controlled Formspree _next fields found: 0",
-            f"Approved public address elements checked: "
-            f"{approved_public_address_total}/23",
             f"Public PostalAddress schemas found: "
             f"{len(postal_address_pages)}",
             f"Organization address properties found: "
