@@ -17,6 +17,10 @@
 
 The custom-scope route maps to “I am not sure yet” while preserving `Custom scope inquiry` in the form context. It is not a third primary service.
 
+**Optional setup CTA:** Ask About Business Email → `/contact/?service=business-email-workspace#project-inquiry`
+
+The Business Email query maps the primary choice to “I am not sure yet,” checks the separate non-required Business Email & Workspace Setup field, and preserves `Business Email & Workspace Setup inquiry` in the form context. The footer uses the compact link **Business Email Setup** → `/pricing/#business-email-workspace`.
+
 ## Homepage
 
 **Eyebrow:** Brand · Website · Online Advertising
@@ -32,6 +36,7 @@ Sections:
 1. “Your business should look as professional online as the work you provide.”
 2. “One clear path from first impression to customer inquiry.”
 3. Brand & Website Launch and Focused Ads Management
+   - Compact optional Business Email & Workspace Setup callout directly afterward
 4. “The right platform depends on how customers find you.”
 5. “A straightforward process from inquiry to improvement.”
 6. “Selected work, clearly labelled.”
@@ -50,6 +55,8 @@ The page introduces only:
 - Brand & Website Launch — $599 USD one time
 - Focused Ads Management — $349 USD per month
 
+After the two primary services, add a smaller **Optional setup** section for **Business Email & Workspace Setup — From $149 USD one time**. State one existing business domain, up to 3 users, Google Workspace or Microsoft 365, restrained email-authentication setup, separate provider subscriptions, client-owned administration, and separately scoped migrations or complex environments.
+
 ## Brand & Website Launch
 
 **Title:** A clear brand and professional website, ready to share.
@@ -57,6 +64,8 @@ The page introduces only:
 **Lead:** Brand direction, a practical visual identity, and a responsive business website with up to four core pages—planned and launched as one focused project.
 
 Primary content: outcomes, included scope, typical pages, three-to-five-week timeline, exclusions, process, FAQ, inquiry CTA.
+
+Near the end, cross-reference Business Email & Workspace Setup as an optional setup from $149. It is not included in the $599 launch scope; provider subscriptions remain separate.
 
 ## Focused Ads Management
 
@@ -82,7 +91,9 @@ Use two equal offer cards, a concise “Need both?” example, and one shared tw
 
 Each column lists only what its own service includes. Do not restore a shared item-label column, row-by-row cross-service comparisons, or “available separately” cells. Add the clarification: **Choosing both services? You receive everything listed in both columns, delivered in the appropriate sequence for your business.**
 
-After the inclusion section, use one discreet **Need something beyond these scopes?** panel with **Ask About a Custom Scope**. This inquiry can mention ongoing website support, content updates, blog publishing, additional landing pages, or broader campaign requirements without creating a third package or publishing add-on prices.
+After the inclusion section, use a subordinate section anchored at `#business-email-workspace` for **Business Email & Workspace Setup — From $149 USD one time**. Include one domain, up to 3 users, Google Workspace or Microsoft 365, DNS/email-authentication and security baselines, separate provider costs, client ownership, and separately quoted migration or complexity.
+
+Keep the discreet **Need something beyond these scopes?** panel with **Ask About a Custom Scope**. This inquiry can mention ongoing website support, content updates, blog publishing, additional landing pages, or broader campaign requirements without creating another package or publishing another add-on price.
 
 ## Process
 
@@ -121,6 +132,8 @@ Answer:
 - How long is the advertising commitment?
 - Can RielArt guarantee leads or sales?
 - Do you work with businesses outside the United States?
+- Can RielArt set up professional business email?
+- Does the $149 include Google Workspace or Microsoft 365 subscriptions?
 
 No homepage FAQ question was removed during the July 28 content-consistency
 pass. Revisit FAQ length only after real traffic or interaction data identifies
@@ -144,6 +157,8 @@ The form uses exactly four service choices:
 Advertising-specific questions appear only for Focused Ads Management or Both.
 
 The custom-scope query selects “I am not sure yet” and preserves the inquiry context in a hidden field; it does not add a fifth primary service choice.
+
+Immediately after the four primary choices, use a separate non-required **Optional setup** checkbox for **Business Email & Workspace Setup — from $149**. The dedicated query selects “I am not sure yet,” checks this checkbox, shows a visible prepared state, and sets `Business Email & Workspace Setup inquiry`. It never reveals advertising questions by itself.
 
 ## Thank you
 

@@ -437,3 +437,82 @@ After publication, send one controlled, owner-authorized production inquiry
 to verify Formspree acceptance, mailbox delivery, the JavaScript inline state,
 and the configured no-JavaScript redirect. No production submission was sent
 during this QA pass.
+
+## August 7, 2026 — Business Email & Workspace Setup QA
+
+### Source and commercial-integrity results
+
+- Bundled Python static audit: **PASS** — 32 HTML files, 22 indexable and
+  sitemap URLs, 216 asset references, 52 images, 32 JSON-LD blocks, one form,
+  zero warnings, and zero critical failures.
+- The audit found exactly two primary services on Home, Services, and Pricing;
+  the optional setup uses no `.offer-card`, `data-primary-service`, Service
+  schema, or Offer schema.
+- Approved optional coverage: four marked public callouts, four inquiry CTAs,
+  one Pricing offer/price occurrence, and 24 footer links.
+- `$149` is restricted to marked Business Email & Workspace Setup elements and
+  the exact synchronized FAQPage strings. No `$149/month`, Managed IT
+  Services, retired commercial price, or extra primary-service marker remains.
+- FAQ visible copy and FAQPage JSON-LD remain synchronized.
+
+### Contact-form state matrix
+
+The test loaded the real local production JavaScript and did not send a
+Formspree request.
+
+| State | Advertising questions | Result |
+|---|---|---|
+| Optional setup only | Hidden and disabled | PASS |
+| Focused Ads Management | Visible and enabled | PASS |
+| Both services | Visible and enabled | PASS |
+| Brand & Website Launch | Hidden and disabled | PASS |
+| I am not sure yet | Hidden and disabled | PASS |
+
+With the `business-email-workspace` query, desktop light mode and 320-pixel
+dark mode both selected `I am not sure yet`, checked the optional checkbox,
+showed the prepared-inquiry status, and set the hidden context to exactly
+`Business Email & Workspace Setup inquiry`. Mocked `FormData` contained the
+optional value `Business Email & Workspace Setup — from $149`; disabled
+advertising fields were excluded. Unchecking the optional setup hid the status
+and cleared the hidden context; rechecking it restored both while advertising
+fields remained hidden and disabled.
+
+### Responsive, theme, and keyboard checks
+
+- Headless Chrome covered Home, Services, Pricing, Brand & Website Launch,
+  Contact, and FAQ in ten desktop/mobile light/dark cases, including 320-pixel
+  layouts. No case produced horizontal overflow or a console warning/error.
+- Optional sections stacked at natural height, and the Contact checkbox kept a
+  visible 3-pixel focus outline in both tested themes.
+- Source review confirmed a semantic labelled checkbox, no new dependency,
+  and unchanged Formspree submission code.
+
+### Command and HTTP results
+
+- Bundled Python `-B tools/site_audit.py .`: PASS.
+- `node --check assets/js/site.js`: PASS.
+- `git diff --check`: PASS.
+- Local HTTP crawl: 34 routes checked; 33 HTTP 200 responses; 31 HTML pages;
+  aggregate HTML 399,759 bytes; all route HTML limits PASS.
+- JavaScript: 20,479 / 20,480 bytes — PASS.
+- Logo: 8,587 / 10,240 bytes — PASS.
+- CSS: 92,044 / 83,968 bytes — FAIL against the existing budget.
+- Combined image library: 11,869,058 / 665,600 bytes — FAIL against the
+  existing budget.
+
+The CSS and image budgets were already over limit before this change; the
+optional-service pass adds no image asset and keeps JavaScript under budget.
+These known performance-budget failures make the final disposition a
+**CONDITIONAL PASS**, not a functional or commercial-integrity failure.
+
+### Remaining production-only checks
+
+- Complete owner/legal review of the updated operational terms and provider
+  responsibilities.
+- After publication, verify the deployed cache key, routes, footer anchor,
+  production redirects, and external destinations.
+- Send one separately authorized production inquiry to confirm Formspree and
+  mailbox delivery; no real submission was sent during this QA pass.
+- Confirm tenant/domain ownership, delegated access, recovery, DNS rollback,
+  migration boundaries, retention, and offboarding procedures before accepting
+  the first live setup engagement.

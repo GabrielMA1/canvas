@@ -2,6 +2,8 @@
 
 **Prepared:** July 28, 2026
 
+**Updated:** August 7, 2026
+
 **Purpose:** Record legal, owner, account, privacy, and operational decisions that cannot be verified from the static repository alone.
 
 This register is an implementation handoff, not legal advice. The public Privacy Policy and Terms describe the intended operating model but require review against actual agreements, accounts, data flows, target markets, and business practices before launch.
@@ -13,13 +15,15 @@ This register is an implementation handoff, not legal advice. The public Privacy
 - Contact forms use Formspree and currently route successful submissions to `/thanks/`.
 - Calendly is an optional outbound scheduling service.
 - The Client Portal, Cloudflare infrastructure, Resend login email, and Stripe billing references already appear in the site's privacy disclosures.
-- The approved commercial model has two public services:
+- The approved commercial model has two primary public services:
   - Brand & Website Launch - $599 USD one time.
   - Focused Ads Management - $349 USD per month with a three-month initial commitment.
+- The approved subordinate setup is Business Email & Workspace Setup - from $149 USD one time. It is not a third primary service, managed IT offer, or public add-on catalogue.
 - Advertising spend is separate and is paid by the client directly to Google or Meta.
 - No public Stripe checkout or subscription link is approved for the remodeled offers.
 - The general public CTA is **Get Started**. Service-specific CTAs remain **Start Your Launch** and **Start Advertising**.
 - The pricing page exposes a separately reviewed custom-scope inquiry, not a third service. Its query maps to “I am not sure yet” while preserving `Custom scope inquiry` as form context.
+- The contact form keeps the four primary choices and adds one non-required Business Email & Workspace Setup checkbox. Its query maps the primary choice to “I am not sure yet,” checks the optional field, and preserves `Business Email & Workspace Setup inquiry` as form context.
 - The public site intentionally provides `hello@rielart.com` rather than publishing a street or mailing address.
 
 These facts must be rechecked against the deployed production site and relevant provider accounts before release.
@@ -54,6 +58,25 @@ The agreement must confirm:
 - change-request and out-of-scope approval procedures.
 
 The public $599 description is not a substitute for these terms.
+
+### 2A. Business Email & Workspace Setup agreement and operating procedure
+
+Before accepting the optional setup, confirm and document:
+
+- that the written scope is a straightforward new setup for one existing business domain and up to 3 users unless a different scope is expressly approved;
+- whether Google Workspace or Microsoft 365 is being configured and that the client contracts with and pays the provider directly;
+- client ownership and continuing administrator control of the tenant, domain, mailboxes, aliases, data, and recovery methods;
+- administrative or delegated access that avoids sharing personal passwords where the provider supports it;
+- registrar and DNS access, existing-record capture, TTL planning, approved DNS changes, rollback steps, and responsibility for pre-existing DNS defects;
+- domain and tenant verification, MX, SPF, DKIM, an appropriate initial DMARC configuration, and the absence of ongoing DMARC or deliverability monitoring unless separately approved;
+- MFA enrolment, recovery contacts or methods, emergency administrator access, and which client decision-maker approves users and permissions;
+- the exact users, mailboxes, aliases or shared addresses, signature template, and Gmail or Outlook guidance included;
+- website contact-form delivery checks, access limits, and the distinction between configuration testing and a deliverability or inbox-placement guarantee;
+- that historical mail, PST/archive, cross-provider, tenant-to-tenant, large-mailbox, multiple-domain, larger-team, remediation, advanced administration, device-management, security-monitoring, backup, and ongoing-support work is excluded unless separately scoped in writing;
+- secure handling and retention of provider identifiers, configuration records, migration data when separately approved, and any local exports;
+- handoff evidence, retained client administrator access, removal of RielArt access, and deletion or retention of setup records after completion.
+
+The public starting price and scope are not a substitute for an accepted agreement. Counsel and the owner should approve provider-cost, access, risk-allocation, security, privacy, migration, remediation, cancellation, and offboarding terms before client work begins.
 
 ### 3. Focused Ads Management commercial terms
 
@@ -111,6 +134,7 @@ Review:
 - contact-form and inquiry information;
 - Client Portal data;
 - campaign-account and performance data;
+- Google Workspace or Microsoft 365 user names, work email addresses, provider identifiers, tenant settings, domain/DNS configuration, and separately approved migration information;
 - website events and conversion records;
 - lead-form submissions and call-event information;
 - customer lists, enhanced conversions, offline conversions, or advanced matching if later proposed;
@@ -195,6 +219,7 @@ After the remodeled inquiry fields are live, run an owner-authorized production 
 - delivery to the intended mailbox;
 - the exact approved endpoint remains in use;
 - service interest and conditional advertising fields arrive correctly;
+- the optional Business Email checkbox and hidden inquiry context arrive correctly while advertising fields remain disabled unless Focused Ads Management or Both is selected;
 - hidden conditional fields are not submitted with misleading values;
 - the "not sure" options remain valid;
 - the consent value and privacy link are present;
@@ -299,7 +324,7 @@ Before publishing the legal updates:
 
 1. Have the owner review every operational statement against actual practice.
 2. Have qualified counsel review the Privacy Policy, Terms, service agreement, data-processing terms, and international/consent decisions.
-3. Confirm that public pages contain only the two approved offers and prices.
+3. Confirm that public pages contain exactly two primary offers, the one approved subordinate Business Email & Workspace Setup, and only the approved $599, $349, and context-bound $149 prices.
 4. Confirm all obsolete public Stripe links are removed.
 5. Confirm the Privacy Policy does not say a tag or pixel is active.
 6. Confirm no tag or pixel has been added without the approved consent and policy work.
@@ -308,6 +333,7 @@ Before publishing the legal updates:
 9. Confirm the three-month commitment and no-guarantee wording match the agreement.
 10. Confirm the public site contains no street or mailing address, address schema, or empty `<address>` element.
 11. Confirm **Get Started** is the general CTA and the custom-scope inquiry remains separate from the two primary services.
+    Confirm the Business Email query uses the neutral primary choice, checks the optional setup field, preserves the dedicated context, and does not reveal advertising questions.
 12. Test Formspree, the thank-you route, Calendly if retained, the Client Portal, privacy and terms links, keyboard access, mobile layout, and 200% zoom.
 13. Record the reviewer, decision date, evidence, and any accepted risk for every item closed in this register.
 
@@ -317,6 +343,9 @@ Before publishing the legal updates:
 |---|---|---|---|
 | Contracting identity and required business disclosures | Owner / counsel | Open | |
 | Brand & Website Launch agreement | Owner / counsel | Open | |
+| Business Email & Workspace Setup agreement | Owner / counsel | Open | |
+| Workspace, domain, DNS, MFA, recovery, and rollback procedure | Owner | Open | |
+| Business Email migration boundary, handoff, retention, and offboarding | Owner / privacy counsel | Open | |
 | Focused Ads commitment and renewal | Owner / counsel | Open | |
 | Google account-access procedure | Owner | Open | |
 | Meta account-access procedure | Owner | Open | |

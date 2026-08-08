@@ -66,6 +66,35 @@ Requirements outside the standard scope are reviewed before work begins and requ
 
 The full service definition is maintained in `RIELART-ADS-SERVICE-SCOPE.md`.
 
+## Approved optional setup — not a third primary service
+
+**Name:** Business Email & Workspace Setup
+
+**Price:** From $149 USD one time
+
+**Best for:** A business with one existing domain that needs professional email through Google Workspace or Microsoft 365.
+
+**CTA:** Ask About Business Email → `/contact/?service=business-email-workspace#project-inquiry`
+
+The starting scope is for a straightforward new setup and may include:
+
+- One existing business domain
+- Up to 3 users or mailboxes
+- Professional addresses on the client’s domain
+- Google Workspace or Microsoft 365 account setup
+- Domain verification, MX records, and other required mail DNS configuration
+- Email authentication baseline including SPF, DKIM, and an appropriate initial DMARC configuration
+- Basic MFA and security baseline
+- Common aliases or shared addresses where supported and appropriate
+- One basic professional email-signature template
+- Basic Gmail or Outlook sign-in and setup guidance
+- Basic website contact-form email-delivery check where access permits
+- Handoff of client-owned administrative access
+
+Google Workspace or Microsoft 365 subscriptions are paid separately by the client directly to the provider. Domain registration, renewals, premium software, and other provider fees are also separate unless an accepted written scope expressly includes them. RielArt does not own or resell the client’s tenant.
+
+Historical or large mailbox migration, Google-to-Microsoft or Microsoft-to-Google migration, tenant-to-tenant migration, PST or archive migration, complex DNS cleanup, multiple domains, more than 3 users, advanced Microsoft 365 administration, SharePoint, Intune, device or endpoint management, ongoing IT support, ongoing mailbox administration, ongoing deliverability monitoring, backup management, cybersecurity monitoring, compliance consulting, and unlimited device setup are not included automatically. Existing email migration, larger teams, multiple domains, and more complex environments are scoped separately. No fixed mailbox-migration price is approved.
+
 ## When a business needs both
 
 The services remain separate:
@@ -88,11 +117,11 @@ RielArt may separately review ongoing website support, content updates, limited 
 
 **Ask About a Custom Scope:** `/contact/?service=custom-scope#project-inquiry`
 
-The contact page maps this query to “I am not sure yet” and preserves `Custom scope inquiry` as form context. This is an inquiry path, not a third package, public add-on catalogue, published price, or guarantee that RielArt will accept the work.
+The contact page maps this query to “I am not sure yet” and preserves `Custom scope inquiry` as form context. Except for the approved Business Email & Workspace Setup above, this is an inquiry path, not another package, public add-on catalogue, published price, or guarantee that RielArt will accept the work.
 
 ## Inquiry and payment model
 
-General, service-specific, and custom-scope actions all lead to the canonical inquiry form with the appropriate context. No public Stripe checkout or subscription link is approved for the two current offers.
+General, primary-service, optional business-email, and custom-scope actions all lead to the canonical inquiry form with the appropriate context. No public Stripe checkout or subscription link is approved for the two primary offers or the optional setup.
 
 Future payment links belong in `config/payment-links.json`. That internal configuration is excluded from the published site. A link may be connected to public UI only after the offer, currency, amount, payment structure, and destination have been approved and tested.
 
@@ -101,7 +130,7 @@ Future payment links belong in `config/payment-links.json`. That internal config
 - Do not describe Brand & Website Launch as cheap, budget, entry level, starter pricing, discounted, introductory, templated, new-agency, or limited-time.
 - Do not create a “most popular” label.
 - Do not publish a third bundle.
-- Do not publish add-on prices without approval.
+- Publish $149 only as the approved starting price for Business Email & Workspace Setup. Do not publish other add-on prices without approval.
 - Do not describe the custom-scope inquiry as a package or imply unlimited availability.
 - Do not promise leads, sales, revenue, rankings, or advertising performance.
 - Do not add public payment buttons until approved links exist.

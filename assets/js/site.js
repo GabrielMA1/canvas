@@ -6,7 +6,6 @@
   const desktopNavigation = window.matchMedia("(min-width: 1081px)");
   root.classList.add("js");
 
-  /* Theme */
   const themeButtons = [...document.querySelectorAll("[data-theme-toggle]")];
 
   function setTheme(theme, persist = false) {
@@ -23,7 +22,6 @@
       try {
         localStorage.setItem("theme", nextTheme);
       } catch (error) {
-        /* The theme still works when storage is unavailable. */
       }
     }
   }
@@ -35,7 +33,6 @@
     });
   });
 
-  /* Mobile navigation */
   const menuButton = document.querySelector("[data-menu-toggle]");
   const mobileMenu = document.querySelector("[data-mobile-menu]");
   const desktopDropdowns = [...document.querySelectorAll("[data-nav-dropdown]")];
@@ -141,7 +138,6 @@
 
   desktopNavigation.addEventListener?.("change", resetNavigationForViewport);
   resetNavigationForViewport(desktopNavigation);
-  /* Accessible single-open FAQ groups */
   const faqTimers = new WeakMap();
 
   function answerFor(button) {
@@ -212,7 +208,6 @@
     });
   });
 
-  /* Restrained reveal behavior with a no-JavaScript fallback in CSS */
   const revealElements = [...document.querySelectorAll(".reveal")];
 
   if (reducedMotion.matches || !("IntersectionObserver" in window)) {
@@ -231,7 +226,6 @@
     revealElements.forEach((element) => observer.observe(element));
   }
 
-  /* Blog filtering and search */
   const filterButtons = [...document.querySelectorAll("[data-filter]")];
   const filterCards = [...document.querySelectorAll("[data-category]")];
   const blogSearch = document.querySelector("[data-blog-search]");
@@ -292,38 +286,30 @@
   blogSearch?.addEventListener("input", applyBlogFilters);
   applyBlogFilters();
 
-  /* Native form submission state */
   const contactForms = [...document.querySelectorAll("[data-contact-form]")];
   const invalidFormMessage = "Please review the highlighted required fields.";
   const invalidStatusFrames = new WeakMap();
 
-  function requestedServiceIntent() {
-    try {
-      const requested = normalize(new URLSearchParams(window.location.search).get("service"));
-      const aliases = {
-        "brand-website-launch": "brand-website-launch",
-        "focused-ads-management": "focused-ads-management",
-        "focused-ads": "focused-ads-management",
-        "advertising": "focused-ads-management",
-        "both": "both-services",
-        "both-services": "both-services",
-        "not-sure": "not-sure",
-        "custom-scope": "not-sure"
-      };
-      return aliases[requested] || "";
-    } catch (error) {
-      return "";
-    }
-  }
-
-  function requestedInquiryContext() {
-    try {
-      const requested = normalize(new URLSearchParams(window.location.search).get("service"));
-      return requested === "custom-scope" ? "Custom scope inquiry" : "";
-    } catch (error) {
-      return "";
-    }
-  }
+  let requestedService = "";
+  try {
+    requestedService = normalize(new URLSearchParams(window.location.search).get("service"));
+  } catch (error) {}
+  const serviceIntent = {
+    "brand-website-launch": "brand-website-launch",
+    "focused-ads-management": "focused-ads-management",
+    "focused-ads": "focused-ads-management",
+    advertising: "focused-ads-management",
+    both: "both-services",
+    "both-services": "both-services",
+    "not-sure": "not-sure",
+    "custom-scope": "not-sure",
+    "business-email-workspace": "not-sure"
+  }[requestedService] || "";
+  const inquiryContext = {
+    "custom-scope": "Custom scope inquiry",
+    "business-email-workspace": "Business Email & Workspace Setup inquiry"
+  }[requestedService] || "";
+  const businessEmailRequested = requestedService === "business-email-workspace";
 
   function applyServiceIntent(form, intent) {
     if (!intent) return;
@@ -462,13 +448,21 @@
     return true;
   }
 
-  const serviceIntent = requestedServiceIntent();
-  const inquiryContext = requestedInquiryContext();
-
   contactForms.forEach((form) => {
     applyServiceIntent(form, serviceIntent);
     const contextField = form.querySelector("[data-inquiry-context]");
     if (contextField instanceof HTMLInputElement) contextField.value = inquiryContext;
+    const businessEmailControl = form.querySelector("[data-business-email-workspace]");
+    if (businessEmailControl instanceof HTMLInputElement) {
+      const preparedStatus=form.querySelector("[data-optional-setup-status]");
+      if (businessEmailRequested) businessEmailControl.checked=true;
+      const syncBusinessEmail = () => {
+        if (preparedStatus) preparedStatus.hidden = !businessEmailControl.checked;
+        if (businessEmailRequested) contextField.value = businessEmailControl.checked ? inquiryContext : "";
+      };
+      syncBusinessEmail();
+      businessEmailControl.addEventListener("change", syncBusinessEmail);
+    }
     updateAdvertisingFields(form);
 
     form.addEventListener(
@@ -561,7 +555,6 @@
     contactForms.forEach(restoreForm);
   });
 
-  /* Current year, active navigation, and header state */
   document.querySelectorAll("[data-year]").forEach((element) => {
     element.textContent = String(new Date().getFullYear());
   });
@@ -575,7 +568,6 @@
       const active = linkPath === "/" ? currentPath === "/" : currentPath.startsWith(linkPath);
       if (active) link.setAttribute("aria-current", "page");
     } catch (error) {
-      /* Ignore malformed optional links without affecting navigation. */
     }
   });
 

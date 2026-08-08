@@ -421,3 +421,65 @@ unrelated public-page change was introduced.
 Owner action required in Formspree: Set the form's Thank You redirect to
 `https://rielart.com/thanks/` so non-JavaScript submissions also remain within
 the RielArt website. Codex cannot configure the external Formspree dashboard.
+
+## August 7, 2026 — optional Business Email & Workspace Setup
+
+### Commercial model preserved
+
+- Kept Brand & Website Launch at `$599 one time` and Focused Ads Management at
+  `$349/month` as the only two primary services.
+- Introduced `Business Email & Workspace Setup` as a visually subordinate,
+  optional setup starting at `$149 USD one time`; it is not a third primary
+  service, subscription, or managed-IT offer.
+- Kept Google Workspace or Microsoft 365 subscriptions, domains, licenses, and
+  other provider costs separate from the RielArt setup fee.
+
+### Public implementation
+
+- Added a compact homepage callout, a detailed Services explanation, a
+  dedicated Pricing section at `#business-email-workspace`, and an explicit
+  Brand & Website Launch upgrade note outside the `$599` scope.
+- Limited the starting scope to one existing domain and up to three users, with
+  initial provider configuration, restrained DNS authentication work, MFA,
+  aliases, signature setup, sign-in guidance, and a form-delivery check.
+- Clarified client ownership and control, and separated migration, multiple
+  domains, remediation, and complex environments into separately scoped work.
+- Added two synchronized visible and FAQPage-schema answers.
+- Added the compact `Business Email Setup` footer link to all 24 full public
+  templates and advanced the shared CSS/JavaScript cache key to
+  `20260807email1`.
+- Updated sitemap modification dates only for the eight changed canonical
+  content routes.
+
+### Contact behavior
+
+- Preserved the exact four required primary `service_interest` radio choices.
+- Added one separately labelled, non-required optional checkbox.
+- `/contact/?service=business-email-workspace#project-inquiry` selects
+  `I am not sure yet`, checks the optional setup, shows a prepared-inquiry cue,
+  and sets `inquiry_context` to exactly
+  `Business Email & Workspace Setup inquiry`.
+- Advertising questions continue to appear only for Focused Ads Management or
+  Both services. Formspree, the success/error flow, and all other form fields
+  remain unchanged.
+
+### Legal, documentation, and audit controls
+
+- Added narrow authorized-access, client-ownership, provider-dependency,
+  migration, and remediation language to the canonical Privacy Policy and
+  Terms pages. No new Service or Offer schema was introduced.
+- Updated the current README, strategy, copy map, offer scope, and manual-review
+  checklist without rewriting historical audit or release records.
+- Replaced the former blanket `$149` rejection with a contextual audit rule:
+  `$149` is allowed only inside marked Business Email & Workspace Setup
+  elements or the exact synchronized FAQPage strings; `$149/month`, unrelated
+  `$149` offers, extra primary cards, and unapproved Service schema remain
+  failures.
+
+### Release disposition
+
+Local functional and source validation passes. HTTP smoke remains a
+conditional pass because the pre-existing combined image-library budget and
+CSS budget are over their configured limits; JavaScript remains within its
+budget. No deployment, real Formspree submission, provider-account change, or
+email-platform setup was performed.

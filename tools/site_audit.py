@@ -34,7 +34,13 @@ EMAIL_URL = "mailto:hello@rielart.com"
 LINKEDIN_URL = "https://www.linkedin.com/in/gabrielmacovei/"
 EXPECTED_ONE_TIME_PRICES = {"$599"}
 EXPECTED_MONTHLY_PRICES = {"$349"}
-LEGACY_COMMERCIAL_PRICES = {"$149", "$247", "$249", "$399", "$497", "$699"}
+LEGACY_COMMERCIAL_PRICES = {"$247", "$249", "$399", "$497", "$699"}
+OPTIONAL_SERVICE_NAME = "Business Email & Workspace Setup"
+OPTIONAL_SERVICE_MARKER = "business-email-workspace"
+OPTIONAL_SERVICE_PRICE = "From $149 USD one time"
+OPTIONAL_SERVICE_INQUIRY_URL = (
+    "/contact/?service=business-email-workspace#project-inquiry"
+)
 APPROVED_SERVICE_NAMES = {
     "Brand & Website Launch",
     "Focused Ads Management",
@@ -1606,6 +1612,7 @@ def main() -> int:
             )
 
     pricing_markers_validated = 0
+    optional_price_validated = 0
     pricing_path = (root / "pricing" / "index.html").resolve()
     pricing_page = pages.get(pricing_path)
     if pricing_page is None:
@@ -1643,6 +1650,14 @@ def main() -> int:
                 )
             else:
                 pricing_markers_validated += 1
+
+        if OPTIONAL_SERVICE_PRICE not in pricing_text:
+            critical.append(
+                "pricing/index.html: approved optional Business Email "
+                "starting price or cadence is missing"
+            )
+        else:
+            optional_price_validated = 1
 
         for marker in sorted(LEGACY_COMMERCIAL_PRICES):
             if marker in pricing_text:
@@ -2216,8 +2231,8 @@ def main() -> int:
                 f"{expected_section!r}"
             )
 
-    current_css_cache_reference = "site.css?v=20260731nav2"
-    current_js_cache_reference = "site.js?v=20260731nav2"
+    current_css_cache_reference = "site.css?v=20260807email1"
+    current_js_cache_reference = "site.js?v=20260807email1"
     retired_cache_references = (
         "site.css?v=20260728r3",
         "site.css?v=20260728r4",
@@ -2226,6 +2241,8 @@ def main() -> int:
         "site.js?v=20260729r1",
         "site.css?v=20260731nav1",
         "site.js?v=20260731nav1",
+        "site.css?v=20260731nav2",
+        "site.js?v=20260731nav2",
     )
     css_cache_reference_count = production_html.count(
         current_css_cache_reference
@@ -2457,6 +2474,181 @@ def main() -> int:
                 f"{relative}: expected exactly two offer cards, found "
                 f"{offer_card_count}"
             )
+
+    optional_block_pattern = re.compile(
+        r'<(?P<tag>aside|section|div)\b'
+        r'(?=[^>]*\bdata-optional-service=["\']business-email-workspace["\'])'
+        r'[^>]*>(?P<body>.*?)</(?P=tag)\s*>',
+        re.I | re.S,
+    )
+    optional_requirements = {
+        "index.html": (
+            "Already have a domain but still using a personal email address?",
+            "Google Workspace",
+            "Microsoft 365",
+            "up to 3 users",
+            "Provider subscriptions are paid separately",
+        ),
+        "services/index.html": (
+            "Professional business email when you need it.",
+            "One existing business domain",
+            "Up to 3 users",
+            "Google Workspace",
+            "Microsoft 365",
+            "SPF, DKIM, and an appropriate initial DMARC configuration",
+            "Client-owned administrative handoff",
+            "Provider subscriptions are billed separately",
+            "paid directly by the client",
+            "Domain registration, renewals, premium software, and other provider fees are separate",
+            "Existing email migration",
+        ),
+        "pricing/index.html": (
+            "One existing business domain",
+            "Up to 3 users",
+            "Google Workspace",
+            "Microsoft 365",
+            "Appropriate initial DMARC configuration",
+            "Client-owned administrative handoff",
+            "Provider costs are separate",
+            "Existing mailbox migration",
+        ),
+        "services/brand-website-launch/index.html": (
+            "Need professional business email too?",
+            "one existing business domain",
+            "up to 3 users",
+            "not included in the standard $599",
+            "subscription costs are separate",
+            "client owns the account",
+        ),
+    }
+    optional_offer_blocks_checked = 0
+    for relative, required_phrases in optional_requirements.items():
+        source = page_source(relative)
+        matches = list(optional_block_pattern.finditer(source))
+        if len(matches) != 1:
+            critical.append(
+                f"{relative}: expected one subordinate Business Email "
+                f"optional-service block, found {len(matches)}"
+            )
+            continue
+        block_html = matches[0].group(0)
+        block_text = normalize_text(strip_html(block_html))
+        for phrase in (OPTIONAL_SERVICE_NAME, OPTIONAL_SERVICE_PRICE, *required_phrases):
+            if phrase.casefold() not in block_text.casefold():
+                critical.append(
+                    f"{relative}: optional Business Email block is missing "
+                    f"approved wording ({phrase})"
+                )
+        if OPTIONAL_SERVICE_INQUIRY_URL not in block_html:
+            critical.append(
+                f"{relative}: optional Business Email CTA has the wrong target"
+            )
+        if "data-primary-service" in block_html or re.search(
+            r'\bclass=["\'][^"\']*\boffer-card\b', block_html, re.I
+        ):
+            critical.append(
+                f"{relative}: optional Business Email setup is incorrectly "
+                "presented as a primary offer card"
+            )
+        optional_offer_blocks_checked += 1
+
+    if page_source("pricing/index.html").count(
+        'id="business-email-workspace"'
+    ) != 1:
+        critical.append(
+            "pricing/index.html: optional Business Email pricing anchor is "
+            "missing or duplicated"
+        )
+
+    optional_cta_links = [
+        (relative, href)
+        for relative, href, raw_text in anchor_records
+        if action_text(raw_text) == "Ask About Business Email"
+    ]
+    if len(optional_cta_links) != 4 or any(
+        href != OPTIONAL_SERVICE_INQUIRY_URL
+        for _relative, href in optional_cta_links
+    ):
+        critical.append(
+            "public HTML must contain exactly four approved Business Email "
+            f"inquiry CTAs ({optional_cta_links})"
+        )
+
+    business_email_footer_count = production_html.count(
+        'href="/pricing/#business-email-workspace">Business Email Setup</a>'
+    )
+    if business_email_footer_count != 24:
+        critical.append(
+            "public HTML must contain exactly 24 compact Business Email "
+            f"footer links ({business_email_footer_count})"
+        )
+
+    optional_price_context_pattern = re.compile(
+        r'<(?P<tag>aside|section|div|fieldset|article|p)\b'
+        r'(?=[^>]*\bdata-optional-service=["\']business-email-workspace["\'])'
+        r'[^>]*>(?P<body>.*?)</(?P=tag)\s*>',
+        re.I | re.S,
+    )
+    approved_faq_json_price_fragments = (
+        '"text": "Yes. Business Email & Workspace Setup starts at $149 USD '
+        'one time for a straightforward new setup and can include professional '
+        'email on your domain through Google Workspace or Microsoft 365, '
+        'essential DNS and email-authentication configuration, and basic '
+        'account and security setup. Provider subscriptions are billed '
+        'separately. Existing mailbox migration, larger teams, and more '
+        'complex environments are scoped separately."',
+        '"name": "Does the $149 include Google Workspace or Microsoft 365 '
+        'subscriptions?"',
+    )
+    expected_optional_price_counts = {
+        "index.html": 1,
+        "services/index.html": 1,
+        "pricing/index.html": 1,
+        "services/brand-website-launch/index.html": 1,
+        "contact/index.html": 2,
+        "faq/index.html": 4,
+        "terms/index.html": 1,
+    }
+    for relative, source in sorted(html_sources.items()):
+        price_matches = list(re.finditer(r"\$149(?!\d)", source))
+        expected_price_count = expected_optional_price_counts.get(relative, 0)
+        if len(price_matches) != expected_price_count:
+            critical.append(
+                f"{relative}: expected {expected_price_count} approved $149 "
+                f"occurrences, found {len(price_matches)}"
+            )
+        approved_ranges = [
+            (match.start(), match.end())
+            for match in optional_price_context_pattern.finditer(source)
+        ]
+        if relative == "faq/index.html":
+            for fragment in approved_faq_json_price_fragments:
+                if source.count(fragment) != 1:
+                    critical.append(
+                        "faq/index.html: approved $149 FAQPage JSON context "
+                        "is missing or duplicated"
+                    )
+                    continue
+                start = source.index(fragment)
+                approved_ranges.append((start, start + len(fragment)))
+        for price_match in price_matches:
+            if not any(
+                start <= price_match.start() < end
+                for start, end in approved_ranges
+            ):
+                critical.append(
+                    f"{relative}: $149 is outside an approved Business Email "
+                    "& Workspace Setup context"
+                )
+    if re.search(
+        r"(?i)\$149\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
+        strip_html(production_html),
+    ):
+        critical.append(
+            "public HTML contains an unapproved $149 monthly offer"
+        )
+    if re.search(r"(?i)\bManaged IT Services\b", production_html):
+        critical.append("public HTML advertises unapproved Managed IT Services")
 
     pricing_relative = "pricing/index.html"
     refined_pricing_html = page_source(pricing_relative)
@@ -2741,6 +2933,84 @@ def main() -> int:
         if phrase.casefold() not in faq_text.casefold():
             critical.append(f"{faq_relative}: missing {label}")
 
+    business_email_faq_answer = (
+        "Yes. Business Email & Workspace Setup starts at $149 USD one time "
+        "for a straightforward new setup and can include professional email "
+        "on your domain through Google Workspace or Microsoft 365, essential "
+        "DNS and email-authentication configuration, and basic account and "
+        "security setup. Provider subscriptions are billed separately. "
+        "Existing mailbox migration, larger teams, and more complex "
+        "environments are scoped separately."
+    )
+    business_email_subscription_answer = (
+        "No. RielArt charges for the setup work. The client owns the account "
+        "and pays Google Workspace, Microsoft 365, domain, and other "
+        "third-party charges directly."
+    )
+    faq_html = page_source(faq_relative)
+    for question, answer in (
+        ("Can RielArt set up professional business email?", business_email_faq_answer),
+        (
+            "Does the $149 include Google Workspace or Microsoft 365 subscriptions?",
+            business_email_subscription_answer,
+        ),
+    ):
+        if question.casefold() not in faq_text.casefold():
+            critical.append(
+                f"{faq_relative}: missing optional Business Email question "
+                f"({question})"
+            )
+        if answer.casefold() not in faq_text.casefold():
+            critical.append(
+                f"{faq_relative}: missing approved optional Business Email answer"
+            )
+        answer_is_synchronized = (
+            faq_html.count(answer) == 2
+            if "&" not in answer
+            else faq_html.count(answer) == 1
+            and faq_html.count(answer.replace("&", "&amp;")) == 1
+        )
+        if faq_html.count(question) != 2 or not answer_is_synchronized:
+            critical.append(
+                f"{faq_relative}: visible and FAQPage schema Business Email "
+                f"content are not synchronized ({question})"
+            )
+
+    privacy_text = page_visible("privacy-policy/index.html")
+    for phrase in (
+        "authorized administrative or delegated access",
+        "client-owned Google Workspace, Microsoft 365, domain-registrar, DNS, or email-provider accounts",
+        "does not routinely read client email content",
+        "does not own the client’s workspace tenant",
+    ):
+        if phrase.casefold() not in privacy_text.casefold():
+            critical.append(
+                "privacy-policy/index.html: Business Email access disclosure "
+                f"is missing ({phrase})"
+            )
+
+    terms_text = page_visible("terms/index.html")
+    for phrase in (
+        "optional setup—not a third primary service",
+        "starts at $149 USD one time",
+        "client owns and controls the workspace tenant",
+        "administrative or delegated access",
+        "Existing email migration",
+        "Google Workspace, Microsoft 365, domain registrars, DNS providers, email providers",
+    ):
+        if phrase.casefold() not in terms_text.casefold():
+            critical.append(
+                "terms/index.html: Business Email commercial or access terms "
+                f"are missing ({phrase})"
+            )
+
+    pricing_metadata = page_source("pricing/index.html")
+    if pricing_metadata.count("optional professional business email setup") < 2:
+        critical.append(
+            "pricing/index.html: metadata must describe two primary services "
+            "plus optional professional business email setup"
+        )
+
     contact_path = (root / "contact" / "index.html").resolve()
     contact_page = pages.get(contact_path)
     contact_relative = "contact/index.html"
@@ -2814,6 +3084,7 @@ def main() -> int:
             "inquiry_context",
             "_gotcha",
             "service_interest",
+            "business_email_workspace_setup",
             "name",
             "business_name",
             "email",
@@ -2851,6 +3122,52 @@ def main() -> int:
                 "contact/index.html: service choices do not exactly match "
                 f"the approved set ({sorted(service_choices)})"
             )
+        optional_setup_controls = [
+            control
+            for control in form.controls
+            if control.name == "business_email_workspace_setup"
+        ]
+        if len(optional_setup_controls) != 1:
+            critical.append(
+                "contact/index.html: expected one Business Email optional "
+                "setup checkbox"
+            )
+        else:
+            optional_control = optional_setup_controls[0]
+            if optional_control.control_type != "checkbox":
+                critical.append(
+                    "contact/index.html: Business Email optional setup must "
+                    "use a checkbox"
+                )
+            if optional_control.required:
+                critical.append(
+                    "contact/index.html: Business Email optional setup must "
+                    "not be required"
+                )
+            if unescape(optional_control.value) != (
+                "Business Email & Workspace Setup — from $149"
+            ):
+                critical.append(
+                    "contact/index.html: Business Email checkbox value does "
+                    "not match the approved offer"
+                )
+            if not optional_control.wrapped_label:
+                critical.append(
+                    "contact/index.html: Business Email checkbox is missing "
+                    "its associated label"
+                )
+        for required_optional_fragment in (
+            'class="form-choice optional-setup-choice"',
+            'data-optional-service="business-email-workspace"',
+            "data-business-email-workspace",
+            "data-optional-setup-status",
+            "Business email setup selected.",
+        ):
+            if required_optional_fragment not in contact_html:
+                critical.append(
+                    "contact/index.html: optional Business Email inquiry UI "
+                    f"is missing {required_optional_fragment!r}"
+                )
         context_controls = [
             control
             for control in form.controls
@@ -3041,7 +3358,6 @@ def main() -> int:
             "not-sure contact choice"
         )
     for required_custom_token in (
-        "requestedInquiryContext",
         "Custom scope inquiry",
         "data-inquiry-context",
     ):
@@ -3049,6 +3365,29 @@ def main() -> int:
             critical.append(
                 "assets/js/site.js: custom-scope context preservation is "
                 f"missing {required_custom_token!r}"
+            )
+    if not re.search(
+        r'["\']business-email-workspace["\']\s*:\s*["\']not-sure["\']',
+        site_javascript,
+    ):
+        critical.append(
+            "assets/js/site.js: Business Email query must preserve the "
+            "neutral not-sure primary choice"
+        )
+    for required_optional_token in (
+        "Business Email & Workspace Setup inquiry",
+        "data-business-email-workspace",
+        "data-optional-setup-status",
+        "preparedStatus.hidden = !businessEmailControl.checked",
+        'businessEmailControl.checked ? inquiryContext : ""',
+        'businessEmailControl.addEventListener("change", syncBusinessEmail)',
+        'selectedValue === "focused-ads-management" || '
+        'selectedValue === "both-services"',
+    ):
+        if required_optional_token not in site_javascript:
+            critical.append(
+                "assets/js/site.js: Business Email query or advertising "
+                f"separation is missing {required_optional_token!r}"
             )
 
     for legacy_name in sorted(LEGACY_SERVICE_NAMES):
@@ -3250,6 +3589,14 @@ def main() -> int:
             f"Orphan indexable pages found: {len(orphan_pages)}",
             f"Approved visible pricing markers found: "
             f"{pricing_markers_validated}/2",
+            f"Approved optional starting-price markers found: "
+            f"{optional_price_validated}/1",
+            f"Subordinate Business Email offer blocks checked: "
+            f"{optional_offer_blocks_checked}/4",
+            f"Business Email inquiry links checked: "
+            f"{len(optional_cta_links)}/4",
+            f"Business Email footer links checked: "
+            f"{business_email_footer_count}/24",
             f"Redirect rules checked: {len(redirects)}",
             f"GitHub Pages exclusions checked: {len(deploy_excludes)}",
             f"Internal artifact paths safely excluded: "
@@ -3278,7 +3625,8 @@ def main() -> int:
             f"Mobile Services groups checked: "
             f"{mobile_services_group_count}/24",
             f"Mobile Learn groups checked: "
-            f"{mobile_learn_group_count}/24",            "Inline contact success cards checked: "
+            f"{mobile_learn_group_count}/24",
+            "Inline contact success cards checked: "
             f"{production_html.count('data-contact-success')}/1",
             "Source-controlled Formspree _next fields found: 0",
             f"Public PostalAddress schemas found: "

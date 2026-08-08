@@ -15,6 +15,8 @@ The public website will sell exactly two primary services:
 
 These services are separate. A qualified business may buy either service or both. The website will not create a third bundle or publish a Stripe checkout until an approved payment link exists.
 
+The sole approved optional setup is **Business Email & Workspace Setup — from $149 USD one time**. It remains visually and commercially subordinate to the two primary services and does not expand RielArt into managed IT or a broad add-on catalogue.
+
 ## Five-second message
 
 **Headline:** Build your brand. Launch your website. Reach more customers.
@@ -44,15 +46,15 @@ The website must not imply a U.S. office, Canadian office, global team, particul
 
 Primary navigation:
 
-- How It Works
+- Services dropdown: All Services, the two primary services, and the Google/Meta advertising explanations
 - Work
 - Pricing
-- Insights
+- Learn dropdown: How It Works, About RielArt, Insights, and FAQ
 - Contact
 - Client Portal
 - Get Started
 
-The Services dropdown is removed. `/services/` remains as the consolidated explanation page. Two detailed service routes support evaluation and search intent without creating additional offers:
+The Services and Learn dropdowns organize the existing routes without adding commercial offers. `/services/` remains the consolidated explanation page. Two detailed service routes support evaluation and search intent without creating additional primary offers:
 
 - `/services/brand-website-launch/`
 - `/services/focused-ads-management/`
@@ -61,12 +63,13 @@ Google Search Ads and Meta Ads are explanatory sections within the Focused Ads M
 
 ## Homepage plan
 
-The homepage will contain ten concise sections:
+The homepage will retain ten concise core sections, with one compact optional setup callout directly after the two-service area:
 
 1. Hero
 2. The business problem
 3. The three-step RielArt sequence
 4. Two services
+   - Compact Business Email & Workspace Setup callout—not a third card
 5. Google or Meta explanation
 6. Four-step process
 7. Accurately labelled work
@@ -89,7 +92,7 @@ The hero contains the approved headline, supporting message, action buttons, and
 - Preserve useful AI articles as educational content, but remove AI as a primary offer.
 - Use one concise no-guarantee statement where it is contextually useful.
 - Avoid artificial urgency, unsupported social proof, and performance promises.
-- Present work beyond the two standard services only as a separately reviewed custom-scope inquiry, never as a third package or priced add-on catalogue.
+- Present Business Email & Workspace Setup as the one approved optional setup. Present other work beyond the two primary services only as a separately reviewed custom-scope inquiry, never as another package or priced add-on catalogue.
 
 ## Visual principles
 
@@ -112,6 +115,7 @@ All commercial CTAs lead to `/contact/`.
 - **Start Your Launch** preselects Brand & Website Launch.
 - **Start Advertising** preselects Focused Ads Management and reveals the advertising questions.
 - **Get Started** opens the general inquiry form.
+- **Ask About Business Email** uses `/contact/?service=business-email-workspace#project-inquiry`, maps the primary choice to “I am not sure yet,” checks the separate optional setup field, and preserves `Business Email & Workspace Setup inquiry` as form context.
 - **Ask About a Custom Scope** uses `/contact/?service=custom-scope#project-inquiry`, maps to “I am not sure yet,” and preserves the separate inquiry context without creating another primary service.
 
 The form submits to the existing Formspree endpoint and returns to the existing thank-you route. The thank-you page explains review, recommendation, fit, onboarding, access, and payment steps without implying automatic acceptance.
@@ -137,7 +141,7 @@ The previous audit passed its own rules, but those rules describe the superseded
 
 The remodel is complete when:
 
-- the public site consistently presents only the two approved services;
+- the public site consistently presents exactly two primary services plus the one approved subordinate Business Email & Workspace Setup;
 - all commercial CTAs use the inquiry flow;
 - old public Stripe links and outdated commercial prices are absent;
 - advertising scope, limits, ownership, spend, and commitment are clear;
