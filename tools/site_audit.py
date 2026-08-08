@@ -2483,7 +2483,7 @@ def main() -> int:
     )
     optional_requirements = {
         "index.html": (
-            "Already have a domain but still using a personal email address?",
+            "Want professional email on your own domain?",
             "Google Workspace",
             "Microsoft 365",
             "up to 3 users",
@@ -2887,9 +2887,10 @@ def main() -> int:
     homepage_html = page_source(homepage_relative)
     homepage_ads_phrases = (
         "Ad copy and campaign creative",
-        "The practical parts of advertising, handled together.",
-        "without taking ownership of your advertising accounts or charging "
-        "a percentage of your ad spend",
+        "The practical parts of your online presence, handled together.",
+        "RielArt connects your brand, website, campaign creative, tracking, "
+        "and reporting without taking ownership of your accounts or adding "
+        "unnecessary complexity.",
         "Ad copy and Meta creative included",
         "Campaign messaging and practical creative refreshes are handled "
         "together, including short-form video when appropriate.",
