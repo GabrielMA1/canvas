@@ -23,7 +23,7 @@ The redesign is called **The Turn**. It grows from the folded-ribbon geometry of
 
 ## Performance results
 
-- Shared CSS: 92,044 bytes before; 58,766 bytes after.
+- Shared CSS: 92,044 bytes before; 58,205 bytes after.
 - Shared JavaScript: 20,479 bytes before; 19,868 bytes after.
 - Image library: 11,869,058 bytes before; 377,834 bytes after (96.8% reduction). Social images now match their declared 1200 × 630 dimensions.
 - No external font, framework, build step, or third-party runtime was introduced.
@@ -31,13 +31,17 @@ The redesign is called **The Turn**. It grows from the folded-ribbon geometry of
 ## Verification completed
 
 - Static audit: 32 HTML files, 22 indexable pages, 22 sitemap URLs, 217 asset references, 53 image checks, 32 JSON-LD blocks, one form, 14 redirects, zero warnings, and zero critical failures.
+- The final precision pass removes only the compact homepage-hero price strip. The View Pricing action remains, and approved prices remain visible in the homepage service section, Pricing, both primary service pages, and relevant commercial content.
+- The semantic Advertising Details fieldset now keeps its legend visually inside the panel, aligns differently wrapped desktop labels through shared grid rows, and returns to natural stacked labels on mobile. Hidden, Ads, Both, and switch-away states all passed.
 - HTTP crawl: 34 routes requested, 33 expected HTTP 200 responses, 31 HTML routes, and every HTML/CSS/JavaScript/image/logo budget passed.
-- Browser matrix: 11 high-risk routes × 11 viewports × 2 themes = 242 rendered cases and 8,110 assertions, all passing. Reviewed widths were 1440, 1280, 1180, 1081, 1080, 1024, 820, 768, 430, 390, and 320 CSS pixels.
-- Hero pixel and geometry review passed all 22 light/dark width combinations, including text-range safe zones and clip hit-tests after the restrained pathway motion completed.
-- Thirteen interaction suites passed for theme persistence, desktop dropdown and Escape behavior, closed/open mobile-menu focus handling and breakpoint reset, current-page navigation, FAQ behavior, Insights filtering/search, reduced motion, no-JavaScript navigation and form use, 720px 200%-equivalent reflow, visible keyboard focus, and mocked form states.
-- Independent pixel and visible-text contrast review covered Home, Portfolio, Insights, a long article, Contact, and FAQ at 1440, 820, and 390 pixels in both themes, plus high-risk Home and Portfolio views at 320 pixels. No visual blocker or low-ratio rendered-text hit remained.
+- Final browser matrix: 14 requested routes × 15 viewports × 2 themes = 420 rendered cases and 20,330 assertions, all passing. Reviewed widths were 1600, 1440, 1366, 1280, 1180, 1081, 1080, 1024, 820, 768, 430, 390, 375, 360, and 320 CSS pixels.
+- Hero pixel and geometry review passed all 30 light/dark width combinations after the pricing removal, including text-range safe zones and clip hit-tests after the restrained pathway motion completed.
+- Twenty-two final interaction checks passed for theme, navigation, mobile-menu, FAQ, Insights, form, reduced-motion, reflow, focus, and conditional-field behavior.
+- Independent alignment review covered the full requested route matrix. Header/container/footer edges, service and pricing cards, buttons, portfolio rows, FAQ controls, form panels, mobile gutters, and content wrapping passed with no horizontal overflow, clipping, or unexplained drift.
+- Desktop offer headers now reserve a responsive shared label zone only above 820 pixels, keeping price and action baselines aligned without imposing desktop whitespace on stacked mobile cards.
+- At 380 pixels and below, the compact header wordmark remains available as the link's accessible name while the footer wordmark stays visible. The 320-pixel Contact required marker also stays with its label text.
 - The contact success state was tested with the Formspree request intercepted locally. No real inquiry was submitted.
-- All 24 public page shells use the `20260826final1` CSS and JavaScript cache key.
+- All 24 public page shells use the `20260826final2` CSS and JavaScript cache key.
 - JavaScript syntax and Git whitespace checks passed.
 
 ## Manual production checks still required
