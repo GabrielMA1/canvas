@@ -64,8 +64,8 @@ When Meta Ads is selected, the standard service includes:
 - Up to two ad sets when justified
 - Approximately three to five initial ad variations
 - Advertising copy and headline variations
-- Basic static creative using approved client-provided assets
-- Up to two refreshed static creative variations per month when useful
+- Basic campaign creative assembled from suitable client-provided or otherwise approved assets
+- Up to two refreshed creative variations per month when useful
 - Basic audience configuration
 - Geographic targeting and placement review
 - Meta Pixel setup where supported
@@ -75,7 +75,9 @@ When Meta Ads is selected, the standard service includes:
 
 Creative refreshes are produced when campaign needs and suitable source assets support them; two new assets are not promised every month.
 
-The standard scope does not automatically include organic social posting, account or community management, comment or direct-message responses, influencer marketing, professional photography or video, regular custom video ads, complex motion design, large creative volumes, ecommerce catalogues, multiple countries or languages, multiple unrelated offers, or advanced funnel systems.
+Within the standard Meta creative scope, a simple short-form video ad variation may be assembled from suitable client-provided or otherwise approved assets when appropriate. During ongoing management, it counts as one of the allowance of up to two refreshed creative variations per month. Full video production—including filming, actors or UGC creators, professional voice talent, elaborate editing, advanced motion work, and ongoing custom video production—is not included unless separately scoped.
+
+The standard scope does not automatically include organic social posting, account or community management, comment or direct-message responses, influencer marketing, professional photography, full video production, filming, actors or UGC creators, professional voice talent, elaborate editing, advanced motion work, ongoing custom video production, large creative volumes, ecommerce catalogues, multiple countries or languages, multiple unrelated offers, or advanced funnel systems.
 
 ## Platform fit
 

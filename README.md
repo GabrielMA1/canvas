@@ -33,7 +33,7 @@ Future approved payment links have one internal configuration location: `config/
 - `privacy-policy/`, `terms/` — legal information covering advertising and authorized business-email/workspace access, pending the decisions recorded in `RIELART-MANUAL-REVIEW.md`
 - `thanks/`, `404.html` — noindex utility pages
 - `assets/css/site.css` — consolidated visual system and responsive rules
-- `assets/js/site.js` — theme, navigation, FAQ, filter, reveal, conditional form, and validation behaviour
+- `assets/js/site.js` — theme, active navigation, menus, FAQ, filter, conditional form, and validation behaviour
 - `tools/site_audit.py` — static-site, commercial-model, integration, metadata, schema, link, and redirect audit
 - `tools/http_smoke.py` — local HTTP crawler and response-budget check
 

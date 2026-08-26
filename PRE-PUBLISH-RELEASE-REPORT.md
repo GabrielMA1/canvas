@@ -31,14 +31,14 @@ and Insights refinements documented in section 18.
    - Attempted exactly as requested.
    - Result: did not run because `python` is not available on this machine's
      `PATH`.
-2. `C:\Users\Gabriel\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe -B tools/site_audit.py`
+2. `<LOCAL_CODEX_RUNTIME>\dependencies\python\python.exe -B tools/site_audit.py`
    - Equivalent bundled Python execution.
    - Result before release fixes: pass.
    - Result after release fixes and artifact creation: pass.
-3. `C:\Users\Gabriel\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe -m http.server 4173 --bind 127.0.0.1`
+3. `<LOCAL_CODEX_RUNTIME>\dependencies\python\python.exe -m http.server 4173 --bind 127.0.0.1`
    - Local static server started successfully at
      `http://127.0.0.1:4173/`.
-4. `C:\Users\Gabriel\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe -B tools/http_smoke.py --base-url http://127.0.0.1:4173/`
+4. `<LOCAL_CODEX_RUNTIME>\dependencies\python\python.exe -B tools/http_smoke.py --base-url http://127.0.0.1:4173/`
    - Result before release fixes: pass.
    - Result after release fixes: pass.
 5. `node --check assets/js/site.js`

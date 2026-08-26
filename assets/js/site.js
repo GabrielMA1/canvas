@@ -38,10 +38,13 @@
   const desktopDropdowns = [...document.querySelectorAll("[data-nav-dropdown]")];
   let previouslyFocused = null;
 
-  function menuFocusableElements() {
+  function menuFocusableElements({ includeToggle = false } = {}) {
     if (!mobileMenu) return [];
-    return [...mobileMenu.querySelectorAll("a, button, input, select, textarea, [tabindex]:not([tabindex='-1'])")]
+    const menuElements = [...mobileMenu.querySelectorAll("a, button, input, select, textarea, [tabindex]:not([tabindex='-1'])")]
       .filter((element) => !element.hasAttribute("disabled") && !element.hidden);
+    return includeToggle && menuButton
+      ? [menuButton, ...menuElements]
+      : menuElements;
   }
 
   function closeMenu({ restoreFocus = true } = {}) {
@@ -90,7 +93,7 @@
     }
 
     if (event.key !== "Tab") return;
-    const focusable = menuFocusableElements();
+    const focusable = menuFocusableElements({ includeToggle: true });
     if (!focusable.length) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -132,8 +135,8 @@
   });
 
   const resetNavigationForViewport = (event) => {
-    if (event.matches) closeMenu({ restoreFocus: false });
-    else closeDropdowns();
+    closeMenu({ restoreFocus: false });
+    if (!event.matches) closeDropdowns();
   };
 
   desktopNavigation.addEventListener?.("change", resetNavigationForViewport);
@@ -207,24 +210,6 @@
       }
     });
   });
-
-  const revealElements = [...document.querySelectorAll(".reveal")];
-
-  if (reducedMotion.matches || !("IntersectionObserver" in window)) {
-    revealElements.forEach((element) => element.classList.add("visible"));
-  } else {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        });
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
-    );
-    revealElements.forEach((element) => observer.observe(element));
-  }
 
   const filterButtons = [...document.querySelectorAll("[data-filter]")];
   const filterCards = [...document.querySelectorAll("[data-category]")];
@@ -560,31 +545,22 @@
   });
 
   const currentPath = window.location.pathname.replace(/\/index\.html$/, "/");
-  document.querySelectorAll(".nav a, .mobile-menu nav > a:not(.btn)").forEach((link) => {
+  document.querySelectorAll(".nav a, .mobile-menu nav a:not(.btn)").forEach((link) => {
     try {
       const url = new URL(link.href, window.location.origin);
       if (url.origin !== window.location.origin) return;
       const linkPath = url.pathname.replace(/\/index\.html$/, "/");
-      const active = linkPath === "/" ? currentPath === "/" : currentPath.startsWith(linkPath);
-      if (active) link.setAttribute("aria-current", "page");
+      const active = (
+        linkPath === currentPath
+        || (linkPath === "/blog/" && currentPath.startsWith("/blog/"))
+      ) && !url.hash;
+      if (!active) return;
+      link.setAttribute("aria-current", "page");
+      link
+        .closest("[data-nav-dropdown]")
+        ?.querySelector("summary")
+        ?.classList.add("contains-current");
     } catch (error) {
     }
   });
-
-  const header = document.querySelector(".site-header");
-  let headerFrame = 0;
-
-  function updateHeader() {
-    header?.classList.toggle("is-scrolled", window.scrollY > 16);
-    headerFrame = 0;
-  }
-
-  updateHeader();
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (!headerFrame) headerFrame = window.requestAnimationFrame(updateHeader);
-    },
-    { passive: true }
-  );
 })();

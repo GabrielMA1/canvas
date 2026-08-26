@@ -21,8 +21,9 @@
   <meta name="twitter:image" content="https://rielart.com/images/rielart-og.jpg">
   <link rel="icon" href="/images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20260807email1">
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260826final1">
   <script>
+    document.documentElement.classList.add("js");
     try {
       document.documentElement.dataset.theme = localStorage.getItem("theme") === "dark" ? "dark" : "light";
     } catch (error) {
@@ -100,7 +101,7 @@
       </div>
     </div>
   </header>
-  <div class="mobile-menu" id="mobile-navigation" data-mobile-menu aria-hidden="true">
+  <div class="mobile-menu" id="mobile-navigation" data-mobile-menu aria-hidden="false">
     <nav aria-label="Mobile navigation">
       <div class="mobile-nav-services">
         <p class="mobile-nav-label">Services</p>
@@ -133,7 +134,28 @@
         </nav>
         <span class="eyebrow">Work and representative concepts</span>
         <h1 class="page-title">See how brand, website, and advertising can work together.</h1>
-        <p class="lead">The examples below are representative concepts, not client case studies. They show possible service structures without claiming completed client work or results.</p>
+        <p class="lead">The work below is clearly classified. RielArt’s own identity appears as an internal project, while the service examples remain representative concepts—not client case studies or claimed results.</p>
+      </div>
+    </section>
+
+    <section class="section portfolio-internal-section">
+      <div class="container">
+        <article class="portfolio-feature">
+          <div class="portfolio-feature-visual" aria-hidden="true">
+            <span class="portfolio-wordmark">RielArt</span>
+            <span class="portfolio-plane portfolio-plane-one"></span>
+            <span class="portfolio-plane portfolio-plane-two"></span>
+            <span class="portfolio-plane portfolio-plane-three"></span>
+            <span class="portfolio-feature-mark"><img src="/images/logo.png" width="96" height="96" alt=""></span>
+          </div>
+          <div class="portfolio-feature-content">
+            <span class="eyebrow">Internal project · RielArt</span>
+            <h2>RielArt’s own digital presence.</h2>
+            <p class="section-copy">The studio’s identity, responsive website, inquiry path, and client experience are treated as one connected brand system. This visual uses the existing RielArt mark and The Turn design language.</p>
+            <p class="portfolio-truth-note">Shown as RielArt’s own work—not as a client case study.</p>
+            <a class="article-link" href="/">View the RielArt website</a>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -221,6 +243,6 @@
     </div>
     <div class="container footer-bottom"><p>© <span data-year>2026</span> RielArt. All rights reserved.</p><p><a href="/privacy-policy/">Privacy</a> <a href="/terms/">Terms</a></p></div>
   </footer>
-<script src="/assets/js/site.js?v=20260807email1" defer></script>
+<script src="/assets/js/site.js?v=20260826final1" defer></script>
 </body>
 </html>

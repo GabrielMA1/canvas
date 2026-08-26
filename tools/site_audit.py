@@ -2231,9 +2231,13 @@ def main() -> int:
                 f"{expected_section!r}"
             )
 
-    current_css_cache_reference = "site.css?v=20260807email1"
-    current_js_cache_reference = "site.js?v=20260807email1"
+    current_css_cache_reference = "site.css?v=20260826final1"
+    current_js_cache_reference = "site.js?v=20260826final1"
     retired_cache_references = (
+        "site.css?v=20260825turn1",
+        "site.js?v=20260825turn1",
+        "site.css?v=20260807email1",
+        "site.js?v=20260807email1",
         "site.css?v=20260728r3",
         "site.css?v=20260728r4",
         "site.css?v=20260729r1",
@@ -2738,7 +2742,9 @@ def main() -> int:
             "Up to one hour of campaign-related website changes",
             "For Meta campaigns, the monthly creative allowance includes "
             "up to two refreshed variations when useful. One may be a "
-            "short-form video ad.",
+            "simple short-form video ad assembled from suitable "
+            "client-provided or otherwise approved assets; full video "
+            "production is not included unless separately scoped.",
         ),
     }
     for match in inclusion_matches:
@@ -2848,10 +2854,18 @@ def main() -> int:
             "meta campaigns normally begin with approximately three to five "
             "ad variations built around a focused set of creative concepts",
         "video included within the two-variation allowance":
-            "one of those two variations may be a short-form video ad",
+            "one of those two variations may be a simple short-form video "
+            "ad assembled from suitable client-provided or otherwise "
+            "approved assets",
         "short-form video production limits":
-            "included short-form videos are typically focused 10–15 second "
-            "edits created for the campaign",
+            "within the standard Meta creative scope, a simple 10–15 second "
+            "short-form video ad variation may be assembled from suitable "
+            "client-provided or otherwise approved assets when appropriate",
+        "full video production exclusion":
+            "full video production—including filming, actors or UGC "
+            "creators, professional voice talent, elaborate editing, "
+            "advanced motion work, and ongoing custom video production—is "
+            "not included unless separately scoped",
         "video is not an additional creative":
             "a video counts as one of the two included variations; it is not "
             "an additional third creative",
@@ -2893,7 +2907,8 @@ def main() -> int:
         "unnecessary complexity.",
         "Ad copy and Meta creative included",
         "Campaign messaging and practical creative refreshes are handled "
-        "together, including short-form video when appropriate.",
+        "together, including a simple asset-based short-form video variation "
+        "when appropriate. Full video production is separately scoped.",
     )
     for phrase in homepage_ads_phrases:
         if phrase.casefold() not in homepage_text.casefold():
@@ -2912,18 +2927,42 @@ def main() -> int:
         "with responsive ad copy variations. Meta campaigns normally begin "
         "with approximately three to five ad variations and include up to "
         "two refreshed creative variations per month when useful. One "
-        "refreshed variation may be a short-form video ad."
+        "refreshed variation may be a simple short-form video ad assembled "
+        "from suitable client-provided or otherwise approved assets; full "
+        "video production is not included unless separately scoped."
     )
     video_faq_answer = (
-        "Yes. For suitable Meta campaigns, the standard service may include "
-        "up to one short-form video variation per month within the "
-        "two-creative monthly allowance. Videos are generally created from "
-        "approved client media, licensed stock assets, website content, "
-        "brand graphics, motion typography, or other suitable materials. "
-        "On-location filming, actors, UGC creators, professional voice "
-        "talent, advanced animation, and larger production requirements are "
-        "quoted separately."
+        "Yes. Within the standard Meta creative scope, a simple short-form "
+        "video ad variation may be assembled from suitable client-provided "
+        "or otherwise approved assets when appropriate. During ongoing "
+        "management, it counts as one of the allowance of up to two "
+        "refreshed creative variations per month. Full video production—"
+        "including filming, actors or UGC creators, professional voice "
+        "talent, elaborate editing, advanced motion work, and ongoing custom "
+        "video production—is not included unless separately scoped."
     )
+    internal_ads_scope_relative = "RIELART-ADS-SERVICE-SCOPE.md"
+    internal_ads_scope_text = read_text(root / internal_ads_scope_relative)
+    internal_scope_phrases = (
+        "Basic campaign creative assembled from suitable client-provided or otherwise approved assets",
+        "Up to two refreshed creative variations per month when useful",
+        "a simple short-form video ad variation may be assembled from suitable client-provided or otherwise approved assets when appropriate",
+        "Full video production—including filming, actors or UGC creators, professional voice talent, elaborate editing, advanced motion work, and ongoing custom video production—is not included unless separately scoped",
+    )
+    for phrase in internal_scope_phrases:
+        if phrase.casefold() not in internal_ads_scope_text.casefold():
+            critical.append(
+                f"{internal_ads_scope_relative}: missing reconciled Meta creative scope ({phrase})"
+            )
+    for retired_phrase in (
+        "Basic static creative using approved client-provided assets",
+        "Up to two refreshed static creative variations per month when useful",
+    ):
+        if retired_phrase.casefold() in internal_ads_scope_text.casefold():
+            critical.append(
+                f"{internal_ads_scope_relative}: retired static-only scope remains ({retired_phrase})"
+            )
+
     faq_relative = "faq/index.html"
     faq_text = page_visible(faq_relative)
     for label, phrase in (

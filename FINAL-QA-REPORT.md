@@ -3,7 +3,7 @@
 # Final QA Report — RielArt
 
 Date: 2026-07-26  
-Review copy: `C:\Users\Gabriel\Documents\Codex\2026-07-18\are-you-able-to-search-every-2\live-rielart-working2`  
+Review copy: `<LOCAL_REVIEW_COPY>`
 Branch: `rielart-connected-system-improvement`
 
 ## Result

@@ -24,7 +24,7 @@ The remaining checks require owner-controlled accounts, real devices, software t
 Command:
 
 ```powershell
-& "C:\Users\Gabriel\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" tools/site_audit.py
+& "<LOCAL_CODEX_RUNTIME>\dependencies\python\python.exe" tools/site_audit.py
 ```
 
 | Check | Final result |
@@ -51,7 +51,7 @@ The audit also confirmed the required page metadata, canonicals, H1 coverage, in
 Command:
 
 ```powershell
-& "C:\Users\Gabriel\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe" tools/http_smoke.py --base-url http://127.0.0.1:4173/
+& "<LOCAL_CODEX_RUNTIME>\dependencies\python\python.exe" tools/http_smoke.py --base-url http://127.0.0.1:4173/
 ```
 
 | Check | Final result |
