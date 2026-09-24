@@ -1,5 +1,36 @@
 # RielArt Commercial Remodel and Refinement - Implementation Log
 
+## September 24, 2026 — 2027 design refinement
+
+Scope: visual identity, hierarchy, composition, and presentation. The commercial model, prices, CTAs, inquiry flow, URLs, canonicals, sitemap, redirects, structured data, legal wording, and integrations are unchanged. `config/payment-links.json` remains `null`/`null`. See `REDESIGN-NOTES.md` for the design rationale.
+
+### Changed
+
+- `assets/css/site.css` rewritten as one token-driven system (night bands re-scope tokens; two brand devices; new type scale).
+- `assets/fonts/` added: Schibsted Grotesk and Newsreader Latin variable WOFF2 files plus `LICENSE-OFL.txt`.
+- All 24 full pages: cache key `20260924r1`, Schibsted Grotesk preload, inline SVG sun/moon icons in the theme toggle.
+- `index.html`: new hero markup with service map; problem and sequence merged into one band with service attribution; sections reordered; Client Portal strip under the process; closing CTA on a night band. All approved copy, FAQ text/schema, offer cards, and Business Email block retained.
+- `services/brand-website-launch/`: scope-boundary cards replaced by an Included / Not automatically included panel listing the approved exclusions.
+- `services/focused-ads-management/`: website-edit allowance cards moved into the same boundary panel (wording unchanged).
+- `pricing/`: “Need both?” rendered as an arithmetic example row; the approved sentence (including $948 and “not a third package”) is unchanged.
+- `portfolio/`: abstract planes replaced with real screenshots of this site (`images/work-rielart-desktop.jpg` 82 KB, `images/work-rielart-mobile.jpg` 44 KB), fact list, design decisions, concept flags, and structural scope sketches.
+- `about/`: decorative “01 · / 02 · / 03 ·” cards replaced by the shared path sequence (same copy).
+- `assets/js/site.js`: header scroll state only; all form, menu, FAQ, filter, and theme logic unchanged.
+- `tools/site_audit.py`: current cache key updated and `20260826final2` added to retired keys.
+- `tools/http_smoke.py`: new 110 KB font budget. No existing budget was raised.
+
+### Measurements (local, same tools)
+
+| Metric | Before (`46b0dd5`) | After |
+|---|---:|---:|
+| HTML bytes, 31 routes | 400,056 | 417,177 |
+| CSS | 55,040 | 72,722 / 83,968 budget |
+| JavaScript | 19,302 | 19,715 / 20,480 budget |
+| Image library | 377,834 | 504,386 / 665,600 budget |
+| Fonts | 0 | 104,836 / 112,640 budget |
+
+Not used: `images/gabriel-macovei.webp`, `images/rielart-web-team.webp`, and `images/automation-workspace.webp` remain unreferenced, as before. Founder-led positioning is not approved, so the portraits were not reintroduced.
+
 **Implemented:** July 27-28, 2026
 **Repository:** `live-rielart`
 **Deployment status:** Source implementation complete; no production deployment, commit, payment activation, or external form submission was performed.

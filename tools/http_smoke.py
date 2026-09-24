@@ -38,6 +38,8 @@ DEFAULT_BUDGETS = {
     "javascript_total": 20 * 1024,
     "image_library": 650 * 1024,
     "logo": 10 * 1024,
+    # Two self-hosted Latin variable fonts; Newsreader loads only on articles.
+    "fonts": 110 * 1024,
 }
 IMAGE_SUFFIXES = {".gif", ".ico", ".jpeg", ".jpg", ".png", ".svg", ".webp"}
 
@@ -135,6 +137,12 @@ def main() -> int:
         default=DEFAULT_BUDGETS["logo"],
         help="Maximum raw bytes for images/logo.png (default: %(default)s)",
     )
+    parser.add_argument(
+        "--max-font-bytes",
+        type=int,
+        default=DEFAULT_BUDGETS["fonts"],
+        help="Maximum raw bytes across local WOFF2 fonts (default: %(default)s)",
+    )
     args = parser.parse_args()
 
     base_url = args.base_url.rstrip("/") + "/"
@@ -204,6 +212,9 @@ def main() -> int:
         if path.is_file() and path.suffix.lower() in IMAGE_SUFFIXES
     )
     logo_bytes = (args.root / "images" / "logo.png").stat().st_size
+    font_bytes = sum(
+        path.stat().st_size for path in (args.root / "assets").rglob("*.woff2")
+    )
     performance_budgets = {
         "html_per_route_bytes": args.max_html_bytes,
         "css": {"actual": css_bytes, "maximum": args.max_css_bytes},
@@ -216,6 +227,7 @@ def main() -> int:
             "maximum": args.max_image_bytes,
         },
         "logo": {"actual": logo_bytes, "maximum": args.max_logo_bytes},
+        "fonts": {"actual": font_bytes, "maximum": args.max_font_bytes},
     }
 
     for label, actual, maximum in (
@@ -223,6 +235,7 @@ def main() -> int:
         ("JavaScript", javascript_bytes, args.max_js_bytes),
         ("Image library", image_bytes, args.max_image_bytes),
         ("Logo", logo_bytes, args.max_logo_bytes),
+        ("Fonts", font_bytes, args.max_font_bytes),
     ):
         if actual > maximum:
             failures.append(
@@ -256,7 +269,8 @@ def main() -> int:
         f"CSS {css_bytes}/{args.max_css_bytes}; "
         f"JS {javascript_bytes}/{args.max_js_bytes}; "
         f"images {image_bytes}/{args.max_image_bytes}; "
-        f"logo {logo_bytes}/{args.max_logo_bytes}"
+        f"logo {logo_bytes}/{args.max_logo_bytes}; "
+        f"fonts {font_bytes}/{args.max_font_bytes}"
     )
     print(f"Failures: {len(failures)}")
     for failure in failures:

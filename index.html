@@ -21,7 +21,8 @@
   <meta name="twitter:image" content="https://rielart.com/images/rielart-og.jpg">
   <link rel="icon" href="/images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20260826final2">
+  <link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260924r1">
   <script>
     document.documentElement.classList.add("js");
     try {
@@ -105,7 +106,7 @@
         <a href="/contact/">Contact</a>
       </nav>
       <div class="header-actions">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"><span class="theme-glyph sun" aria-hidden="true">☼</span><span class="theme-glyph moon" aria-hidden="true">☾</span></button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"><span class="theme-glyph sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></span><span class="theme-glyph moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.6A8.2 8.2 0 0 1 9.4 4a8.2 8.2 0 1 0 10.6 10.6Z"/></svg></span></button>
         <a class="header-portal-link" href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
         <a class="btn btn-primary btn-small project-button" href="/contact/#project-inquiry">Get Started</a>
         <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
@@ -136,52 +137,45 @@
     </nav>
   </div>
 <main id="main-content" tabindex="-1">
-    <section class="remodel-hero">
-      <div class="container remodel-hero-grid">
-        <div class="remodel-hero-copy">
-          <span class="eyebrow">Brand &middot; Website &middot; Online Advertising</span>
-          <h1 class="display"><span>Build your brand.</span><span>Launch your website.</span><span>Reach more customers.</span></h1>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-grid">
+        <span class="eyebrow">Brand &middot; Website &middot; Online Advertising</span>
+        <h1 class="hero-title display" id="hero-title">
+          <span class="hero-line">Build your brand.</span>
+          <span class="hero-line">Launch your website.</span>
+          <span class="hero-line">Reach more customers.</span>
+        </h1>
+        <ul class="hero-map" aria-label="The two RielArt services">
+          <li><a href="/services/brand-website-launch/"><span>Brand &amp; Website Launch</span><small>One-time project for the brand and website</small></a></li>
+          <li><a href="/services/focused-ads-management/"><span>Focused Ads Management</span><small>Ongoing Google or Meta advertising</small></a></li>
+        </ul>
+        <div class="hero-copy">
           <p class="lead">RielArt creates clear brands and professional websites for growing businesses, then helps bring the right people to them through managed online advertising.</p>
           <div class="btn-row">
             <a class="btn btn-primary" href="/contact/#project-inquiry">Get Started <span aria-hidden="true">→</span></a>
             <a class="btn btn-secondary" href="/pricing/">View Pricing</a>
           </div>
         </div>
-        <div class="hero-turn" aria-hidden="true">
-          <div class="hero-turn-mark"><img src="/images/logo.png" width="96" height="96" alt=""></div>
-          <div class="hero-turn-path">
-            <div class="hero-turn-step">
-              <span>Brand</span><small>Become recognizable</small>
-            </div>
-            <div class="hero-turn-step">
-              <span>Website</span><small>Become credible</small>
-            </div>
-            <div class="hero-turn-step">
-              <span>Customer pathway</span><small>Become easier to choose</small>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
     <section class="section section-alt" id="the-problem">
-      <div class="container editorial-split">
-        <div><span class="eyebrow">The problem</span><h2 class="section-title">Your business should look as professional online as the work you provide.</h2></div>
-        <div class="editorial-copy">
-          <p>An unclear brand or outdated website can make a capable business feel difficult to trust. Advertising makes that problem more expensive when it sends visitors to a confusing experience.</p>
-          <p>RielArt brings the brand, website, and customer-acquisition decisions into one clear direction—without asking you to coordinate separate designers, developers, and advertisers.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="sequence">
       <div class="container">
-        <div class="section-heading"><span class="eyebrow">The RielArt sequence</span><h2 class="section-title">One clear path from first impression to customer inquiry.</h2></div>
-        <ol class="sequence-list">
-          <li><span>Identity</span><div><h3>Build the brand</h3><p>Clarify how the business should look, sound, and be understood.</p></div></li>
-          <li><span>Presence</span><div><h3>Launch the website</h3><p>Create a clear, mobile-friendly website that helps visitors understand the business and take action.</p></div></li>
-          <li><span>Momentum</span><div><h3>Reach potential customers</h3><p>Run a focused Google or Meta campaign based on how the market discovers the service.</p></div></li>
-        </ol>
+        <div class="editorial-split">
+          <div><span class="eyebrow">The problem</span><h2 class="section-title">Your business should look as professional online as the work you provide.</h2></div>
+          <div class="editorial-copy">
+            <p>An unclear brand or outdated website can make a capable business feel difficult to trust. Advertising makes that problem more expensive when it sends visitors to a confusing experience.</p>
+            <p>RielArt brings the brand, website, and customer-acquisition decisions into one clear direction—without asking you to coordinate separate designers, developers, and advertisers.</p>
+          </div>
+        </div>
+        <div class="sequence-block" id="sequence">
+          <div class="section-heading sequence-heading"><span class="eyebrow">The RielArt sequence</span><h2 class="section-title">One clear path from first impression to customer inquiry.</h2></div>
+          <ol class="sequence-list">
+            <li><span>Identity</span><div><h3>Build the brand</h3><p>Clarify how the business should look, sound, and be understood.</p><p class="sequence-service">Part of <a href="/services/brand-website-launch/">Brand &amp; Website Launch</a></p></div></li>
+            <li><span>Presence</span><div><h3>Launch the website</h3><p>Create a clear, mobile-friendly website that helps visitors understand the business and take action.</p><p class="sequence-service">Part of <a href="/services/brand-website-launch/">Brand &amp; Website Launch</a></p></div></li>
+            <li><span>Momentum</span><div><h3>Reach potential customers</h3><p>Run a focused Google or Meta campaign based on how the market discovers the service.</p><p class="sequence-service">Delivered by <a href="/services/focused-ads-management/">Focused Ads Management</a></p></div></li>
+          </ol>
+        </div>
       </div>
     </section>
 
@@ -237,16 +231,19 @@
       </div>
     </section>
 
-    <section class="section section-alt" id="how-it-works">
-      <div class="container">
-        <div class="section-heading"><span class="eyebrow">How it works</span><h2 class="section-title">A straightforward process from inquiry to improvement.</h2></div>
-        <ol class="process-rail">
-          <li><span>Listen</span><h3>Tell us about your business</h3><p>Share what you offer, what needs to improve, and the market you want to reach.</p></li>
-          <li><span>Direct</span><h3>Confirm the right starting point</h3><p>RielArt reviews the request and recommends the appropriate service and, for advertising, the platform.</p></li>
-          <li><span>Make</span><h3>Build or prepare the campaign</h3><p>Complete the agreed brand and website work or configure the approved advertising campaign.</p></li>
-          <li><span>Move</span><h3>Launch, measure, and improve</h3><p>Put the work live, confirm tracking, and make informed improvements within the approved scope.</p></li>
-        </ol>
-        <div class="section-action"><a class="text-link" href="/process/">See the complete process <span aria-hidden="true">→</span></a></div>
+    <section class="section section-alt" id="why-rielart">
+      <div class="container why-grid">
+        <div><span class="eyebrow">Why RielArt</span><h2 class="section-title">The practical parts of your online presence, handled together.</h2><p class="section-copy">RielArt connects your brand, website, campaign creative, tracking, and reporting without taking ownership of your accounts or adding unnecessary complexity.</p></div>
+        <ul class="trust-ledger">
+          <li><span>Aligned</span>Brand, website, and advertising organized around one offer</li>
+          <li><span>Clear fee</span>Flat management fee—not a percentage of ad spend</li>
+          <li><span>Owned</span>Client-owned accounts, data, and payment methods</li>
+          <li><span>Included</span><div><strong>Ad copy and Meta creative included</strong><br><small class="section-copy">Campaign messaging and practical creative refreshes are handled together, including a simple asset-based short-form video variation when appropriate. Full video production is separately scoped.</small></div></li>
+          <li><span>Useful</span>Campaign-related website improvements included</li>
+          <li><span>Measured</span>Conversion tracking and practical optimization</li>
+          <li><span>Explained</span>Clear monthly reporting and review</li>
+          <li><span>Organized</span>Delivery through the Client Portal</li>
+        </ul>
       </div>
     </section>
 
@@ -265,19 +262,34 @@
       </div>
     </section>
 
-    <section class="section section-dark" id="why-rielart">
-      <div class="container why-grid">
-        <div><span class="eyebrow">Why RielArt</span><h2 class="section-title">The practical parts of your online presence, handled together.</h2><p class="section-copy">RielArt connects your brand, website, campaign creative, tracking, and reporting without taking ownership of your accounts or adding unnecessary complexity.</p></div>
-        <ul class="trust-ledger">
-          <li><span>Aligned</span>Brand, website, and advertising organized around one offer</li>
-          <li><span>Clear fee</span>Flat management fee—not a percentage of ad spend</li>
-          <li><span>Owned</span>Client-owned accounts, data, and payment methods</li>
-          <li><span>Included</span><div><strong>Ad copy and Meta creative included</strong><br><small class="section-copy">Campaign messaging and practical creative refreshes are handled together, including a simple asset-based short-form video variation when appropriate. Full video production is separately scoped.</small></div></li>
-          <li><span>Useful</span>Campaign-related website improvements included</li>
-          <li><span>Measured</span>Conversion tracking and practical optimization</li>
-          <li><span>Explained</span>Clear monthly reporting and review</li>
-          <li><span>Organized</span>Delivery through the Client Portal</li>
-        </ul>
+    <section class="section section-alt" id="how-it-works">
+      <div class="container">
+        <div class="split-heading">
+          <div><span class="eyebrow">How it works</span><h2 class="section-title">A straightforward process from inquiry to improvement.</h2></div>
+          <p class="section-copy"><a class="text-link" href="/process/">See the complete process <span aria-hidden="true">→</span></a></p>
+        </div>
+        <ol class="process-rail">
+          <li><span>Listen</span><h3>Tell us about your business</h3><p>Share what you offer, what needs to improve, and the market you want to reach.</p></li>
+          <li><span>Direct</span><h3>Confirm the right starting point</h3><p>RielArt reviews the request and recommends the appropriate service and, for advertising, the platform.</p></li>
+          <li><span>Make</span><h3>Build or prepare the campaign</h3><p>Complete the agreed brand and website work or configure the approved advertising campaign.</p></li>
+          <li><span>Move</span><h3>Launch, measure, and improve</h3><p>Put the work live, confirm tracking, and make informed improvements within the approved scope.</p></li>
+        </ol>
+        <div class="portal-strip">
+          <div>
+            <span class="eyebrow">Organized delivery</span>
+            <h3>Keep the work, decisions, and next steps in one place.</h3>
+            <p>Approved clients use the Client Portal to follow the agreed scope, provide consolidated feedback, access shared files, and review project or campaign updates.</p>
+            <a class="text-link" href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Open Client Portal <span aria-hidden="true">↗</span></a>
+          </div>
+          <dl>
+            <div><dt>Scope</dt><dd>Services, responsibilities, milestones, and included work</dd></div>
+            <div><dt>Files</dt><dd>Source material, approved assets, and final deliverables</dd></div>
+            <div><dt>Feedback</dt><dd>Consolidated review notes at clear checkpoints</dd></div>
+            <div><dt>Access</dt><dd>Account requirements without sharing personal passwords</dd></div>
+            <div><dt>Updates</dt><dd>Progress, campaign summaries, and next actions</dd></div>
+            <div><dt>Handoff</dt><dd>Client-owned accounts, assets, and documentation</dd></div>
+          </dl>
+        </div>
       </div>
     </section>
 
@@ -299,9 +311,9 @@
       </div>
     </section>
 
-    <section class="section final-cta-section">
+    <section class="final-cta-band final-cta-section">
       <div class="container">
-        <div class="final-cta"><span class="eyebrow">Start with the business goal</span><h2>Ready to improve how your business appears and attracts customers online?</h2><p>Tell RielArt what your business does, what needs to improve, and where you want to reach customers.</p><div class="btn-row"><a class="btn btn-primary" href="/contact/#project-inquiry">Get Started</a><a class="btn btn-secondary" href="/pricing/">View Pricing</a></div></div>
+        <div class="final-cta"><span class="eyebrow">Start with the business goal</span><h2>Ready to improve how your business appears and attracts customers online?</h2><p>Tell RielArt what your business does, what needs to improve, and where you want to reach customers.</p><div class="btn-row"><a class="btn btn-primary" href="/contact/#project-inquiry">Get Started <span aria-hidden="true">→</span></a><a class="btn btn-secondary" href="/pricing/">View Pricing</a></div></div>
       </div>
     </section>
   </main>
@@ -314,6 +326,6 @@
     </div>
     <div class="container footer-bottom"><p>© <span data-year>2026</span> RielArt. All rights reserved.</p><p><a href="/privacy-policy/">Privacy</a> <a href="/terms/">Terms</a></p></div>
   </footer>
-  <script src="/assets/js/site.js?v=20260826final2" defer></script>
+  <script src="/assets/js/site.js?v=20260924r1" defer></script>
 </body>
 </html>

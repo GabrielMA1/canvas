@@ -19,23 +19,24 @@ Future approved payment links have one internal configuration location: `config/
 
 ## Site structure
 
-- `index.html` — homepage with approved positioning, two primary offers, a compact optional business-email callout, Google/Meta comparison, work, FAQ, and final inquiry CTA
+- `index.html` — homepage with approved positioning and a hero service map, the problem and three-step sequence, two primary offers, a compact optional business-email callout, Google/Meta comparison, reasons to choose RielArt, labelled work, process with a Client Portal strip, FAQ, and final inquiry CTA
 - `services/` — consolidated two-primary-service overview plus a subordinate business-email setup section
 - `services/brand-website-launch/` — detailed $599 launch scope with an optional business-email cross-reference
 - `services/focused-ads-management/` — detailed $349 monthly advertising scope, including Google and Meta explanations
 - `pricing/` — two-primary-offer comparison, “Need both?” example, detailed optional business-email setup, and a discreet custom-scope inquiry
 - `process/` — four-step customer-facing process
-- `portfolio/` — accurately labelled internal work and representative concepts
+- `portfolio/` — RielArt's own site as the internal project (real screenshots of this site), design decisions, and flagged representative concepts with structural scope sketches
 - `about/` — company approach, operating principles, ownership, and service area
 - `faq/` — detailed commercial, business-email setup, and delivery answers
 - `blog/` — searchable Insights index and nine educational articles
 - `contact/` — canonical inquiry with four primary choices, a non-required business-email checkbox, conditional advertising questions, and preserved query context
 - `privacy-policy/`, `terms/` — legal information covering advertising and authorized business-email/workspace access, pending the decisions recorded in `RIELART-MANUAL-REVIEW.md`
 - `thanks/`, `404.html` — noindex utility pages
-- `assets/css/site.css` — consolidated visual system and responsive rules
+- `assets/css/site.css` — consolidated visual system (“The Turn”, 2027 refinement) and responsive rules
+- `assets/fonts/` — self-hosted Schibsted Grotesk and Newsreader Latin variable WOFF2 files with their SIL OFL 1.1 licence
 - `assets/js/site.js` — theme, active navigation, menus, FAQ, filter, conditional form, and validation behaviour
 - `tools/site_audit.py` — static-site, commercial-model, integration, metadata, schema, link, and redirect audit
-- `tools/http_smoke.py` — local HTTP crawler and response-budget check
+- `tools/http_smoke.py` — local HTTP crawler and response-budget check (HTML, CSS, JavaScript, images, logo, fonts)
 
 Five retired service routes and the legacy package route remain as noindex compatibility pages with direct permanent mappings in `_redirects`. See `RIELART-URL-MIGRATION.md`.
 
@@ -74,4 +75,4 @@ python tools/http_smoke.py --base-url http://127.0.0.1:4173/
 - Test representative pages at 320 px, tablet, and desktop widths in both themes, with keyboard navigation, reduced motion, and 200% zoom.
 - Keep representative concepts clearly labelled until permissioned client work is available.
 
-The `RIELART-*.md` documents record the commercial strategy, offer scope, advertising limits, migration decisions, copy map, implementation details, manual decisions, and final QA.
+`REDESIGN-NOTES.md` describes the current design system. The `RIELART-*.md` documents record the commercial strategy, offer scope, advertising limits, migration decisions, copy map, implementation details, manual decisions, and final QA.

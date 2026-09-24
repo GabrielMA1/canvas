@@ -33,6 +33,19 @@
     });
   });
 
+  const siteHeader = document.querySelector(".site-header");
+  if (siteHeader) {
+    let headerFrame = 0;
+    const syncHeader = () => {
+      headerFrame = 0;
+      siteHeader.classList.toggle("is-scrolled", window.scrollY > 8);
+    };
+    window.addEventListener("scroll", () => {
+      if (!headerFrame) headerFrame = window.requestAnimationFrame(syncHeader);
+    }, { passive: true });
+    syncHeader();
+  }
+
   const menuButton = document.querySelector("[data-menu-toggle]");
   const mobileMenu = document.querySelector("[data-mobile-menu]");
   const desktopDropdowns = [...document.querySelectorAll("[data-nav-dropdown]")];

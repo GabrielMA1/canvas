@@ -31,18 +31,21 @@ The Business Email query maps the primary choice to “I am not sure yet,” che
 
 No supplemental trust line appears below the hero actions.
 
-Sections:
+**Hero service map (added September 24, 2026):** a two-item list beside the headline — **Brand & Website Launch** (“One-time project for the brand and website”) and **Focused Ads Management** (“Ongoing Google or Meta advertising”). It links to the two service routes and shows no prices.
+
+Sections, in order:
 
 1. “Your business should look as professional online as the work you provide.”
-2. “One clear path from first impression to customer inquiry.”
-3. Brand & Website Launch and Focused Ads Management
+   - followed in the same band by “One clear path from first impression to customer inquiry.” Each step notes “Part of Brand & Website Launch” or “Delivered by Focused Ads Management.”
+2. Brand & Website Launch and Focused Ads Management
    - Compact optional Business Email & Workspace Setup callout directly afterward
-4. “The right platform depends on how customers find you.”
-5. “A straightforward process from inquiry to improvement.”
-6. “Selected work, clearly labelled.”
-7. “A practical partner for the whole customer journey.”
-8. Ten approved commercial FAQs
-9. “Ready to improve how your business appears and attracts customers online?”
+3. “The right platform depends on how customers find you.”
+4. “The practical parts of your online presence, handled together.”
+5. “Selected work, clearly labelled.”
+6. “A straightforward process from inquiry to improvement.”
+   - Client Portal strip: “Keep the work, decisions, and next steps in one place.” (approved Process-page copy and six portal modules)
+7. Ten approved commercial FAQs
+8. “Ready to improve how your business appears and attracts customers online?”
 
 ## Services
 
@@ -111,6 +114,8 @@ Four public steps:
 **Title:** Selected work, clearly labelled.
 
 Keep existing legitimate items and identify each as completed work, an internal project, a representative concept, or a solution model. Do not attach unsupported business results.
+
+The Work page (September 24, 2026) presents the RielArt website as the internal project using two real screenshots of this repository's homepage (`/images/work-rielart-desktop.jpg`, `/images/work-rielart-mobile.jpg`), a brand/website/inquiry/delivery fact list, and four “Design decisions.” Each representative concept carries a “Representative concept · <service>” flag and a structural scope sketch (page set, launch sequence, Google campaign → up to three ad groups → responsive ads, Meta campaign → up to two ad sets → 3–5 initial variations). The sketches contain no names, data, metrics, or results. Regenerate the screenshots if the homepage design changes.
 
 ## About
 

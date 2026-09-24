@@ -21,7 +21,8 @@
   <meta name="twitter:image" content="https://rielart.com/images/rielart-og.jpg">
   <link rel="icon" href="/images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20260826final2">
+  <link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260924r1">
   <script>
     document.documentElement.classList.add("js");
     try {
@@ -94,7 +95,7 @@
         <a href="/contact/">Contact</a>
       </nav>
       <div class="header-actions">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"><span class="theme-glyph sun" aria-hidden="true">☼</span><span class="theme-glyph moon" aria-hidden="true">☾</span></button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"><span class="theme-glyph sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></span><span class="theme-glyph moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.6A8.2 8.2 0 0 1 9.4 4a8.2 8.2 0 1 0 10.6 10.6Z"/></svg></span></button>
         <a class="header-portal-link" href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
         <a class="btn btn-primary btn-small project-button" href="/contact/#project-inquiry">Get Started</a>
         <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
@@ -162,23 +163,11 @@
           </div>
           <p class="section-copy">The work begins with the foundation the business needs now. Advertising can start later, or immediately when an existing website passes the advertising-readiness review.</p>
         </div>
-        <div class="grid-3">
-          <article class="card">
-            <span class="tag">01 · Build the brand</span>
-            <h3>Clarify how the business should look and be understood.</h3>
-            <p class="section-copy">Practical direction for positioning, messaging, colour, typography, and a simple professional identity.</p>
-          </article>
-          <article class="card">
-            <span class="tag">02 · Launch the website</span>
-            <h3>Create a clear, mobile-friendly path to action.</h3>
-            <p class="section-copy">A professional business website with focused pages, a contact path, search foundations, and launch assistance.</p>
-          </article>
-          <article class="card">
-            <span class="tag">03 · Reach potential customers</span>
-            <h3>Use Google or Meta based on how customers discover the offer.</h3>
-            <p class="section-copy">A focused campaign with client-owned accounts, conversion tracking, ongoing optimization, and practical reporting.</p>
-          </article>
-        </div>
+        <ol class="sequence-list">
+          <li><span>Build the brand</span><div><h3>Clarify how the business should look and be understood.</h3><p>Practical direction for positioning, messaging, colour, typography, and a simple professional identity.</p></div></li>
+          <li><span>Launch the website</span><div><h3>Create a clear, mobile-friendly path to action.</h3><p>A professional business website with focused pages, a contact path, search foundations, and launch assistance.</p></div></li>
+          <li><span>Reach potential customers</span><div><h3>Use Google or Meta based on how customers discover the offer.</h3><p>A focused campaign with client-owned accounts, conversion tracking, ongoing optimization, and practical reporting.</p></div></li>
+        </ol>
       </div>
     </section>
 
@@ -260,6 +249,6 @@
     </div>
     <div class="container footer-bottom"><p>© <span data-year>2026</span> RielArt. All rights reserved.</p><p><a href="/privacy-policy/">Privacy</a> <a href="/terms/">Terms</a></p></div>
   </footer>
-<script src="/assets/js/site.js?v=20260826final2" defer></script>
+<script src="/assets/js/site.js?v=20260924r1" defer></script>
 </body>
 </html>

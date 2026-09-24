@@ -1,5 +1,24 @@
 # RielArt Focused Refinement - QA Report
 
+## September 24, 2026 — 2027 design refinement QA
+
+**Environment:** Linux container, Python 3 static server on `127.0.0.1:4173`, Node 22, Playwright 1.56 with the preinstalled Chromium. No Safari/iOS, Firefox, screen reader, or Lighthouse run was available; those results are not claimed.
+
+| Check | Result |
+|---|---|
+| `python3 tools/site_audit.py` | PASS — 0 warnings, 0 critical failures (24/24 cache references, 2 primary services, 4/4 Business Email blocks, 0 Stripe links, 0 PostalAddress) |
+| `python3 tools/http_smoke.py --base-url http://127.0.0.1:4173/` | PASS — 34 routes, 33 × 200, 1 intentional 404, all budgets including the new font budget |
+| `node --check assets/js/site.js` | PASS |
+| `git diff --check` | PASS |
+| Interaction script (23 checks) | PASS — mobile menu open/focus/Escape/focus return; theme persistence; FAQ open/close; desktop dropdown Escape + focus return; Insights filter (4 Websites) and search (2 chatbot); ads, both, business-email, and custom-scope query presets; exactly four primary radios; conditional ads fields shown/hidden/disabled; empty-submit validation with no request; success card and error/retry state with **Formspree intercepted locally** (no real submission); reduced-motion disables path animation; skip link is the first tab stop |
+| Responsive matrix | 16 routes × 320, 390, 768, 1024, 1440, 1920 × light/dark = 192 cases: 0 page overflow, 0 elements outside the viewport, 0 broken eager images |
+| Hero fit | Headline right edge stays ≥ 26 px left of the service map at 1181–1920 px |
+| Contrast (token math) | All text pairs ≥ 5.0:1 in both themes and on night bands; control borders ≥ 3.4:1 |
+| LCP / CLS (Chromium, ~4 Mbps / 150 ms) | Home, Contact, one article at 390 and 1440: LCP 496–512 ms after vs 432–476 ms before; CLS ≤ 0.004 |
+| Targeted searches | No retired service names, legacy prices, Stripe links, addresses, founder/team claims, or performance claims introduced; “guarantee” appears only in the approved no-guarantee answers |
+
+Not verified here: true 200% browser zoom (reflow was covered at 320 px width), real assistive technology, host-level 301 redirects, and production Formspree delivery.
+
 **QA date:** July 28, 2026
 **Environment:** Local static server, repository audit tools, and Codex in-app browser
 **Result:** Final source passes the content-consistency assertions, static audit, local HTTP crawl, JavaScript syntax check, diff check, and focused browser validation. The previously open rendered pricing-inclusion review was completed in the later release-gate report; the current Insights/404 changes were separately rendered and verified below.
