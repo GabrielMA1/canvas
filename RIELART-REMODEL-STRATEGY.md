@@ -63,23 +63,20 @@ Google Search Ads and Meta Ads are explanatory sections within the Focused Ads M
 
 ## Homepage plan
 
-The homepage will retain ten concise core sections, with one compact optional setup callout directly after the two-service area:
+Updated September 24, 2026 for the 2027 design refinement. The homepage keeps every approved section and message; the order now follows the customer's questions:
 
-1. Hero
-2. The business problem
-3. The three-step RielArt sequence
-4. Two services
+1. Hero — the approved headline, supporting message, **Get Started** and **View Pricing**, plus a compact service map that links the headline's first two lines to Brand & Website Launch and its third line to Focused Ads Management (no prices, no trust line)
+2. The business problem, continued by the three-step RielArt sequence (each step names the service that delivers it)
+3. Two services
    - Compact Business Email & Workspace Setup callout—not a third card
-5. Google or Meta explanation
-6. Four-step process
-7. Accurately labelled work
-8. Truthful operational reasons to choose RielArt
-9. Ten concise FAQs
-10. Final project CTA
+4. Google or Meta explanation
+5. Truthful operational reasons to choose RielArt (`#why-rielart`)
+6. Accurately labelled work
+7. Four-step process, with a compact Client Portal strip that reuses approved Process-page portal copy
+8. Ten concise FAQs
+9. Final project CTA
 
-The former hero tabs, capability ticker, AI-led copy, abstract service taxonomy, duplicate CTAs, and long card grids are removed.
-
-The hero contains the approved headline, supporting message, action buttons, and orbital visual without a supplemental trust line.
+The former hero tabs, capability ticker, AI-led copy, abstract service taxonomy, duplicate CTAs, and long card grids remain removed.
 
 ## Content principles
 
@@ -96,16 +93,17 @@ The hero contains the approved headline, supporting message, action buttons, and
 
 ## Visual principles
 
-Preserve the RielArt logo, typography, premium blue-and-navy language, light/dark themes, responsive behaviour, accessible focus states, and reduced-motion support.
+Preserve the RielArt logo, premium blue-and-navy language, light/dark themes, responsive behaviour, accessible focus states, and reduced-motion support.
 
-Simplify the visual system around:
+Typography is self-hosted Schibsted Grotesk (all UI and headings) with Newsreader for article body text only (both SIL OFL 1.1). Simplify the visual system around:
 
 - generous whitespace;
 - direct type hierarchy;
 - two equal-height offer cards;
 - consistent card anatomy and alignment;
 - a small number of purposeful visual accents;
-- a code-native orbital brand animation in the homepage hero;
+- a single "path line" derived from the logo's blue-to-cyan turn, used only for the hero service map, the three-step sequence, and the process rail;
+- one folded-corner device, reserved for the primary-service pair, the contact introduction, the Work feature, and the closing homepage CTA;
 - clear tables and accordions where comparison or detail benefits from them.
 
 ## Conversion flow

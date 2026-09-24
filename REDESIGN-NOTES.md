@@ -1,4 +1,54 @@
-# RielArt redesign handoff — August 26, 2026
+# RielArt design notes — current system (September 24, 2026)
+
+Status: implemented on branch `claude/kind-mayer-5vhoki` for owner review. Not deployed or merged. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
+
+## Concept: The Turn, reduced to two devices
+
+The folded R mark still drives the identity, but it is no longer repeated on every button, eyebrow, and card. It survives as two deliberate devices:
+
+1. **The path line** — the logo's blue-to-cyan gradient, drawn as a single line that connects brand → website → customers. Used only in the hero service map, the homepage/About three-step sequence, and the process rail.
+2. **The fold** — one cut corner, reserved for the pair of primary services, the contact introduction, the Work feature image, and the closing homepage CTA.
+
+Everything else is carried by typography, rules, and spacing rather than boxes.
+
+## Typography
+
+- **Schibsted Grotesk** (variable, Latin, 46.8 KB, preloaded) for headings, UI, and body.
+- **Newsreader** (variable, Latin, 58.1 KB) for article body text only; the browser downloads it only on Insights articles.
+- Both are self-hosted under SIL OFL 1.1 (`assets/fonts/LICENSE-OFL.txt`) with a metric-adjusted local fallback. No third-party font request.
+- Scale: display (hero only), page title, section title, H3, price numerals (tabular), lead, body, and small sentence-case labels. Uppercase labels and decorative 01/02/03 numbering were removed.
+
+## Colour
+
+Warm paper, deep ink, and RielArt blue are retained. Night bands use a deep brand navy (`#0c1b35`) rather than near-black, and re-scope the palette with CSS custom properties so every component adapts automatically. Dark mode is a designed counterpart: near-black paper with navy emphasis bands and a lighter blue. All text token pairs measure ≥ 5:1; control borders ≥ 3.4:1.
+
+## Composition changes
+
+- **Homepage hero:** the approved three-line headline at display scale beside a service map that ties “Build… Launch…” to Brand & Website Launch and “Reach more customers.” to Focused Ads Management. No floating cards, no prices, no trust line.
+- **Homepage order:** problem + sequence → services → Google or Meta → why RielArt → work → process + Client Portal strip → FAQ → closing CTA.
+- **Primary services** are one ruled two-column sheet with large tabular prices; Business Email is a lighter, rule-topped row beneath (never a third card).
+- **Google or Meta** is a two-column comparison divided by an “or”.
+- **Inner page heroes** set the title left and the lead right on desktop.
+- **Service pages** use ruled scope ledgers and an Included / Not automatically included boundary panel.
+- **Pricing** adds an arithmetic “Need both?” row ($599 once, then $349/month) that keeps the approved sentence and states it is not a third package.
+- **Work** shows real screenshots of this RielArt site, a fact list, design decisions, and flagged representative concepts with structural scope sketches.
+- **Insights** index is an editorial list; articles read in Newsreader with a sticky service aside on desktop.
+- **Contact** keeps every field and behaviour; service choices are clearer selection tiles and the optional setup is a lighter dashed control.
+
+## Motion
+
+Path lines draw once (hero on load; sequence/process via CSS scroll-driven timelines where supported). Dropdowns, mobile menu, FAQ, buttons, and the theme icon use short transitions. `prefers-reduced-motion` removes all of it. No scroll-jacking or parallax.
+
+## Technical
+
+Static HTML, CSS, and vanilla JavaScript only. JavaScript gained one passive, rAF-throttled header scroll-state handler. Shared cache key: `20260924r1`.
+
+---
+
+# Historical: RielArt redesign handoff — August 26, 2026
+
+The notes below describe the previous implementation and are kept as a record. Where they conflict with the section above, the section above is current.
+
 
 Status: implemented and verified in the testing clone. Nothing was deployed, pushed, submitted, or changed in production or any external service. QA artifacts were kept outside the tracked clone.
 

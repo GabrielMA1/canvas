@@ -21,7 +21,8 @@
   <meta name="twitter:image" content="https://rielart.com/images/rielart-og.jpg">
   <link rel="icon" href="/images/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/css/site.css?v=20260826final2">
+  <link rel="preload" href="/assets/fonts/schibsted-grotesk-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/site.css?v=20260924r1">
   <script>
     document.documentElement.classList.add("js");
     try {
@@ -94,7 +95,7 @@
         <a href="/contact/">Contact</a>
       </nav>
       <div class="header-actions">
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"><span class="theme-glyph sun" aria-hidden="true">☼</span><span class="theme-glyph moon" aria-hidden="true">☾</span></button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode"><span class="theme-glyph sun" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></span><span class="theme-glyph moon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.6A8.2 8.2 0 0 1 9.4 4a8.2 8.2 0 1 0 10.6 10.6Z"/></svg></span></button>
         <a class="header-portal-link" href="https://portal.rielart.com" target="_blank" rel="noopener noreferrer">Client Portal</a>
         <a class="btn btn-primary btn-small project-button" href="/contact/#project-inquiry">Get Started</a>
         <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation"><span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span></button>
@@ -141,37 +142,50 @@
     <section class="section portfolio-internal-section">
       <div class="container">
         <article class="portfolio-feature">
-          <div class="portfolio-feature-visual" aria-hidden="true">
-            <span class="portfolio-wordmark">RielArt</span>
-            <span class="portfolio-plane portfolio-plane-one"></span>
-            <span class="portfolio-plane portfolio-plane-two"></span>
-            <span class="portfolio-plane portfolio-plane-three"></span>
-            <span class="portfolio-feature-mark"><img src="/images/logo.png" width="96" height="96" alt=""></span>
+          <div class="portfolio-feature-visual">
+            <figure><img class="shot-desktop" src="/images/work-rielart-desktop.jpg" width="1280" height="800" alt="The RielArt homepage on a desktop screen, showing the headline Build your brand. Launch your website. Reach more customers. beside the two services." loading="lazy" decoding="async"></figure>
+            <figure><img class="shot-mobile" src="/images/work-rielart-mobile.jpg" width="390" height="844" alt="The RielArt homepage on a phone in dark mode." loading="lazy" decoding="async"></figure>
           </div>
           <div class="portfolio-feature-content">
             <span class="eyebrow">Internal project · RielArt</span>
             <h2>RielArt’s own digital presence.</h2>
-            <p class="section-copy">The studio’s identity, responsive website, inquiry path, and client experience are treated as one connected brand system. This visual uses the existing RielArt mark and The Turn design language.</p>
+            <p class="section-copy">The studio’s identity, responsive website, inquiry path, and client experience are treated as one connected brand system. These screenshots show the live RielArt website design in light and dark themes.</p>
             <p class="portfolio-truth-note">Shown as RielArt’s own work—not as a client case study.</p>
+            <dl class="feature-facts">
+              <div><dt>Brand</dt><dd>The folded R mark, warm paper and deep ink palette, and a single typeface family</dd></div>
+              <div><dt>Website</dt><dd>Responsive pages, light and dark themes, accessible navigation, and published pricing beside scope and limits</dd></div>
+              <div><dt>Inquiry path</dt><dd>One inquiry form that preselects the service, asks advertising questions only when relevant, and confirms receipt inline</dd></div>
+              <div><dt>Delivery</dt><dd>A separate Client Portal for approved clients’ scope, files, feedback, and updates</dd></div>
+            </dl>
             <a class="article-link" href="/">View the RielArt website</a>
           </div>
         </article>
+        <div class="decision-list">
+          <h3>Design decisions</h3>
+          <ul>
+            <li><strong>The headline is the service map.</strong> Build and launch point to Brand &amp; Website Launch; reach points to Focused Ads Management.</li>
+            <li><strong>Scope sits next to price.</strong> Commitments, separate advertising spend, and exclusions are shown where the price is read.</li>
+            <li><strong>Inquiry before payment.</strong> Every service begins with a fit review, so the site has no checkout.</li>
+            <li><strong>One brand line, used sparingly.</strong> The logo’s blue-to-cyan turn marks the path from brand to customer, not every surface.</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-alt">
       <div class="container">
         <div class="split-heading">
           <div>
             <span class="eyebrow">Representative concepts</span>
             <h2 class="section-title">Four truthful examples of focused scope.</h2>
           </div>
-          <p class="section-copy">Every real project is confirmed through an inquiry, readiness review, and written scope before work begins.</p>
+          <p class="section-copy">Every real project is confirmed through an inquiry, readiness review, and written scope before work begins. The sketches below show scope structure only—no client, launch, or result is implied.</p>
         </div>
 
         <div class="model-grid">
           <article class="model-card">
-            <span class="card-kicker">Representative concept · Brand &amp; Website Launch</span>
+            <span class="concept-flag">Representative concept · Brand &amp; Website Launch</span>
+            <div class="scope-diagram" aria-hidden="true"><div class="row"><div class="node page-sketch"><i></i><i></i><i></i><span>Home</span></div><div class="node page-sketch"><i></i><i></i><i></i><span>About</span></div><div class="node page-sketch"><i></i><i></i><i></i><span>Services</span></div><div class="node page-sketch"><i></i><i></i><i></i><span>Contact</span></div></div></div>
             <h3>Home-service brand and four-page website</h3>
             <p class="section-copy">A clear identity and mobile-friendly website that explains the service area, builds trust, and makes it easy to request an estimate.</p>
             <p class="model-includes"><strong>Could include:</strong> brand direction · wordmark refinement · Home · About · Services · Contact · lead form · SEO foundation</p>
@@ -179,7 +193,8 @@
           </article>
 
           <article class="model-card">
-            <span class="card-kicker">Representative concept · Brand &amp; Website Launch</span>
+            <span class="concept-flag">Representative concept · Brand &amp; Website Launch</span>
+            <div class="scope-diagram" aria-hidden="true"><div class="row"><div class="node lead-node">Questionnaire</div><div class="node">Direction</div><div class="node">Visual system</div><div class="node">Four pages</div><div class="node lead-node">Inquiry</div></div></div>
             <h3>Professional-service website and inquiry path</h3>
             <p class="section-copy">Focused positioning, a practical visual system, and a responsive website that helps visitors understand the offer and take a clear next step.</p>
             <p class="model-includes"><strong>Could include:</strong> audience questionnaire · messaging guidance · typography · colour palette · four core pages · analytics foundation</p>
@@ -187,7 +202,8 @@
           </article>
 
           <article class="model-card">
-            <span class="card-kicker">Representative concept · Google Search Ads</span>
+            <span class="concept-flag">Representative concept · Google Search Ads</span>
+            <div class="scope-diagram" aria-hidden="true"><div class="node lead-node wide">One Search campaign</div><span class="link"></span><div class="row"><div class="node">Ad group</div><div class="node">Ad group</div><div class="node">Ad group</div></div><div class="row"><div class="node wide">Responsive ad</div><div class="node wide">Responsive ad</div><div class="node wide">Responsive ad</div></div></div>
             <h3>High-intent search campaign for one service</h3>
             <p class="section-copy">A focused campaign designed for potential customers who are already searching for a clearly defined service in one regional market.</p>
             <p class="model-includes"><strong>Could include:</strong> one Search campaign · up to three ad groups · keyword research · search-term review · conversion tracking · monthly reporting</p>
@@ -195,7 +211,8 @@
           </article>
 
           <article class="model-card">
-            <span class="card-kicker">Representative concept · Meta Ads</span>
+            <span class="concept-flag">Representative concept · Meta Ads</span>
+            <div class="scope-diagram" aria-hidden="true"><div class="node lead-node wide">One Leads or Sales campaign</div><span class="link"></span><div class="row"><div class="node">Ad set</div><div class="node">Ad set (when justified)</div></div><div class="row"><div class="node wide">3–5 initial ad variations</div></div></div>
             <h3>Facebook and Instagram campaign for a visual offer</h3>
             <p class="section-copy">A focused campaign for an offer that benefits from strong visual presentation, awareness, or reaching customers before they actively search.</p>
             <p class="model-includes"><strong>Could include:</strong> one Leads or Sales campaign · up to two ad sets when justified · three to five initial variations · basic tracking · monthly reporting</p>
@@ -205,7 +222,7 @@
       </div>
     </section>
 
-    <section class="section section-alt">
+    <section class="section">
       <div class="container">
         <div class="split-heading">
           <div>
@@ -243,6 +260,6 @@
     </div>
     <div class="container footer-bottom"><p>© <span data-year>2026</span> RielArt. All rights reserved.</p><p><a href="/privacy-policy/">Privacy</a> <a href="/terms/">Terms</a></p></div>
   </footer>
-<script src="/assets/js/site.js?v=20260826final2" defer></script>
+<script src="/assets/js/site.js?v=20260924r1" defer></script>
 </body>
 </html>
