@@ -19,7 +19,7 @@ Future approved payment links have one internal configuration location: `config/
 
 ## Site structure
 
-- `index.html` — homepage with approved positioning and a hero service map, the problem and three-step sequence, two primary offers, a compact optional business-email callout, Google/Meta comparison, reasons to choose RielArt, labelled work, process with a Client Portal strip, FAQ, and final inquiry CTA
+- `index.html` — homepage: approved headline on a full-width ink field with both services and prices set as a price list, the problem statement, the two-offer price board with a compact optional business-email callout, Why RielArt (three lead commitments plus five supporting points), Google/Meta comparison, process with a Client Portal strip, labelled work, FAQ, and final inquiry CTA
 - `services/` — consolidated two-primary-service overview plus a subordinate business-email setup section
 - `services/brand-website-launch/` — detailed $599 launch scope with an optional business-email cross-reference
 - `services/focused-ads-management/` — detailed $349 monthly advertising scope, including Google and Meta explanations
@@ -32,8 +32,8 @@ Future approved payment links have one internal configuration location: `config/
 - `contact/` — canonical inquiry with four primary choices, a non-required business-email checkbox, conditional advertising questions, and preserved query context
 - `privacy-policy/`, `terms/` — legal information covering advertising and authorized business-email/workspace access, pending the decisions recorded in `RIELART-MANUAL-REVIEW.md`
 - `thanks/`, `404.html` — noindex utility pages
-- `assets/css/site.css` — consolidated visual system (“The Turn”, 2027 refinement) and responsive rules
-- `assets/fonts/` — self-hosted Schibsted Grotesk and Newsreader Latin variable WOFF2 files with their SIL OFL 1.1 licence
+- `assets/css/site.css` — consolidated visual system (“Printed in one ink”, October 2026) and responsive rules
+- `assets/fonts/` — self-hosted Archivo and Newsreader Latin variable WOFF2 files with their SIL OFL 1.1 licence
 - `assets/js/site.js` — theme, active navigation, menus, FAQ, filter, conditional form, and validation behaviour
 - `tools/site_audit.py` — static-site, commercial-model, integration, metadata, schema, link, and redirect audit
 - `tools/http_smoke.py` — local HTTP crawler and response-budget check (HTML, CSS, JavaScript, images, logo, fonts)

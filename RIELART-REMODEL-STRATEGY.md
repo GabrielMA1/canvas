@@ -63,20 +63,18 @@ Google Search Ads and Meta Ads are explanatory sections within the Focused Ads M
 
 ## Homepage plan
 
-Updated September 24, 2026 for the 2027 design refinement. The homepage keeps every approved section and message; the order now follows the customer's questions:
+Updated October 8, 2026 for the "Printed in one ink" redesign. The order follows the customer's questions, and the prices are no longer buried:
 
-1. Hero — the approved headline, supporting message, **Get Started** and **View Pricing**, plus a compact service map that links the headline's first two lines to Brand & Website Launch and its third line to Focused Ads Management (no prices, no trust line)
-2. The business problem, continued by the three-step RielArt sequence (each step names the service that delivers it)
-3. Two services
+1. Hero — the approved headline, supporting message, **Get Started** and **View Pricing**, plus a price list that names both services with their prices (Brand & Website Launch $599; Focused Ads Management $349/month, ad spend separate). This deliberately reverses the September "no prices in the hero" decision: published pricing is RielArt's clearest differentiator.
+2. The business problem ("Your business should look as professional online as the work you provide.") — the former three-step sequence was removed from the homepage because it repeated the headline line for line; it remains on About.
+3. Two services as one price board
    - Compact Business Email & Workspace Setup callout—not a third card
-4. Google or Meta explanation
-5. Truthful operational reasons to choose RielArt (`#why-rielart`)
-6. Accurately labelled work
-7. Four-step process, with a compact Client Portal strip that reuses approved Process-page portal copy
+4. Truthful operational reasons to choose RielArt (`#why-rielart`): three lead commitments (flat fee, client ownership, creative included) set large, five supporting points beneath
+5. Google or Meta explanation
+6. Four-step process, with a compact Client Portal strip
+7. Accurately labelled work
 8. Ten concise FAQs
 9. Final project CTA
-
-The former hero tabs, capability ticker, AI-led copy, abstract service taxonomy, duplicate CTAs, and long card grids remain removed.
 
 ## Content principles
 
@@ -95,15 +93,13 @@ The former hero tabs, capability ticker, AI-led copy, abstract service taxonomy,
 
 Preserve the RielArt logo, premium blue-and-navy language, light/dark themes, responsive behaviour, accessible focus states, and reduced-motion support.
 
-Typography is self-hosted Schibsted Grotesk (all UI and headings) with Newsreader for article body text only (both SIL OFL 1.1). Simplify the visual system around:
+Typography is self-hosted Archivo (all UI, headings, and prices; condensed widths for statements) with Newsreader for article body text only (both SIL OFL 1.1). The visual system is "Printed in one ink" (see `REDESIGN-NOTES.md`):
 
-- generous whitespace;
-- direct type hierarchy;
-- two equal-height offer cards;
-- consistent card anatomy and alignment;
-- a small number of purposeful visual accents;
-- a single "path line" derived from the logo's blue-to-cyan turn, used only for the hero service map, the three-step sequence, and the process rail;
-- one folded-corner device, reserved for the primary-service pair, the contact introduction, the Work feature, and the closing homepage CTA;
+- one ink: the logo's deep ultramarine used flat, as full fields with paper-coloured type and as the colour of prices, links, and focus — no gradients outside the logo;
+- warm paper and a deeper warm paper for panels; dark mode as a designed counterpart;
+- one signature device, the dotted price-list leader, used only where something has a price;
+- square corners; rules instead of cards; a heavy rule only on price boards and scope boundaries;
+- small labels above headings only where they carry information (optional setup, work classification, article category);
 - clear tables and accordions where comparison or detail benefits from them.
 
 ## Conversion flow

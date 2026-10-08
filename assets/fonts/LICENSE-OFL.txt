@@ -1,8 +1,9 @@
-Schibsted Grotesk and Newsreader are self-hosted under the SIL Open Font License 1.1.
-Files are the Latin variable subsets published by Fontsource (@fontsource-variable/schibsted-grotesk 5.3.0, @fontsource-variable/newsreader 5.3.0).
+Archivo and Newsreader are self-hosted under the SIL Open Font License 1.1.
+Archivo: Latin variable subset from Google Fonts (Archivo v25), instanced to wdth 74–100 and wght 400–840 and subset to the characters the site uses.
+Newsreader: Latin variable subset published by Fontsource (@fontsource-variable/newsreader 5.3.0).
 
-===== Schibsted Grotesk =====
-Copyright 2023 The Schibsted-Grotesk Project Authors (https://github.com/schibsted/schibsted-grotesk) SchibstedGrotesk-Italic[wght].ttf: Copyright 2023 The Schibsted-Grotesk Project Authors (https://github.com/schibsted/schibsted-grotesk)
+===== Archivo =====
+Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

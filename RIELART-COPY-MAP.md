@@ -23,27 +23,24 @@ The Business Email query maps the primary choice to “I am not sure yet,” che
 
 ## Homepage
 
-**Eyebrow:** Brand · Website · Online Advertising
-
 **H1:** Build your brand. Launch your website. Reach more customers.
 
 **Lead:** RielArt creates clear brands and professional websites for growing businesses, then helps bring the right people to them through managed online advertising.
 
-No supplemental trust line appears below the hero actions.
+No supplemental trust line appears below the hero actions. The former eyebrow ("Brand · Website · Online Advertising") was removed; the headline says it.
 
-**Hero service map (added September 24, 2026):** a two-item list beside the headline — **Brand & Website Launch** (“One-time project for the brand and website”) and **Focused Ads Management** (“Ongoing Google or Meta advertising”). It links to the two service routes and shows no prices.
+**Hero price list (October 8, 2026):** a two-item list beneath the headline — **Brand & Website Launch · $599** (“One-time project for the brand and website”) and **Focused Ads Management · $349/month** (“Ongoing Google or Meta advertising. Ad spend paid separately.”). It links to the two service routes.
 
 Sections, in order:
 
 1. “Your business should look as professional online as the work you provide.”
-   - followed in the same band by “One clear path from first impression to customer inquiry.” Each step notes “Part of Brand & Website Launch” or “Delivered by Focused Ads Management.”
-2. Brand & Website Launch and Focused Ads Management
+2. “Start with the part your business needs now.” — Brand & Website Launch and Focused Ads Management
    - Compact optional Business Email & Workspace Setup callout directly afterward
-3. “The right platform depends on how customers find you.”
-4. “The practical parts of your online presence, handled together.”
-5. “Selected work, clearly labelled.”
-6. “A straightforward process from inquiry to improvement.”
+3. “The practical parts of your online presence, handled together.” — lead commitments: “Flat management fee—not a percentage of ad spend.”, “Client-owned accounts, data, and payment methods.”, “Ad copy and Meta creative included.” (with the approved creative wording), then five supporting points
+4. “The right platform depends on how customers find you.”
+5. “A straightforward process from inquiry to improvement.”
    - Client Portal strip: “Keep the work, decisions, and next steps in one place.” (approved Process-page copy and six portal modules)
+6. “Selected work, clearly labelled.”
 7. Ten approved commercial FAQs
 8. “Ready to improve how your business appears and attracts customers online?”
 
@@ -115,7 +112,7 @@ Four public steps:
 
 Keep existing legitimate items and identify each as completed work, an internal project, a representative concept, or a solution model. Do not attach unsupported business results.
 
-The Work page (September 24, 2026) presents the RielArt website as the internal project using two real screenshots of this repository's homepage (`/images/work-rielart-desktop.jpg`, `/images/work-rielart-mobile.jpg`), a brand/website/inquiry/delivery fact list, and four “Design decisions.” Each representative concept carries a “Representative concept · <service>” flag and a structural scope sketch (page set, launch sequence, Google campaign → up to three ad groups → responsive ads, Meta campaign → up to two ad sets → 3–5 initial variations). The sketches contain no names, data, metrics, or results. Regenerate the screenshots if the homepage design changes.
+The Work page (updated October 8, 2026) presents the RielArt website as the internal project using two real screenshots of this repository's homepage (`/images/work-rielart-desktop.jpg`, `/images/work-rielart-mobile.jpg`), a brand/website/inquiry/delivery fact list, and four “Design decisions” describing the current system. Each representative concept carries a “Representative concept · <service>” flag and a structural scope sketch (page set, launch sequence, Google campaign → up to three ad groups → responsive ads, Meta campaign → up to two ad sets → 3–5 initial variations). The sketches contain no names, data, metrics, or results. Regenerate the screenshots if the homepage design changes.
 
 ## About
 
