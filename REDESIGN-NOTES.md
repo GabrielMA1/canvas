@@ -1,4 +1,53 @@
-# RielArt design notes — current system (September 24, 2026)
+# RielArt design notes — current system: “Printed in one ink” (October 8, 2026)
+
+Status: implemented on branch `claude/clever-allen-vt1at2` for owner review. Not deployed. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
+
+## Audit of the previous system
+
+What was strong: honest, well-scoped copy; two clear services with published prices; light/dark themes; accessible, dependency-free code; a thorough audit tool.
+
+What read as generic: a small label above nearly every heading (85 instances); the same heading-left / paragraph-right split in almost every section; a navy band alternating with paper; folded corners and a gradient “path line” used as decoration; a polished but anonymous grotesk-on-blue look that could belong to any studio.
+
+Information hierarchy problems: the prices — RielArt’s clearest differentiator — first appeared in the third section; the “sequence” section repeated the hero headline line for line; Why RielArt gave eight points equal weight behind vague one-word labels, burying the three hardest commitments (flat fee, client ownership, creative included); Pricing listed every inclusion twice.
+
+## Why this direction
+
+RielArt sells straight dealing to owners of real-world service businesses: two services, published prices, written boundaries, client-owned accounts, no guarantees. Those owners trust honest printed matter — a clear price card, a written quote, a well-made sign — more than technology aesthetics. So the identity borrows the discipline of a one-colour print job: economical, confident, and legible, with nothing added for effect.
+
+## The system
+
+1. **One ink.** The deep ultramarine of the R mark (`#1238c4`; `#1a36b8` fields and `#8fa4ff` text in dark mode), used flat: as full-width fields with paper-coloured type (homepage hero, Why RielArt, closing CTA, inner-page price boards), and as the colour of prices, links, and focus. No gradient outside the logo. No navy, no cyan.
+2. **Warm paper.** `#f3efe6` paper; a deeper warm paper `#e7e1d4` for panels and alternate sections. Dark mode is a designed counterpart (night paper `#111319`) that keeps the same cobalt fields.
+3. **One family.** Archivo — a grotesque descended from 19th-century American commercial type — set heavy and condensed (wdth 74–84%) for statements, titles, and prices, normal width for reading and UI. Newsreader remains for article body text only. Archivo is instanced to wdth 74–100 and wght 400–840 and subset to the site’s characters (50 KB).
+4. **The price-list leader.** A dotted leader running from a service name to its price — the single signature device, used only where something has a price (homepage hero, share image).
+5. **Rules, not cards.** Square corners throughout. A heavy 4px rule only on price boards, fact strips, and scope boundaries; 2px rules head lists; 1px rules divide.
+6. **Labels only where they inform.** Section labels were removed except where they carry meaning: Optional setup (subordinate status), Internal project / Representative concept (honesty labels), article category, Compare the services (approved copy).
+
+## Structural changes
+
+- **Homepage:** prices move into the first viewport via the hero price list; the redundant sequence section was removed (it remains on About); Why RielArt leads with three large commitments over five supporting points; the work section is a compact labelled list after the process.
+- **Pricing:** the cobalt price board now carries name, price, terms, and actions only; the full inclusions live once, in “What each service includes.”
+- **About:** the six-card standards grid became a ruled two-column list.
+- **Work:** screenshots regenerated from the redesigned homepage; facts and design decisions rewritten to describe the current system truthfully.
+- **Share image:** `images/rielart-og.jpg` replaced the generic laptop photograph with a typographic card in the brand system (same path, 1200 × 630).
+- Decorative → arrows were removed from buttons and links; ↗ remains only where a link opens a new tab.
+
+## Motion
+
+Kept deliberately small: link-underline thickening, header rule on scroll, dropdown caret, menu icon, FAQ open/close, theme glyph. No scroll-triggered effects. `prefers-reduced-motion` removes all transitions.
+
+## Recommendations for the owner
+
+- The Insights featured guide still uses its stock-style cover (`og-website-leads.jpg`) because the audit requires it; the other article covers share that style. Consider replacing them with typographic covers like the new share image.
+- The unused portraits remain unreferenced because founder-led positioning is not approved.
+
+## Verification
+
+Static audit: 0 warnings, 0 critical failures. HTTP smoke crawl: 34 routes, all budgets pass (fonts 108 KB / 110 KB). Overflow sweep: 19 routes × 5 widths (320–1440) × 2 themes, no horizontal overflow. Interaction checks: dropdown, mobile menu focus, FAQ, keyboard focus on cobalt fields, form preselection, conditional advertising fields, and validation messaging. Shared cache key: `20261008ink1`.
+
+---
+
+# Historical: “The Turn” refinement (September 24, 2026)
 
 Status: implemented on branch `claude/kind-mayer-5vhoki` for owner review. Not deployed or merged. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
 
