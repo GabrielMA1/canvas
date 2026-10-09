@@ -92,6 +92,7 @@
     }
   });
 
+  mobileMenu?.querySelectorAll("nav a, nav p").forEach((item, index) => item.style.setProperty("--i", index));
   mobileMenu?.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => closeMenu({ restoreFocus: false }));
   });
@@ -238,8 +239,9 @@
       .replace(/^-|-$/g, "");
   }
 
-  function applyBlogFilters() {
+  function applyBlogFilters(animate = false) {
     if (!filterCards.length) return;
+    const settle = animate && typeof window.rielartFlip === "function" ? window.rielartFlip(filterCards) : null;
     const activeButton = filterButtons.find((button) => button.getAttribute("aria-pressed") === "true")
       || filterButtons.find((button) => button.classList.contains("active"))
       || filterButtons[0];
@@ -258,6 +260,7 @@
       card.hidden = !visible;
       if (visible) visibleCount += 1;
     });
+    settle?.();
 
     if (blogStatus) {
       blogStatus.textContent = visibleCount
@@ -277,7 +280,7 @@
       });
       button.classList.add("active");
       button.setAttribute("aria-pressed", "true");
-      applyBlogFilters();
+      applyBlogFilters(true);
     });
   });
 

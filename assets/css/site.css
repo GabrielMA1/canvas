@@ -68,7 +68,13 @@
   --container: 1240px;
   --gutter: clamp(1rem, 0.4rem + 2.6vw, 2.5rem);
   --header-h: 72px;
+  /* Motion: three durations, one easing family. GSAP uses power3.out, the
+     same curve, for the homepage entrance and the Insights filter. */
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --dur-press: 120ms;
+  --dur-state: 200ms;
+  --dur-enter: 320ms;
 
   color-scheme: light;
 }
@@ -342,8 +348,9 @@ body:not(.home) .section:not(.section-alt):not(.section-dark):not(.section-tint)
   line-height: 1.15;
   text-align: center;
   text-decoration: none;
-  transition: background-color 160ms var(--ease), color 160ms var(--ease), border-color 160ms var(--ease);
+  transition: background-color 160ms var(--ease), color 160ms var(--ease), border-color 160ms var(--ease), transform var(--dur-press) var(--ease);
 }
+.btn:active { transform: translateY(1px); }
 
 .btn-primary { background: var(--blue); color: var(--paper); }
 .btn-primary:hover { background: var(--blue-press); }
@@ -469,6 +476,9 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 }
 .nav-dropdown[open] .nav-caret { transform: rotate(225deg); margin-top: 0.2rem; }
 
+.nav-dropdown[open] .nav-dropdown-panel { animation: panel-in var(--dur-state) var(--ease); }
+@keyframes panel-in { from { opacity: 0; transform: translateY(-6px); } }
+
 .nav-dropdown-panel {
   position: absolute;
   top: calc(100% + 0.5rem);
@@ -569,10 +579,11 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   overflow-y: auto;
   background: var(--paper);
   visibility: hidden;
-  opacity: 0;
-  transition: opacity 180ms var(--ease), visibility 0s linear 180ms;
+  /* The sheet appears at once; only its lines animate. On close the lines
+     fade first, then the sheet is removed. */
+  transition: visibility 0s linear var(--dur-state);
 }
-.mobile-menu.open { visibility: visible; opacity: 1; transition: opacity 180ms var(--ease); }
+.mobile-menu.open { visibility: visible; transition: none; }
 
 .mobile-menu nav {
   display: grid;
@@ -615,6 +626,21 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 }
 
 .mobile-menu .btn { margin-top: 1.75rem; min-height: 3.25rem; font-size: 1.0625rem; }
+
+/* Opening sets the menu like a list being written: each line rises in order. */
+.mobile-menu nav a,
+.mobile-menu nav p {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--dur-state) var(--ease-in), transform var(--dur-state) var(--ease-in);
+}
+.mobile-menu.open nav a,
+.mobile-menu.open nav p {
+  opacity: 1;
+  transform: none;
+  transition: opacity var(--dur-enter) var(--ease), transform var(--dur-enter) var(--ease);
+  transition-delay: calc(var(--i, 0) * 14ms);
+}
 
 /* ---------- Homepage: hero ---------- */
 
@@ -676,6 +702,15 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   border-bottom: 2px dotted currentColor;
   opacity: 0.55;
 }
+
+/* On load each leader draws from the service toward its price. Names and
+   prices are visible from the first paint; only the dots move. */
+.hero .price-list-leader {
+  transform-origin: 0 50%;
+  animation: leader-draw 520ms var(--ease) 180ms both;
+}
+.hero .price-list > li + li .price-list-leader { animation-delay: 260ms; }
+@keyframes leader-draw { from { transform: scaleX(0); } }
 
 .price-list-price {
   font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.375rem);
@@ -1755,6 +1790,17 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 .form-field select:focus-visible,
 .form-field textarea:focus-visible { border-color: var(--blue); outline: 2px solid var(--blue); outline-offset: 0; }
 .form-field [aria-invalid="true"] { border-color: #b3261e !important; }
+.field-error {
+  grid-column: 1 / -1;
+  margin-top: 0.125rem;
+  color: #b3261e;
+  font-size: 0.875rem;
+  font-weight: 620;
+  line-height: 1.35;
+  animation: field-error-in var(--dur-state) var(--ease);
+}
+[data-theme="dark"] .field-error { color: #ff8a80; }
+@keyframes field-error-in { from { opacity: 0; transform: translateY(-3px); } }
 [data-theme="dark"] .form-field [aria-invalid="true"] { border-color: #ff8a80 !important; }
 
 .ads-fields { padding: 1.5rem; background: var(--tint); }
@@ -1977,7 +2023,14 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 
 /* ---------- Motion and print ---------- */
 
+/* Page to page: the header stays put while the page underneath cross-fades. */
+@view-transition { navigation: auto; }
+.site-header { view-transition-name: site-header; }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: var(--dur-state); }
+
 @media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
   html { scroll-behavior: auto; }
   *,
   *::before,
