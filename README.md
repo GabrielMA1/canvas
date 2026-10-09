@@ -35,6 +35,10 @@ Future approved payment links have one internal configuration location: `config/
 - `assets/css/site.css` — consolidated visual system (“Printed in one ink”, October 2026) and responsive rules
 - `assets/fonts/` — self-hosted Archivo and Newsreader Latin variable WOFF2 files with their SIL OFL 1.1 licence
 - `assets/js/site.js` — theme, active navigation, menus, FAQ, filter, conditional form, and validation behaviour
+- `assets/js/motion-insights.js` — GSAP Flip for the Insights topic filter (loaded on `/blog/` only)
+- `assets/js/form-messages.js` — inline, field-level validation messages (loaded on `/contact/` only)
+- `assets/js/vendor/` — pinned GSAP 3.15.0 core and Flip, written by `tools/vendor.mjs`; there is deliberately no `package.json`
+- `tools/vendor.mjs` — re-vendors pinned browser libraries with `npm pack` and prints their SHA-256
 - `tools/site_audit.py` — static-site, commercial-model, integration, metadata, schema, link, and redirect audit
 - `tools/http_smoke.py` — local HTTP crawler and response-budget check (HTML, CSS, JavaScript, images, logo, fonts)
 

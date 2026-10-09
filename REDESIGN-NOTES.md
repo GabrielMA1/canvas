@@ -32,9 +32,27 @@ RielArt sells straight dealing to owners of real-world service businesses: two s
 - **Share image:** `images/rielart-og.jpg` replaced the generic laptop photograph with a typographic card in the brand system (same path, 1200 × 630).
 - Decorative → arrows were removed from buttons and links; ↗ remains only where a link opens a new tab.
 
-## Motion
+## Motion system (October 9, 2026)
 
-Kept deliberately small: link-underline thickening, header rule on scroll, dropdown caret, menu icon, FAQ open/close, theme glyph. No scroll-triggered effects. `prefers-reduced-motion` removes all transitions.
+Principles: motion explains a change of state or place; it never hides content or delays the prices. Three durations (`--dur-press` 120 ms, `--dur-state` 200 ms, `--dur-enter` 320 ms) and one easing family (`--ease`, equivalent to GSAP's `power3.out`). Movement is small (1–10 px) and always settles at the designed layout. Everything is CSS unless CSS cannot do the job.
+
+- **Price-list leaders draw** on the homepage: each dotted leader extends from the service name to its price (CSS, 520 ms). Names and prices are visible from the first paint.
+- **Mobile menu:** the paper sheet appears at once and its lines rise in order (14 ms stagger, CSS); closing fades the lines first, then removes the sheet. Adapted from the idea behind React Bits’ StaggeredMenu, without its layered panels or one-second tweens.
+- **Desktop dropdowns** fade down 6 px on open; **buttons** press 1 px.
+- **Page to page:** cross-document View Transitions keep the header still while the page cross-fades (200 ms). Unsupported browsers navigate normally.
+- **Insights filter (GSAP Flip):** when a topic is chosen, remaining articles glide into place and newly shown ones fade in. Search typing stays instant. This is the only place GSAP loads.
+- **Contact form messages:** a persistent, specific message under each field that needs attention, linked with `aria-describedby` (the shadcn/21st.dev “FormMessage” pattern, implemented natively).
+- Link underlines, header rule, caret, FAQ, and theme glyph keep their existing CSS transitions.
+
+`prefers-reduced-motion` turns off all transitions and animations, View Transitions, and Flip, and scrolling stays native and instant.
+
+### Library decisions
+
+- **GSAP 3.15.0 — adopted narrowly.** Core and Flip are vendored in `assets/js/vendor/` by `tools/vendor.mjs` (pinned version, `npm pack`, SHA-256 printed; the repository keeps no dependency manifest, as `tools/site_audit.py` requires). They load only on `/blog/`. A SplitText hero entrance was built, measured, and removed: it moved desktop LCP from 292 ms to 1,652 ms (4× CPU throttle) and held back the prices.
+- **Lenis — rejected.** Measured on the homepage, a 600 px wheel scroll reached 588 px only after 600 ms (native: immediately). Native anchor scrolling already stops exactly below the sticky header via `scroll-padding-top` and turns instant under reduced motion, so Lenis would add 5.4 KB and input lag for no gain.
+- **React Bits — no code adopted; one idea adapted.** Its components require React (and several need GSAP, motion, or three.js); migrating a static site for them is not justified. Its SplitText is a React wrapper around GSAP SplitText (evaluated above, then rejected); StaggeredMenu’s ordered-reveal idea is reimplemented in CSS. Licence: MIT + Commons Clause, which allows use inside a website.
+- **21st.dev — no component imported.** Its components assume React, Tailwind, Radix, and shadcn tokens, and 21st.dev was not reachable from the build environment. Its common inline form-message pattern is implemented natively.
+
 
 ## Recommendations for the owner
 
@@ -43,7 +61,7 @@ Kept deliberately small: link-underline thickening, header rule on scroll, dropd
 
 ## Verification
 
-Static audit: 0 warnings, 0 critical failures. HTTP smoke crawl: 34 routes, all budgets pass (fonts 108 KB / 110 KB). Overflow sweep: 19 routes × 5 widths (320–1440) × 2 themes, no horizontal overflow. Interaction checks: dropdown, mobile menu focus, FAQ, keyboard focus on cobalt fields, form preselection, conditional advertising fields, and validation messaging. Shared cache key: `20261008ink1`.
+Static audit: 0 warnings, 0 critical failures. HTTP smoke crawl: 34 routes, all budgets pass (fonts 108 KB / 110 KB). Overflow sweep: 19 routes × 5 widths (320–1440) × 2 themes, no horizontal overflow. Interaction checks: dropdown, mobile menu focus, FAQ, keyboard focus on cobalt fields, form preselection, conditional advertising fields, and validation messaging. Shared cache key: `20261009motion1` (updated with the motion system).
 
 ---
 
