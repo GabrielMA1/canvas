@@ -4,26 +4,29 @@ Static, dependency-free production website for RielArt. Deploy the repository’
 
 ## Public commercial model
 
-RielArt presents exactly two primary services:
+Approved by the owner on October 22, 2026. Headline: **The art your business deserves.** RielArt presents four primary offers:
 
-- **Brand & Website Launch — $599 USD one time**
-- **Focused Ads Management — $349 USD per month**, with a three-month initial commitment
+- **Brand & Website Launch — $499 USD one time**, paid $250 at project start and $249 at launch
+- **Ad Videos — $149 USD per video**, or **3 videos for $349** (motion graphics up to 30 seconds, 9:16 and 1:1, delivered in 1–3 business days)
+- **Focused Ads Management — $299 USD per month**, two-month initial commitment, then month to month
+- **Growth Partner — $449 USD per month**: Focused Ads Management plus two new ad videos every month, two-month initial commitment, then month to month
 
-One approved subordinate setup is also public: **Business Email & Workspace Setup — from $149 USD one time**. It is a practical optional setup for a straightforward new Google Workspace or Microsoft 365 configuration, not a third primary service.
+One approved subordinate setup is also public: **Business Email & Workspace Setup — from $149 USD one time**. It is a practical optional setup for a straightforward new Google Workspace or Microsoft 365 configuration, not a primary service.
 
-Advertising spend is separate and is paid by the client directly to Google or Meta. The general site CTA is **Get Started**, linking to `/contact/#project-inquiry`. Service-specific actions remain **Start Your Launch** and **Start Advertising**. There are no public Stripe checkout links.
+Advertising spend is separate and is paid by the client directly to Google or Meta. Focused Ads Management includes static creative; new motion-graphics videos come from Ad Videos or Growth Partner. The general site CTA is **Get Started**, linking to `/contact/#project-inquiry`. Service-specific actions are **Start Your Launch**, **Order an Ad Video**, **Start Advertising**, and **Become a Growth Partner**. There are no public Stripe checkout links.
 
-Except for the approved Business Email & Workspace Setup, support beyond the two primary services is available only as a separately reviewed inquiry. **Ask About a Custom Scope** links to `/contact/?service=custom-scope#project-inquiry`; it does not create another package, price, or promise of availability.
+Support beyond these offers is available only as a separately reviewed inquiry. **Ask About a Custom Scope** links to `/contact/?service=custom-scope#project-inquiry`; it does not create another package, price, or promise of availability.
 
 Future approved payment links have one internal configuration location: `config/payment-links.json`. Both values remain `null` until approved and tested. The `config/` directory is excluded from the GitHub Pages build.
 
 ## Site structure
 
-- `index.html` — homepage: approved headline on a full-width ink field with both services and prices set as a price list, the problem statement, the two-offer price board with a compact optional business-email callout, Why RielArt (three lead commitments plus five supporting points), Google/Meta comparison, process with a Client Portal strip, labelled work, FAQ, and final inquiry CTA
-- `services/` — consolidated two-primary-service overview plus a subordinate business-email setup section
-- `services/brand-website-launch/` — detailed $599 launch scope with an optional business-email cross-reference
-- `services/focused-ads-management/` — detailed $349 monthly advertising scope, including Google and Meta explanations
-- `pricing/` — two-primary-offer comparison, “Need both?” example, detailed optional business-email setup, and a discreet custom-scope inquiry
+- `index.html` — homepage: “The art your business deserves.” on a full-width ink field with all four offers and prices set as a price list, the problem statement, the three-offer price board with the Growth Partner band and a compact optional business-email callout, the ad-video showcase, Why RielArt, Google/Meta comparison, process with a Client Portal strip, labelled work, FAQ, and final inquiry CTA
+- `services/` — overview of the four primary offers plus a subordinate business-email setup section
+- `services/brand-website-launch/` — detailed $499 launch scope, two-part payment, and an optional business-email cross-reference
+- `services/ad-videos/` — Ad Videos scope, formats, delivery, exclusions, usage, and the three video slots
+- `services/focused-ads-management/` — detailed $299 monthly advertising scope, Google and Meta explanations, and the Growth Partner section (`#growth-partner`)
+- `pricing/` — four-offer price board, “launch, then grow” example, four inclusion columns, detailed optional business-email setup, and a discreet custom-scope inquiry
 - `process/` — four-step customer-facing process
 - `portfolio/` — RielArt's own site as the internal project (real screenshots of this site), design decisions, and flagged representative concepts with structural scope sketches
 - `about/` — company approach, operating principles, ownership, and service area
@@ -36,6 +39,8 @@ Future approved payment links have one internal configuration location: `config/
 - `assets/fonts/` — self-hosted Archivo and Newsreader Latin variable WOFF2 files with their SIL OFL 1.1 licence
 - `assets/js/site.js` — theme, active navigation, menus, FAQ, filter, conditional form, and validation behaviour
 - `assets/js/motion-insights.js` — GSAP Flip for the Insights topic filter (loaded on `/blog/` only)
+- `assets/js/video-slots.js` — turns each video slot from placeholder to playable video once its file exists in `videos/` (homepage and Ad Videos page only)
+- `videos/` — owner-uploaded ad videos; see `VIDEO-UPLOADS.md`
 - `assets/js/form-messages.js` — inline, field-level validation messages (loaded on `/contact/` only)
 - `assets/js/vendor/` — pinned GSAP 3.15.0 core and Flip, written by `tools/vendor.mjs`; there is deliberately no `package.json`
 - `tools/vendor.mjs` — re-vendors pinned browser libraries with `npm pack` and prints their SHA-256

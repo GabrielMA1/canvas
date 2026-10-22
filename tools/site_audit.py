@@ -32,9 +32,32 @@ CALENDLY_URL = (
 )
 EMAIL_URL = "mailto:hello@rielart.com"
 LINKEDIN_URL = "https://www.linkedin.com/in/gabrielmacovei/"
-EXPECTED_ONE_TIME_PRICES = {"$599"}
-EXPECTED_MONTHLY_PRICES = {"$349"}
-LEGACY_COMMERCIAL_PRICES = {"$247", "$249", "$399", "$497", "$699"}
+# Commercial model approved by the owner on October 22, 2026: four primary
+# offers plus the subordinate Business Email & Workspace Setup.
+PRIMARY_SERVICE_MARKERS = [
+    "brand-website-launch",
+    "ad-videos",
+    "focused-ads-management",
+    "growth-partner",
+]
+EXPECTED_ONE_TIME_PRICES = {"$499", "$149", "$349"}
+EXPECTED_MONTHLY_PRICES = {"$299", "$449"}
+LEGACY_COMMERCIAL_PRICES = {"$247", "$399", "$497", "$599", "$699", "$948"}
+# $249 is now the second Brand & Website Launch instalment and $349 the Video
+# Pack price; only their retired monthly offers are disallowed.
+LEGACY_MONTHLY_PRICE_PATTERNS = {
+    "$249/month": r"\$249\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
+    "$349/month": r"\$349\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
+}
+PUBLIC_PAGE_COUNT = 25
+# Owner-supplied ad videos referenced by the video slots. Until each file is
+# uploaded the slot shows a placeholder, and the audit reports a warning
+# instead of a missing-asset failure.
+PENDING_MEDIA_UPLOADS = {
+    "/videos/rielart-ad-01.mp4",
+    "/videos/rielart-ad-02.mp4",
+    "/videos/rielart-ad-03.mp4",
+}
 OPTIONAL_SERVICE_NAME = "Business Email & Workspace Setup"
 OPTIONAL_SERVICE_MARKER = "business-email-workspace"
 OPTIONAL_SERVICE_PRICE = "From $149 USD one time"
@@ -43,7 +66,9 @@ OPTIONAL_SERVICE_INQUIRY_URL = (
 )
 APPROVED_SERVICE_NAMES = {
     "Brand & Website Launch",
+    "Ad Videos",
     "Focused Ads Management",
+    "Growth Partner",
 }
 LEGACY_SERVICE_NAMES = {
     "Brand Strategy & Identity",
@@ -1025,10 +1050,16 @@ def main() -> int:
                 root, page.path.resolve(), asset.url
             )
             if is_local and target is None:
-                critical.append(
-                    f"{relative}:{asset.line}: local {asset.kind} asset does "
-                    f"not exist ({asset.url})"
-                )
+                if urlsplit(asset.url).path in PENDING_MEDIA_UPLOADS:
+                    warnings.append(
+                        f"{relative}:{asset.line}: ad video awaiting owner "
+                        f"upload ({asset.url})"
+                    )
+                else:
+                    critical.append(
+                        f"{relative}:{asset.line}: local {asset.kind} asset does "
+                        f"not exist ({asset.url})"
+                    )
 
         form_count += len(page.forms)
         known_ids = {element_id for element_id, _ in page.ids}
@@ -1631,8 +1662,11 @@ def main() -> int:
             )
 
         expected_price_patterns = {
-            "$599": re.compile(r"\$599\s+USD\s+one\s+time\b", re.I),
-            "$349": re.compile(r"\$349\s+USD\s+per\s+month\b", re.I),
+            "$499": re.compile(r"\$499\s+USD\s+one\s+time\b", re.I),
+            "$149": re.compile(r"\$149\s+USD\s+per\s+video\b", re.I),
+            "$349": re.compile(r"\b3\s+videos\s+for\s+\$349\b", re.I),
+            "$299": re.compile(r"\$299\s+USD\s+per\s+month\b", re.I),
+            "$449": re.compile(r"\$449\s+USD\s+per\s+month\b", re.I),
         }
         for marker, expected_pattern in sorted(
             expected_price_patterns.items()
@@ -1665,18 +1699,21 @@ def main() -> int:
                     f"pricing/index.html: retired commercial price remains "
                     f"visible ({marker})"
                 )
+        for marker, pattern in sorted(LEGACY_MONTHLY_PRICE_PATTERNS.items()):
+            if re.search(pattern, pricing_text, re.I):
+                critical.append(
+                    f"pricing/index.html: retired commercial price remains "
+                    f"visible ({marker})"
+                )
 
         pricing_html = read_text(pricing_page.path)
         primary_service_markers = re.findall(
             r'data-primary-service=["\']([^"\']+)["\']',
             pricing_html,
         )
-        if primary_service_markers != [
-            "brand-website-launch",
-            "focused-ads-management",
-        ]:
+        if primary_service_markers != PRIMARY_SERVICE_MARKERS:
             critical.append(
-                "pricing/index.html: pricing must contain exactly the two "
+                "pricing/index.html: pricing must contain exactly the four "
                 "approved primary-service cards in the approved order"
             )
 
@@ -1686,7 +1723,7 @@ def main() -> int:
         r"(?:\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)"
         r"\s*(?:\+\s*)?"
         r"(?:%|percent\b|years?\b|clients?\b|customers?\b|projects?\b|"
-        r"business(?:es)?\b|leads?\b|revenue\b|roi\b|[x×]\b)"
+        r"business(?:es)?\b(?!\s+days?\b)|leads?\b|revenue\b|roi\b|[x×]\b)"
     )
     numerical_claim_matches = 0
     for page in indexable_pages:
@@ -2231,9 +2268,11 @@ def main() -> int:
                 f"{expected_section!r}"
             )
 
-    current_css_cache_reference = "site.css?v=20261009motion1"
-    current_js_cache_reference = "site.js?v=20261009motion1"
+    current_css_cache_reference = "site.css?v=20261022offer1"
+    current_js_cache_reference = "site.js?v=20261022offer1"
     retired_cache_references = (
+        "site.css?v=20261009motion1",
+        "site.js?v=20261009motion1",
         "site.css?v=20261008ink1",
         "site.js?v=20261008ink1",
         "site.css?v=20260924r1",
@@ -2260,14 +2299,14 @@ def main() -> int:
     js_cache_reference_count = production_html.count(
         current_js_cache_reference
     )
-    if css_cache_reference_count != 24:
+    if css_cache_reference_count != PUBLIC_PAGE_COUNT:
         critical.append(
-            "public HTML must contain exactly 24 current shared CSS cache "
+            f"public HTML must contain exactly {PUBLIC_PAGE_COUNT} current shared CSS cache "
             f"references ({css_cache_reference_count})"
         )
-    if js_cache_reference_count != 24:
+    if js_cache_reference_count != PUBLIC_PAGE_COUNT:
         critical.append(
-            "public HTML must contain exactly 24 current shared JS cache "
+            f"public HTML must contain exactly {PUBLIC_PAGE_COUNT} current shared JS cache "
             f"references ({js_cache_reference_count})"
         )
     for retired_cache_reference in retired_cache_references:
@@ -2289,24 +2328,24 @@ def main() -> int:
     mobile_learn_group_count = production_html.count(
         'class="mobile-nav-learn"'
     )
-    if services_dropdown_count != 24:
+    if services_dropdown_count != PUBLIC_PAGE_COUNT:
         critical.append(
-            "public HTML must contain exactly 24 desktop Services "
+            f"public HTML must contain exactly {PUBLIC_PAGE_COUNT} desktop Services "
             f"dropdowns ({services_dropdown_count})"
         )
-    if learn_dropdown_count != 24:
+    if learn_dropdown_count != PUBLIC_PAGE_COUNT:
         critical.append(
-            "public HTML must contain exactly 24 desktop Learn "
+            f"public HTML must contain exactly {PUBLIC_PAGE_COUNT} desktop Learn "
             f"dropdowns ({learn_dropdown_count})"
         )
-    if mobile_services_group_count != 24:
+    if mobile_services_group_count != PUBLIC_PAGE_COUNT:
         critical.append(
-            "public HTML must contain exactly 24 mobile Services groups "
+            f"public HTML must contain exactly {PUBLIC_PAGE_COUNT} mobile Services groups "
             f"({mobile_services_group_count})"
         )
-    if mobile_learn_group_count != 24:
+    if mobile_learn_group_count != PUBLIC_PAGE_COUNT:
         critical.append(
-            "public HTML must contain exactly 24 mobile Learn groups "
+            f"public HTML must contain exactly {PUBLIC_PAGE_COUNT} mobile Learn groups "
             f"({mobile_learn_group_count})"
         )
     anchor_pattern = re.compile(
@@ -2358,9 +2397,15 @@ def main() -> int:
     get_started_count = 0
     action_counts = {
         "Start Your Launch": 0,
+        "Order an Ad Video": 0,
         "Start Advertising": 0,
+        "Become a Growth Partner": 0,
         "See full scope": 0,
         "View Pricing": 0,
+    }
+    service_cta_targets = {
+        "Order an Ad Video": "ad-videos",
+        "Become a Growth Partner": "growth-partner",
     }
     full_scope_targets: set[str] = set()
     for relative, href, raw_text in anchor_records:
@@ -2405,12 +2450,24 @@ def main() -> int:
                     f"{relative}: Start Advertising has the wrong target "
                     f"({href})"
                 )
+        elif text in service_cta_targets:
+            action_counts[text] += 1
+            if not is_local_action_target(
+                href,
+                "/contact/",
+                "project-inquiry",
+                service_cta_targets[text],
+            ):
+                critical.append(
+                    f"{relative}: {text} has the wrong target ({href})"
+                )
         elif text == "See full scope":
             action_counts[text] += 1
             parsed = urlsplit(href)
             full_scope_targets.add(parsed.path)
             if parsed.path not in {
                 "/services/brand-website-launch/",
+                "/services/ad-videos/",
                 "/services/focused-ads-management/",
             }:
                 critical.append(
@@ -2430,19 +2487,20 @@ def main() -> int:
             critical.append(f"public HTML is missing preserved CTA {label!r}")
     if full_scope_targets != {
         "/services/brand-website-launch/",
+        "/services/ad-videos/",
         "/services/focused-ads-management/",
     }:
         critical.append(
-            "See full scope links must cover both approved service pages"
+            "See full scope links must cover all three service pages"
         )
 
     homepage_text = page_visible("index.html")
     approved_headline = (
-        "Build your brand. Launch your website. Reach more customers."
+        "The art your business deserves."
     )
     if approved_headline not in homepage_text:
         critical.append("index.html: approved homepage headline is missing")
-    for topic in ("brand", "website", "online advertising"):
+    for topic in ("brand", "website", "ad videos", "online advertising"):
         if topic not in homepage_text.casefold():
             critical.append(
                 f"index.html: homepage does not clearly present {topic}"
@@ -2456,10 +2514,7 @@ def main() -> int:
             "index.html: AI is still presented as a primary service"
         )
 
-    expected_service_markers = [
-        "brand-website-launch",
-        "focused-ads-management",
-    ]
+    expected_service_markers = PRIMARY_SERVICE_MARKERS
     for relative in ("index.html", "services/index.html", "pricing/index.html"):
         source = page_source(relative)
         markers = re.findall(
@@ -2468,7 +2523,7 @@ def main() -> int:
         )
         if markers != expected_service_markers:
             critical.append(
-                f"{relative}: expected exactly two approved primary "
+                f"{relative}: expected exactly the four approved primary "
                 f"commercial services, found {markers}"
             )
         offer_card_count = len(
@@ -2479,10 +2534,10 @@ def main() -> int:
                 re.I,
             )
         )
-        if offer_card_count != 2:
+        if offer_card_count != len(PRIMARY_SERVICE_MARKERS):
             critical.append(
-                f"{relative}: expected exactly two offer cards, found "
-                f"{offer_card_count}"
+                f"{relative}: expected exactly {len(PRIMARY_SERVICE_MARKERS)} "
+                f"offer cards, found {offer_card_count}"
             )
 
     optional_block_pattern = re.compile(
@@ -2526,7 +2581,7 @@ def main() -> int:
             "Need professional business email too?",
             "one existing business domain",
             "up to 3 users",
-            "not included in the standard $599",
+            "not included in the standard $499",
             "subscription costs are separate",
             "client owns the account",
         ),
@@ -2587,9 +2642,9 @@ def main() -> int:
     business_email_footer_count = production_html.count(
         'href="/pricing/#business-email-workspace">Business Email Setup</a>'
     )
-    if business_email_footer_count != 24:
+    if business_email_footer_count != PUBLIC_PAGE_COUNT:
         critical.append(
-            "public HTML must contain exactly 24 compact Business Email "
+            f"public HTML must contain exactly {PUBLIC_PAGE_COUNT} compact Business Email "
             f"footer links ({business_email_footer_count})"
         )
 
@@ -2619,13 +2674,35 @@ def main() -> int:
         "faq/index.html": 4,
         "terms/index.html": 1,
     }
+    ad_video_price_context = re.compile(
+        r"(?i)(?:ad\s+videos?|per\s+video|/video|video\s+pack|"
+        r"three\s+for|3\s+for|each\s+additional\s+ad\s+video)"
+    )
     for relative, source in sorted(html_sources.items()):
-        price_matches = list(re.finditer(r"\$149(?!\d)", source))
+        all_price_matches = list(re.finditer(r"\$149(?!\d)", source))
+        email_ranges = [
+            (match.start(), match.end())
+            for match in optional_price_context_pattern.finditer(source)
+        ]
+        price_matches = []
+        for price_match in all_price_matches:
+            in_email_context = any(
+                start <= price_match.start() < end
+                for start, end in email_ranges
+            )
+            # Raw (unescaped) text keeps titles and meta descriptions, whose
+            # wording sits inside attributes, in view.
+            window = unescape(
+                source[max(0, price_match.start() - 80):price_match.end() + 80]
+            )
+            if not in_email_context and ad_video_price_context.search(window):
+                continue
+            price_matches.append(price_match)
         expected_price_count = expected_optional_price_counts.get(relative, 0)
         if len(price_matches) != expected_price_count:
             critical.append(
                 f"{relative}: expected {expected_price_count} approved $149 "
-                f"occurrences, found {len(price_matches)}"
+                f"Business Email occurrences, found {len(price_matches)}"
             )
         approved_ranges = [
             (match.start(), match.end())
@@ -2666,7 +2743,8 @@ def main() -> int:
     approved_inclusions_intro = (
         "Compare the services What each service includes. "
         "Each service has its own focused scope. Choose the one your business "
-        "needs now, or choose both to receive everything listed in both scopes."
+        "needs now, or combine them; Growth Partner brings management and new "
+        "video together every month."
     )
     if (
         approved_inclusions_intro.casefold()
@@ -2718,16 +2796,17 @@ def main() -> int:
     ]
     if inclusion_services != expected_service_markers:
         critical.append(
-            f"{pricing_relative}: expected two independent inclusion columns "
+            f"{pricing_relative}: expected four independent inclusion columns "
             f"for {expected_service_markers}, found {inclusion_services}"
         )
 
     required_inclusion_phrases = {
         "brand-website-launch": (
             "Brand & Website Launch",
-            "$599 USD one time",
+            "$499 USD one time",
             "One focused project from brand direction through launch and "
             "handoff.",
+            "Pay in two: $250 to start, $249 at launch.",
             "Practical brand direction and visual identity",
             "Responsive website with up to four core pages",
             "Contact or lead form",
@@ -2736,21 +2815,37 @@ def main() -> int:
             "One organized revision round",
             "Launch assistance and handoff",
         ),
+        "ad-videos": (
+            "Ad Videos",
+            "$149 USD per video",
+            "3 videos for $349. Delivered in 1–3 business days.",
+            "Up to 30 seconds of motion graphics",
+            "Royalty-free music",
+            "Vertical 9:16 and square 1:1 MP4 files",
+            "One organized revision round",
+        ),
         "focused-ads-management": (
             "Focused Ads Management",
-            "$349 USD per month",
-            "Three-month initial commitment. Advertising spend separate.",
+            "$299 USD per month",
+            "Two-month initial commitment, then month to month. Advertising "
+            "spend separate.",
             "One platform and one primary campaign",
             "Campaign setup and conversion tracking",
-            "Ad copy and platform-appropriate campaign creative",
+            "Ad copy and platform-appropriate static creative",
             "Monitoring and optimization",
             "Monthly reporting and review",
             "Up to one hour of campaign-related website changes",
-            "For Meta campaigns, the monthly creative allowance includes "
-            "up to two refreshed variations when useful. One may be a "
-            "simple short-form video ad assembled from suitable "
-            "client-provided or otherwise approved assets; full video "
-            "production is not included unless separately scoped.",
+            "For Meta campaigns, up to two refreshed static creative "
+            "variations per month when useful",
+        ),
+        "growth-partner": (
+            "Growth Partner",
+            "$449 USD per month",
+            "Two-month initial commitment, then month to month. Advertising "
+            "spend separate.",
+            "Everything in Focused Ads Management",
+            "Two new motion-graphics ad videos each month",
+            "Unused videos do not roll over",
         ),
     }
     for match in inclusion_matches:
@@ -2764,8 +2859,8 @@ def main() -> int:
                 )
 
     combined_scope_copy = (
-        "Choosing both services? You receive everything listed in both "
-        "columns, delivered in the appropriate sequence for your business."
+        "Choosing more than one service? You receive everything listed in "
+        "each column, delivered in the appropriate sequence for your business."
     )
     if combined_scope_copy.casefold() not in refined_pricing_text.casefold():
         critical.append(
@@ -2836,8 +2931,10 @@ def main() -> int:
     ads_relative = "services/focused-ads-management/index.html"
     ads_text = page_visible(ads_relative)
     ads_required_phrases = {
-        "three-month initial commitment":
-            "three-month initial commitment",
+        "two-month initial commitment":
+            "two-month initial commitment",
+        "month-to-month continuation":
+            "the service continues month to month",
         "advertising spend is separate":
             "advertising spend is not included",
         "one platform is included":
@@ -2851,7 +2948,7 @@ def main() -> int:
         "website edit time does not roll over":
             "unused website-update time does not roll over",
         "limited Meta creative refresh":
-            "up to two refreshed creative variations per month when useful",
+            "up to two refreshed static creative variations per month when useful",
         "Meta creative material sources":
             "campaign creative using approved client media, licensed stock "
             "assets, website content, brand graphics, motion typography, or "
@@ -2859,27 +2956,22 @@ def main() -> int:
         "Meta initial creative range":
             "meta campaigns normally begin with approximately three to five "
             "ad variations built around a focused set of creative concepts",
-        "video included within the two-variation allowance":
-            "one of those two variations may be a simple short-form video "
-            "ad assembled from suitable client-provided or otherwise "
-            "approved assets",
-        "short-form video production limits":
-            "within the standard Meta creative scope, a simple 10–15 second "
-            "short-form video ad variation may be assembled from suitable "
-            "client-provided or otherwise approved assets when appropriate",
-        "full video production exclusion":
-            "full video production—including filming, actors or UGC "
-            "creators, professional voice talent, elaborate editing, "
-            "advanced motion work, and ongoing custom video production—is "
-            "not included unless separately scoped",
-        "video is not an additional creative":
-            "a video counts as one of the two included variations; it is not "
-            "an additional third creative",
+        "ad videos are a separate service":
+            "new motion-graphics ad videos are available as ad videos, or two "
+            "are included every month with growth partner",
+        "static creative in management":
+            "focused ads management includes static creative",
+        "live production exclusion":
+            "filming, actors or ugc creators, and professional voiceover are "
+            "not included in either",
+        "Growth Partner explained on the ads page":
+            "everything in focused ads management, plus two new "
+            "motion-graphics ad videos each month",
         "creative is refreshed based on need":
             "creative is refreshed based on campaign needs rather than "
             "produced unnecessarily",
-        "Google excludes monthly video production":
-            "google search campaigns do not include monthly video production",
+        "Google excludes video production":
+            "google search campaigns do not include video production",
         "Google responsive-ad explanation":
             "google responsive search ads combine and test multiple headlines and descriptions",
     }
@@ -2891,15 +2983,18 @@ def main() -> int:
             f"{ads_relative}: Google scope promises a fixed monthly ad count"
         )
 
-    for retired_static_phrase in (
-        "Basic static creative using approved client-provided assets",
-        "Up to two refreshed static creative variations per month when useful",
-        "up to two refreshed static variations per month when useful",
+    # Retired October 22, 2026: video now belongs to Ad Videos and Growth
+    # Partner, so management no longer promises a video inside its allowance.
+    for retired_video_phrase in (
+        "one of those two variations may be a simple short-form video",
+        "a simple 10–15 second short-form video ad variation",
+        "a video counts as one of the two included variations",
+        "three-month initial commitment",
     ):
-        if retired_static_phrase.casefold() in ads_text.casefold():
+        if retired_video_phrase.casefold() in ads_text.casefold():
             critical.append(
-                f"{ads_relative}: retired static-only Meta wording remains "
-                f"({retired_static_phrase})"
+                f"{ads_relative}: retired creative or commitment wording "
+                f"remains ({retired_video_phrase})"
             )
 
     homepage_relative = "index.html"
@@ -2908,13 +3003,12 @@ def main() -> int:
     homepage_ads_phrases = (
         "Ad copy and campaign creative",
         "The practical parts of your online presence, handled together.",
-        "RielArt connects your brand, website, campaign creative, tracking, "
-        "and reporting without taking ownership of your accounts or adding "
-        "unnecessary complexity.",
-        "Ad copy and Meta creative included",
-        "Campaign messaging and practical creative refreshes are handled "
-        "together, including a simple asset-based short-form video variation "
-        "when appropriate. Full video production is separately scoped.",
+        "RielArt connects your brand, website, ad videos, campaigns, "
+        "tracking, and reporting without taking ownership of your accounts "
+        "or adding unnecessary complexity.",
+        "Flat fees—never a percentage of ad spend.",
+        "Client-owned accounts, data, and payment methods.",
+        "Videos, ads, and website made in-house.",
     )
     for phrase in homepage_ads_phrases:
         if phrase.casefold() not in homepage_text.casefold():
@@ -2928,32 +3022,29 @@ def main() -> int:
         )
 
     approved_ad_count_answer = (
-        "The standard service includes one advertising platform and one "
+        "Focused Ads Management covers one advertising platform and one "
         "primary campaign. Google Search campaigns use focused ad groups "
         "with responsive ad copy variations. Meta campaigns normally begin "
-        "with approximately three to five ad variations and include up to "
-        "two refreshed creative variations per month when useful. One "
-        "refreshed variation may be a simple short-form video ad assembled "
-        "from suitable client-provided or otherwise approved assets; full "
-        "video production is not included unless separately scoped."
+        "with approximately three to five ad variations built from static "
+        "images or video you already have, with up to two refreshed static "
+        "variations per month when useful. New motion-graphics ad videos "
+        "are available as Ad Videos, and Growth Partner includes two every "
+        "month."
     )
     video_faq_answer = (
-        "Yes. Within the standard Meta creative scope, a simple short-form "
-        "video ad variation may be assembled from suitable client-provided "
-        "or otherwise approved assets when appropriate. During ongoing "
-        "management, it counts as one of the allowance of up to two "
-        "refreshed creative variations per month. Full video production—"
-        "including filming, actors or UGC creators, professional voice "
-        "talent, elaborate editing, advanced motion work, and ongoing custom "
-        "video production—is not included unless separately scoped."
+        "Yes. Ad Videos are motion-graphics ads up to 30 seconds, made from "
+        "your logo, photos, and offer, with royalty-free music and vertical "
+        "9:16 and square 1:1 versions. Each is $149 USD, or three for $349, "
+        "and Growth Partner includes two every month. Filming, actors or "
+        "UGC creators, and professional voiceover are not included."
     )
     internal_ads_scope_relative = "RIELART-ADS-SERVICE-SCOPE.md"
     internal_ads_scope_text = read_text(root / internal_ads_scope_relative)
     internal_scope_phrases = (
-        "Basic campaign creative assembled from suitable client-provided or otherwise approved assets",
-        "Up to two refreshed creative variations per month when useful",
-        "a simple short-form video ad variation may be assembled from suitable client-provided or otherwise approved assets when appropriate",
-        "Full video production—including filming, actors or UGC creators, professional voice talent, elaborate editing, advanced motion work, and ongoing custom video production—is not included unless separately scoped",
+        "Basic static campaign creative assembled from suitable client-provided or otherwise approved assets",
+        "Up to two refreshed static creative variations per month when useful",
+        "New motion-graphics ad videos are sold as Ad Videos or included twice a month in Growth Partner",
+        "Filming, actors or UGC creators, and professional voiceover are not included in any standard scope",
     )
     for phrase in internal_scope_phrases:
         if phrase.casefold() not in internal_ads_scope_text.casefold():
@@ -2961,12 +3052,12 @@ def main() -> int:
                 f"{internal_ads_scope_relative}: missing reconciled Meta creative scope ({phrase})"
             )
     for retired_phrase in (
-        "Basic static creative using approved client-provided assets",
-        "Up to two refreshed static creative variations per month when useful",
+        "a simple short-form video ad variation may be assembled from suitable client-provided or otherwise approved assets when appropriate",
+        "three-month initial commitment",
     ):
         if retired_phrase.casefold() in internal_ads_scope_text.casefold():
             critical.append(
-                f"{internal_ads_scope_relative}: retired static-only scope remains ({retired_phrase})"
+                f"{internal_ads_scope_relative}: retired scope remains ({retired_phrase})"
             )
 
     faq_relative = "faq/index.html"
@@ -3053,7 +3144,7 @@ def main() -> int:
     pricing_metadata = page_source("pricing/index.html")
     if pricing_metadata.count("optional professional business email setup") < 2:
         critical.append(
-            "pricing/index.html: metadata must describe two primary services "
+            "pricing/index.html: metadata must describe the primary services "
             "plus optional professional business email setup"
         )
 
@@ -3068,10 +3159,11 @@ def main() -> int:
             "missing"
         )
     approved_contact_choices = {
-        "Brand & Website Launch — $599 one time",
-        "Focused Ads Management — $349/month",
-        "Both services",
-        "I am not sure yet",
+        "Brand & Website Launch — $499 one time",
+        "Ad Videos — from $149 per video",
+        "Focused Ads Management — $299/month",
+        "Growth Partner — $449/month",
+        "More than one, or not sure yet",
     }
     if contact_page is not None:
         if contact_page.title != "Contact RielArt | Brand, Website & Ads":
@@ -3428,7 +3520,7 @@ def main() -> int:
         'businessEmailControl.checked ? inquiryContext : ""',
         'businessEmailControl.addEventListener("change", syncBusinessEmail)',
         'selectedValue === "focused-ads-management" || '
-        'selectedValue === "both-services"',
+        'selectedValue === "growth-partner"',
     ):
         if required_optional_token not in site_javascript:
             critical.append(
@@ -3446,6 +3538,11 @@ def main() -> int:
             )
     for marker in sorted(LEGACY_COMMERCIAL_PRICES):
         if marker in production_html:
+            critical.append(
+                f"retired public commercial price remains: {marker}"
+            )
+    for marker, pattern in sorted(LEGACY_MONTHLY_PRICE_PATTERNS.items()):
+        if re.search(pattern, strip_html(production_html), re.I):
             critical.append(
                 f"retired public commercial price remains: {marker}"
             )
@@ -3490,8 +3587,10 @@ def main() -> int:
 
     service_schema_names: set[str] = set()
     expected_schema_prices = {
-        "Brand & Website Launch": "599",
-        "Focused Ads Management": "349",
+        "Brand & Website Launch": "499",
+        "Ad Videos": "149",
+        "Focused Ads Management": "299",
+        "Growth Partner": "449",
     }
     localbusiness_found = False
     postal_address_pages: set[str] = set()
@@ -3557,7 +3656,7 @@ def main() -> int:
                     )
     if service_schema_names != APPROVED_SERVICE_NAMES:
         critical.append(
-            "structured service names do not exactly match the two approved "
+            "structured service names do not exactly match the four approved "
             f"services ({sorted(service_schema_names)})"
         )
     if localbusiness_found:
@@ -3642,7 +3741,7 @@ def main() -> int:
             f"Business Email inquiry links checked: "
             f"{len(optional_cta_links)}/4",
             f"Business Email footer links checked: "
-            f"{business_email_footer_count}/24",
+            f"{business_email_footer_count}/{PUBLIC_PAGE_COUNT}",
             f"Redirect rules checked: {len(redirects)}",
             f"GitHub Pages exclusions checked: {len(deploy_excludes)}",
             f"Internal artifact paths safely excluded: "
@@ -3661,17 +3760,17 @@ def main() -> int:
             f"Insights editorial entries checked: "
             f"{len(expected_insights_posts)}",
             f"Current shared CSS cache references checked: "
-            f"{css_cache_reference_count}/24",
+            f"{css_cache_reference_count}/{PUBLIC_PAGE_COUNT}",
             f"Current shared JS cache references checked: "
-            f"{js_cache_reference_count}/24",
+            f"{js_cache_reference_count}/{PUBLIC_PAGE_COUNT}",
             f"Desktop Services dropdowns checked: "
-            f"{services_dropdown_count}/24",
+            f"{services_dropdown_count}/{PUBLIC_PAGE_COUNT}",
             f"Desktop Learn dropdowns checked: "
-            f"{learn_dropdown_count}/24",
+            f"{learn_dropdown_count}/{PUBLIC_PAGE_COUNT}",
             f"Mobile Services groups checked: "
-            f"{mobile_services_group_count}/24",
+            f"{mobile_services_group_count}/{PUBLIC_PAGE_COUNT}",
             f"Mobile Learn groups checked: "
-            f"{mobile_learn_group_count}/24",
+            f"{mobile_learn_group_count}/{PUBLIC_PAGE_COUNT}",
             "Inline contact success cards checked: "
             f"{production_html.count('data-contact-success')}/1",
             "Source-controlled Formspree _next fields found: 0",

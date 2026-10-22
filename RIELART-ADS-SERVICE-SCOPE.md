@@ -2,14 +2,14 @@
 
 ## Commercial terms
 
-**RielArt management fee:** $349 USD per month  
-**Initial commitment:** Three months  
+**RielArt management fee:** $299 USD per month (Growth Partner, which adds two new ad videos per month: $449 USD per month)  
+**Initial commitment:** Two months, then month to month  
 **Advertising spend:** Paid separately by the client directly to Google or Meta  
 **Standard platform:** One — Google Ads or Meta Ads  
 **Standard market:** One country or one clearly defined regional market  
 **Standard language and offer:** One advertising language and one primary service or offer
 
-The initial period allows time to configure tracking, build and launch the campaign, gather useful data, and make informed improvements. It does not guarantee that meaningful results will occur within three months.
+The initial period allows time to configure tracking, build and launch the campaign, gather useful data, and make informed improvements. It does not guarantee that meaningful results will occur within two months. After the initial period the service continues month to month.
 
 ## Shared monthly scope
 
@@ -64,8 +64,8 @@ When Meta Ads is selected, the standard service includes:
 - Up to two ad sets when justified
 - Approximately three to five initial ad variations
 - Advertising copy and headline variations
-- Basic campaign creative assembled from suitable client-provided or otherwise approved assets
-- Up to two refreshed creative variations per month when useful
+- Basic static campaign creative assembled from suitable client-provided or otherwise approved assets
+- Up to two refreshed static creative variations per month when useful
 - Basic audience configuration
 - Geographic targeting and placement review
 - Meta Pixel setup where supported
@@ -75,7 +75,7 @@ When Meta Ads is selected, the standard service includes:
 
 Creative refreshes are produced when campaign needs and suitable source assets support them; two new assets are not promised every month.
 
-Within the standard Meta creative scope, a simple short-form video ad variation may be assembled from suitable client-provided or otherwise approved assets when appropriate. During ongoing management, it counts as one of the allowance of up to two refreshed creative variations per month. Full video production—including filming, actors or UGC creators, professional voice talent, elaborate editing, advanced motion work, and ongoing custom video production—is not included unless separately scoped.
+Updated October 22, 2026: Focused Ads Management includes static creative and can run video the client already has. New motion-graphics ad videos are sold as Ad Videos or included twice a month in Growth Partner ($149 USD per video, $349 for three, up to 30 seconds, 9:16 and 1:1, delivered in 1–3 business days). Filming, actors or UGC creators, and professional voiceover are not included in any standard scope.
 
 The standard scope does not automatically include organic social posting, account or community management, comment or direct-message responses, influencer marketing, professional photography, full video production, filming, actors or UGC creators, professional voice talent, elaborate editing, advanced motion work, ongoing custom video production, large creative volumes, ecommerce catalogues, multiple countries or languages, multiple unrelated offers, or advanced funnel systems.
 
@@ -103,7 +103,7 @@ RielArt reviews the existing website or landing page for:
 - tracking capability;
 - advertising-policy compatibility.
 
-When important issues would limit campaign performance, RielArt may recommend correcting the website or completing Brand & Website Launch first. Not every advertising client is required to buy the $599 service.
+When important issues would limit campaign performance, RielArt may recommend correcting the website or completing Brand & Website Launch first. Not every advertising client is required to buy the $499 service.
 
 ## Included website-edit allowance
 
@@ -138,7 +138,7 @@ When RielArt did not build the website, campaign-related edits are subject to a 
 
 Advertising budgets generally begin around $500 USD per month, but the appropriate budget depends on the industry, location, competition, offer, platform, and goals.
 
-- The advertising budget is not included in the $349 RielArt fee.
+- The advertising budget is not included in the $299 or $449 RielArt fee.
 - The client pays advertising spend directly to Google or Meta.
 - $500 is a starting reference, not a guaranteed sufficient budget.
 - Competitive industries may require more.

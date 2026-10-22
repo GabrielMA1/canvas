@@ -2,6 +2,18 @@
 
 Status: implemented on branch `claude/clever-allen-vt1at2` for owner review. Not deployed. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
 
+## Commercial model update (October 22, 2026)
+
+The owner repositioned RielArt as one partner for brand, website, ad videos, and advertising, and asked for more affordable prices. The visual system is unchanged; the structure grew to carry four offers.
+
+- **Headline:** “The art your business deserves.” (the owner’s choice; it works because the plain service line and the price list sit directly beneath it).
+- **Offers:** Brand & Website Launch $499 (paid $250 + $249); Ad Videos $149 each or 3 for $349; Focused Ads Management $299/month; Growth Partner $449/month (management plus two new ad videos a month). Monthly plans start with a two-month commitment, then run month to month. Business Email & Workspace Setup stays optional from $149.
+- **Scope decision:** Focused Ads Management now includes static creative only; new motion-graphics videos are sold as Ad Videos or bundled in Growth Partner, so the bundle is meaningful and the two video promises never overlap.
+- **Homepage:** a four-row price list in the hero; a three-column price board (cards aligned on a shared subgrid so names of different lengths keep prices level) with Growth Partner printed as its own ink band beneath it; a new ad-video showcase.
+- **Video slots:** each slot names its file in `videos/`. Until the file exists it shows a one-ink placeholder; once uploaded it plays, with no code change (`assets/js/video-slots.js`, `VIDEO-UPLOADS.md`).
+- **New page:** `/services/ad-videos/`. The share image was redrawn with the new headline and prices.
+- **Audit:** `tools/site_audit.py` now encodes the four-offer model (prices, order, contact choices, schema, CTAs, wording) instead of the two-service one; pending video uploads are warnings until the files exist.
+
 ## Audit of the previous system
 
 What was strong: honest, well-scoped copy; two clear services with published prices; light/dark themes; accessible, dependency-free code; a thorough audit tool.
