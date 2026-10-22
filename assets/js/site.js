@@ -297,11 +297,13 @@
   } catch (error) {}
   const serviceIntent = {
     "brand-website-launch": "brand-website-launch",
+    "ad-videos": "ad-videos",
     "focused-ads-management": "focused-ads-management",
+    "growth-partner": "growth-partner",
     "focused-ads": "focused-ads-management",
     advertising: "focused-ads-management",
-    both: "both-services",
-    "both-services": "both-services",
+    both: "not-sure",
+    "both-services": "not-sure",
     "not-sure": "not-sure",
     "custom-scope": "not-sure",
     "business-email-workspace": "not-sure"
@@ -326,7 +328,7 @@
 
     const selected = form.querySelector('input[type="radio"][name="service_interest"]:checked');
     const selectedValue = normalize(selected?.dataset.serviceValue);
-    const shouldShow = selectedValue === "focused-ads-management" || selectedValue === "both-services";
+    const shouldShow = selectedValue === "focused-ads-management" || selectedValue === "growth-partner";
 
     fields.hidden = !shouldShow;
     fields.querySelectorAll("input, select, textarea").forEach((control) => {

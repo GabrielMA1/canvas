@@ -664,11 +664,11 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 }
 .hero-line { display: block; }
 
-.hero-copy { grid-column: 1 / span 6; align-self: end; }
+.hero-copy { grid-column: 1 / span 6; align-self: start; }
 .hero-copy .lead { color: var(--fg); max-width: 34em; }
 .hero-copy .btn-row { margin-top: 2rem; }
 
-.hero-map { grid-column: 8 / -1; align-self: end; }
+.hero-map { grid-column: 8 / -1; align-self: start; }
 
 /* The price list: name, dotted leader, price. */
 .price-list > li { padding-block: 1rem 1.125rem; border-top: 1px solid var(--line); }
@@ -709,7 +709,9 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   transform-origin: 0 50%;
   animation: leader-draw 520ms var(--ease) 180ms both;
 }
-.hero .price-list > li + li .price-list-leader { animation-delay: 260ms; }
+.hero .price-list > li:nth-child(2) .price-list-leader { animation-delay: 240ms; }
+.hero .price-list > li:nth-child(3) .price-list-leader { animation-delay: 300ms; }
+.hero .price-list > li:nth-child(4) .price-list-leader { animation-delay: 360ms; }
 @keyframes leader-draw { from { transform: scaleX(0); } }
 
 .price-list-price {
@@ -773,7 +775,7 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 
 .offer-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   border-top: 4px solid var(--line-strong);
 }
 
@@ -784,10 +786,63 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   padding: clamp(1.75rem, 1.25rem + 1.5vw, 2.5rem) clamp(1.5rem, 0.5rem + 3vw, 3.5rem) clamp(2rem, 1.5rem + 1.5vw, 2.75rem) 0;
 }
 .offer-card + .offer-card {
-  padding-left: clamp(1.5rem, 0.5rem + 3vw, 3.5rem);
-  padding-right: 0;
+  padding-left: clamp(1.25rem, 0.25rem + 2vw, 2.5rem);
   border-left: 1px solid var(--line);
 }
+.offer-card { padding-right: clamp(1.25rem, 0.25rem + 2vw, 2.5rem); }
+.offer-grid > .offer-card:nth-child(3) { padding-right: 0; }
+.offer-card .offer-price strong { font-size: clamp(4rem, 2.6rem + 3.6vw, 6.5rem); }
+
+/* The three cards share one row grid, so headers, prices, notes, and lists
+   line up across columns whatever the length of each name. */
+@supports (grid-template-rows: subgrid) {
+  .offer-grid > .offer-card:not(.partner-offer) {
+    grid-row: span 5;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+  }
+  .offer-grid > .offer-card:not(.partner-offer) .offer-header { align-self: start; }
+}
+
+/* Growth Partner: the partnership, printed as its own ink band under the board. */
+.partner-offer {
+  --bg: var(--field);
+  --fg: var(--on-field);
+  --fg-2: var(--on-field-2);
+  --accent: var(--on-field);
+  --line: rgba(244, 241, 234, 0.26);
+  --line-strong: var(--on-field);
+  --focus: var(--on-field);
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr);
+  grid-template-rows: auto auto;
+  gap: 1.5rem var(--gutter);
+  align-items: start;
+  margin-top: clamp(0.5rem, 0.25rem + 1vw, 1rem);
+  padding: clamp(1.75rem, 1rem + 2.5vw, 3rem) !important;
+  border-left: 0 !important;
+  background: var(--bg);
+  color: var(--fg);
+}
+.partner-offer .offer-header { grid-column: 1; grid-row: 1; }
+.partner-offer .offer-price { grid-column: 2; grid-row: 1; margin-top: 0; flex-direction: column; align-items: flex-start; }
+.partner-offer .check-list { grid-column: 3; grid-row: 1; margin-top: 0; }
+.partner-offer .offer-note { grid-column: 1; grid-row: 2; align-self: center; color: var(--fg-2); }
+.partner-offer .offer-actions { grid-column: 2 / -1; grid-row: 2; margin-top: 0; justify-content: flex-end; }
+
+/* On an ink section (Services, Pricing) the band reverses to paper. */
+.section-dark .partner-offer {
+  --bg: var(--paper);
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
+  --accent: var(--blue);
+  --line: var(--rule);
+  --line-strong: var(--ink);
+  --focus: var(--blue);
+}
+.section-dark .partner-offer .btn-light { background: var(--blue); color: var(--paper); }
+[data-theme="dark"] .section-dark .partner-offer .btn-light { color: #0d1020; }
+.section-dark .partner-offer .text-link-light { color: var(--accent); }
 
 .offer-header { display: grid; gap: 0.625rem; }
 .offer-kicker { color: var(--fg-2); }
@@ -890,6 +945,69 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 }
 .optional-service-panel-compact .optional-service-offer > p { grid-column: 1; }
 .optional-service-panel-compact .optional-service-offer .btn { grid-column: 2; grid-row: 1 / span 3; margin: 0; }
+
+/* ---------- Ad videos ---------- */
+
+.video-showcase-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem 2.5rem;
+  margin-bottom: clamp(2rem, 1.5rem + 2vw, 3rem);
+}
+.video-showcase-head > div { max-width: 40rem; }
+.video-showcase-head .section-copy { margin-top: 1rem; }
+
+/* Vertical ads sit side by side on wide screens and scroll like a feed on phones. */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 20rem));
+  gap: 1.5rem var(--gutter);
+}
+
+.video-slot { margin: 0; }
+
+.video-frame {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: #0d1020;
+}
+.video-frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #0d1020;
+}
+
+.video-placeholder {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.25rem;
+  background: var(--field);
+  color: var(--on-field);
+}
+.video-placeholder img { width: 2rem; height: 2rem; padding: 0.25rem; background: var(--on-field); }
+.video-placeholder span {
+  font-size: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
+  font-weight: 820;
+  font-stretch: 76%;
+  line-height: 0.95;
+}
+.video-placeholder small { display: block; margin-top: 0.5rem; color: var(--on-field-2); font-size: 0.9375rem; font-weight: 600; }
+
+/* With JavaScript, a slot shows its placeholder until its file is found. */
+.js [data-video-slot]:not(.is-ready) .video-placeholder { display: flex; }
+.js [data-video-slot]:not(.is-ready) video { visibility: hidden; }
+
+.video-slot figcaption { display: grid; gap: 0.125rem; margin-top: 0.875rem; }
+.video-slot figcaption strong { font-weight: 700; font-stretch: 94%; }
+.video-slot figcaption small { color: var(--fg-2); font-size: 0.875rem; }
+.video-status:empty { display: none; }
 
 /* ---------- Homepage: why ---------- */
 
@@ -1171,7 +1289,7 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 
 .fact-strip {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
   gap: 0 var(--gutter);
   margin-top: clamp(2rem, 1.5rem + 2vw, 3rem);
   border-top: 4px solid var(--line-strong);
@@ -1291,11 +1409,12 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   border-top: 4px solid var(--line-strong);
 }
 .service-inclusions-column { padding: 1.75rem clamp(1.5rem, 0.5rem + 3vw, 3rem) 1.75rem 0; }
-.service-inclusions-column + .service-inclusions-column {
+.service-inclusions-column:nth-child(even) {
   padding-left: clamp(1.5rem, 0.5rem + 3vw, 3rem);
   padding-right: 0;
   border-left: 1px solid var(--line);
 }
+.service-inclusions-column:nth-child(n + 3) { border-top: 1px solid var(--line); }
 .service-inclusions-header { display: grid; gap: 0.5rem; margin-bottom: 1.25rem; }
 .service-inclusions-label { color: var(--fg-2); }
 .service-inclusions-header h3 { font-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem); font-stretch: 84%; }
@@ -1691,6 +1810,7 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 
 .service-choice { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.625rem; }
 .service-choice > legend { grid-column: 1 / -1; }
+.service-choice label:last-of-type:nth-of-type(odd) { grid-column: 1 / -1; }
 .service-choice label {
   position: relative;
   display: flex;
@@ -1895,6 +2015,18 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   .hero-map { grid-column: 8 / -1; }
 
   .trust-ledger { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .offer-grid { grid-template-columns: minmax(0, 1fr); }
+  .offer-card,
+  .offer-card + .offer-card,
+  .offer-grid > .offer-card:nth-child(3) { padding-inline: 0; border-left: 0; }
+  .offer-card + .offer-card { border-top: 4px solid var(--line-strong); }
+  .offer-grid > .offer-card:not(.partner-offer) { grid-row: auto; grid-template-rows: none; }
+  .partner-offer { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .partner-offer .offer-header { grid-column: 1 / -1; }
+  .partner-offer .offer-price { grid-column: 1; grid-row: 2; }
+  .partner-offer .check-list { grid-column: 2; grid-row: 2; }
+  .partner-offer .offer-note { grid-column: 1 / -1; grid-row: 3; }
+  .partner-offer .offer-actions { grid-column: 1 / -1; grid-row: 4; justify-content: flex-start; }
   .process-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.75rem; }
   .portal-strip,
   .faq-shell { grid-template-columns: minmax(0, 1fr); }
@@ -1931,17 +2063,19 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   .statement { grid-column: 1 / -1; }
   .problem-copy { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
 
-  .offer-grid,
   .boundary-grid,
   .service-inclusions-grid { grid-template-columns: minmax(0, 1fr); }
-  .offer-card,
-  .offer-card + .offer-card { padding-inline: 0; border-left: 0; }
-  .offer-card + .offer-card { border-top: 4px solid var(--line-strong); }
   .offer-note-region:empty { display: none; }
+  .partner-offer { grid-template-columns: minmax(0, 1fr); }
+  .partner-offer .offer-header,
+  .partner-offer .offer-price,
+  .partner-offer .check-list,
+  .partner-offer .offer-note,
+  .partner-offer .offer-actions { grid-column: 1; grid-row: auto; }
   .boundary-grid > div,
   .boundary-grid > div + div,
   .service-inclusions-column,
-  .service-inclusions-column + .service-inclusions-column { padding-inline: 0; border-left: 0; }
+  .service-inclusions-column:nth-child(even) { padding-inline: 0; border-left: 0; }
   .boundary-grid > div + div,
   .service-inclusions-column + .service-inclusions-column { border-top: 1px solid var(--line); }
 
@@ -1976,6 +2110,19 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 
 @media (max-width: 640px) {
   :root { --header-h: 64px; }
+
+  .video-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 72%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.75rem;
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+  }
+  .video-slot { scroll-snap-align: start; }
 
   .header-actions .project-button { display: none; }
 

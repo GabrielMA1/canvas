@@ -1,5 +1,7 @@
 # RielArt Offer Scope
 
+> **Superseded in part on October 22, 2026.** The public offer is now four primary services—Brand & Website Launch ($499, paid $250 + $249), Ad Videos ($149 each or 3 for $349), Focused Ads Management ($299/month), and Growth Partner ($449/month)—under the headline “The art your business deserves.” Monthly plans begin with a two-month commitment, then run month to month. See `README.md` and `REDESIGN-NOTES.md` for the current model; where this document conflicts, they control.
+
 ## Public offer model
 
 RielArt has exactly two primary public services. They can be purchased separately or sequentially.
