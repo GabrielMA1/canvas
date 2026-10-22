@@ -42,12 +42,15 @@ PRIMARY_SERVICE_MARKERS = [
 ]
 EXPECTED_ONE_TIME_PRICES = {"$499", "$149", "$349"}
 EXPECTED_MONTHLY_PRICES = {"$299", "$449"}
-LEGACY_COMMERCIAL_PRICES = {"$247", "$399", "$497", "$599", "$699", "$948"}
-# $249 is now the second Brand & Website Launch instalment and $349 the Video
-# Pack price; only their retired monthly offers are disallowed.
+LEGACY_COMMERCIAL_PRICES = {"$247", "$497", "$599", "$699", "$948"}
+# $249 is now the second Brand & Website Launch instalment, $349 the Video
+# Pack price, and $399 the founding launch price; only their retired monthly
+# offers are disallowed.
 LEGACY_MONTHLY_PRICE_PATTERNS = {
     "$249/month": r"\$249\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
     "$349/month": r"\$349\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
+    # $399 is now the founding Brand & Website Launch price (one time).
+    "$399/month": r"\$399\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
 }
 PUBLIC_PAGE_COUNT = 25
 # Owner-supplied ad videos referenced by the video slots. Until each file is
@@ -1718,11 +1721,11 @@ def main() -> int:
             )
 
     numerical_claim_pattern = re.compile(
-        r"(?i)(?<![\w$])"
+        r"(?i)(?<![\w$])(?<!first )"
         r"(?!0\d\b)"
         r"(?:\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)"
         r"\s*(?:\+\s*)?"
-        r"(?:%|percent\b|years?\b|clients?\b|customers?\b|projects?\b|"
+        r"(?:%(?!\s*off\b)|percent\b(?!\s*off\b)|years?\b|clients?\b|customers?\b|projects?\b|"
         r"business(?:es)?\b(?!\s+days?\b)|leads?\b|revenue\b|roi\b|[x×]\b)"
     )
     numerical_claim_matches = 0
@@ -2268,9 +2271,11 @@ def main() -> int:
                 f"{expected_section!r}"
             )
 
-    current_css_cache_reference = "site.css?v=20261022offer1"
-    current_js_cache_reference = "site.js?v=20261022offer1"
+    current_css_cache_reference = "site.css?v=20261023founding1"
+    current_js_cache_reference = "site.js?v=20261023founding1"
     retired_cache_references = (
+        "site.css?v=20261022offer1",
+        "site.js?v=20261022offer1",
         "site.css?v=20261009motion1",
         "site.js?v=20261009motion1",
         "site.css?v=20261008ink1",
@@ -2693,7 +2698,7 @@ def main() -> int:
             # Raw (unescaped) text keeps titles and meta descriptions, whose
             # wording sits inside attributes, in view.
             window = unescape(
-                source[max(0, price_match.start() - 80):price_match.end() + 80]
+                source[max(0, price_match.start() - 140):price_match.end() + 140]
             )
             if not in_email_context and ad_video_price_context.search(window):
                 continue

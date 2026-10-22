@@ -15,13 +15,19 @@ One approved subordinate setup is also public: **Business Email & Workspace Setu
 
 Advertising spend is separate and is paid by the client directly to Google or Meta. Focused Ads Management includes static creative; new motion-graphics videos come from Ad Videos or Growth Partner. The general site CTA is **Get Started**, linking to `/contact/#project-inquiry`. Service-specific actions are **Start Your Launch**, **Order an Ad Video**, **Start Advertising**, and **Become a Growth Partner**. There are no public Stripe checkout links.
 
+### Founding client pricing (active)
+
+Until the first 10 clients sign, every page shows a founding-client notice and the four offers show the regular price crossed out beside the founding price: Brand & Website Launch $399 (paid $200 + $199), Ad Videos $119 or 3 for $279, Focused Ads Management $239/month, and Growth Partner $359/month. Monthly founding prices last for a client’s first 6 months. In return RielArt may feature the project and request a voluntary testimonial; any published testimonial must say the client received founding pricing.
+
+To end the offer when the 10 places are filled, remove the `offer-banner` aside from every page, remove each `price-was` element together with the founding price beside it (restoring the regular price in the `<strong>`), restore the regular offer notes, and remove the `founding-panel`, `founding-note`, and `service-inclusions-founding` elements, the founding FAQ entry (homepage and FAQ page, including their JSON-LD), the founding Terms paragraph, and the founding wording in the contact choices. Then run the audit.
+
 Support beyond these offers is available only as a separately reviewed inquiry. **Ask About a Custom Scope** links to `/contact/?service=custom-scope#project-inquiry`; it does not create another package, price, or promise of availability.
 
 Future approved payment links have one internal configuration location: `config/payment-links.json`. Both values remain `null` until approved and tested. The `config/` directory is excluded from the GitHub Pages build.
 
 ## Site structure
 
-- `index.html` — homepage: “The art your business deserves.” on a full-width ink field with all four offers and prices set as a price list, the problem statement, the three-offer price board with the Growth Partner band and a compact optional business-email callout, the ad-video showcase, Why RielArt, Google/Meta comparison, process with a Client Portal strip, labelled work, FAQ, and final inquiry CTA
+- `index.html` — homepage: founding-client notice, “The art your business deserves.” beside a CSS motion-graphics reel of the four services (pausable; still frame under reduced motion), the problem statement, the three-offer price board with founding prices and the Growth Partner band, a compact optional business-email callout, the ad-video showcase, Why RielArt, Google/Meta comparison, process with a Client Portal strip, labelled work, FAQ, and final inquiry CTA
 - `services/` — overview of the four primary offers plus a subordinate business-email setup section
 - `services/brand-website-launch/` — detailed $499 launch scope, two-part payment, and an optional business-email cross-reference
 - `services/ad-videos/` — Ad Videos scope, formats, delivery, exclusions, usage, and the three video slots
@@ -39,6 +45,7 @@ Future approved payment links have one internal configuration location: `config/
 - `assets/fonts/` — self-hosted Archivo and Newsreader Latin variable WOFF2 files with their SIL OFL 1.1 licence
 - `assets/js/site.js` — theme, active navigation, menus, FAQ, filter, conditional form, and validation behaviour
 - `assets/js/motion-insights.js` — GSAP Flip for the Insights topic filter (loaded on `/blog/` only)
+- `assets/js/hero-reel.js` — pause control and off-screen pausing for the homepage reel
 - `assets/js/video-slots.js` — turns each video slot from placeholder to playable video once its file exists in `videos/` (homepage and Ad Videos page only)
 - `videos/` — owner-uploaded ad videos; see `VIDEO-UPLOADS.md`
 - `assets/js/form-messages.js` — inline, field-level validation messages (loaded on `/contact/` only)

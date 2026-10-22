@@ -2,6 +2,11 @@
 
 Status: implemented on branch `claude/clever-allen-vt1at2` for owner review. Not deployed. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
 
+## Hero reel and founding pricing (October 23, 2026)
+
+- **Hero:** at the owner’s request the price list left the hero (prices live on the board just below and on Pricing). In its place a CSS motion-graphics reel, styled like a vertical Story with progress segments, tells the four services in twelve seconds: brand assembles, a page builds, kinetic ad copy, and ad → website → inquiry joined by the dotted leader. It demonstrates the motion work RielArt now sells, adds no JavaScript to the critical path, pauses on request or off screen, and is a single still frame under reduced motion.
+- **Founding client pricing:** 20% off the four offers for the first 10 clients, shown as the regular price crossed out beside the founding price, with a site-wide notice and a full explanation on Pricing. The urgency is real (a genuine limit and a six-month lock for monthly plans); no countdowns, invented scarcity, or fictitious reference prices. Crossed-out prices carry screen-reader text (“Regular price … Founding client price …”).
+
 ## Commercial model update (October 22, 2026)
 
 The owner repositioned RielArt as one partner for brand, website, ad videos, and advertising, and asked for more affordable prices. The visual system is unchanged; the structure grew to carry four offers.
