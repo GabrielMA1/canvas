@@ -1773,6 +1773,49 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 .plan-switch [role="tab"]:hover { color: var(--fg); }
 .plan-switch [role="tab"][aria-selected="true"] { background: var(--fg); color: var(--bg); }
 
+/* Help me choose: a quiet text button beside the switch, opening one question. */
+.plan-help-toggle {
+  margin-top: 0.875rem;
+  padding: 0.25rem 0;
+  border: 0;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 640;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+  cursor: pointer;
+}
+.plan-help-toggle[hidden],
+.plan-help[hidden] { display: none; }
+.plan-help {
+  width: min(100%, 36rem);
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 2px solid var(--line-strong);
+  text-align: left;
+}
+.plan-help fieldset { margin: 0; padding: 0; border: 0; }
+.plan-help legend { padding: 0; font-weight: 720; }
+.plan-help label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-block: 0.625rem;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+.plan-help legend + label { margin-top: 0.625rem; border-top: 1px solid var(--line); }
+.plan-help input { width: 1.125rem; height: 1.125rem; margin: 0; accent-color: var(--blue); }
+.plan-help-answer p { display: none; margin-top: 1rem; font-size: 1.0625rem; }
+.plan-help-answer a { color: var(--accent); font-weight: 700; text-underline-offset: 0.2em; }
+.plan-help:has([value="brand"]:checked) [data-need="brand"],
+.plan-help:has([value="videos"]:checked) [data-need="videos"],
+.plan-help:has([value="ads"]:checked) [data-need="ads"],
+.plan-help:has([value="all"]:checked) [data-need="all"] { display: block; }
+.plan-card:target { outline: 3px solid var(--blue); outline-offset: 4px; }
+
 .plan-panel { margin-top: clamp(2rem, 1.5rem + 1.5vw, 2.75rem); }
 .plan-panel-head { margin-bottom: 1.5rem; text-align: center; }
 .plan-panel-head h2 { font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); font-stretch: 84%; }

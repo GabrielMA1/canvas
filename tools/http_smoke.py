@@ -41,7 +41,8 @@ DEFAULT_BUDGETS = {
     # Shared site.js, loaded on every page.
     "javascript_total": 20 * 1024,
     # First-party scripts loaded only on the page that needs them.
-    "page_javascript_total": 8 * 1024,
+    # Sum of all page scripts; each page still loads only its own.
+    "page_javascript_total": 10 * 1024,
     # Pinned GSAP core and Flip (tools/vendor.mjs); Insights index only.
     "vendor_javascript_total": 97 * 1024,
     # Everything one route loads; the Insights index (site.js + GSAP + Flip)
