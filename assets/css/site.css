@@ -381,22 +381,6 @@ body:not(.home) .section:not(.section-alt):not(.section-dark):not(.section-tint)
   text-underline-offset: 0.22em;
 }
 
-/* Checks and dashes: drawn, so they never depend on a font. */
-.check-list li::before,
-.compact-list li::before,
-.plan-features li::before,
-.hero-trust li::before,
-.trust-ledger li::before {
-  content: "";
-  flex: none;
-  width: 0.8em;
-  height: 0.45em;
-  margin-top: 0.42em;
-  border-left: 2px solid var(--accent);
-  border-bottom: 2px solid var(--accent);
-  transform: rotate(-45deg);
-}
-
 /* ---------- Header ---------- */
 
 .site-header {
@@ -707,23 +691,10 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   text-wrap: initial;
 }
 .hero-line { display: block; }
-.hero-kicker {
-  display: block;
-  max-width: 28em;
-  margin-bottom: 1.25rem;
-  color: var(--fg-2);
-  font-size: clamp(1rem, 0.9rem + 0.35vw, 1.1875rem);
-  font-weight: 640;
-  font-stretch: 92%;
-  line-height: 1.35;
-  letter-spacing: 0;
-}
 
 .hero-copy { grid-column: 1 / span 6; align-self: start; }
 .hero-copy .lead { color: var(--fg); max-width: 34em; }
 .hero-copy .btn-row { margin-top: 2rem; }
-.hero-trust { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 1.75rem; color: var(--fg); font-size: 0.9375rem; font-weight: 600; }
-.hero-trust li { display: flex; gap: 0.5rem; }
 .hero-call { margin-top: 1rem; color: var(--fg-2); font-size: 0.9375rem; }
 .hero-call a { color: var(--accent); font-weight: 680; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
 .final-cta .hero-call { margin-top: 1.25rem; font-size: 1rem; }
@@ -1415,13 +1386,6 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 }
 .commitments span { color: var(--fg-2); max-width: 32em; }
 
-.trust-ledger {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 1.25rem var(--gutter);
-  margin-top: clamp(2rem, 1.5rem + 1.5vw, 2.75rem);
-}
-.trust-ledger li { display: flex; gap: 0.625rem; font-size: 0.9375rem; line-height: 1.45; font-weight: 560; }
 
 /* ---------- Homepage: platforms ---------- */
 
@@ -1458,19 +1422,8 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 .platform-panel h3 { margin-top: 0.5rem; font-size: clamp(1.625rem, 1.3rem + 1vw, 2.125rem); font-stretch: 84%; }
 .platform-panel > p { margin-top: 0.75rem; color: var(--fg-2); max-width: 30em; }
 .platform-panel ul { margin-top: 1.25rem; }
-.platform-panel ul li {
-  display: flex;
-  gap: 0.75rem;
-  padding-block: 0.375rem;
-}
-.platform-panel ul li::before {
-  content: "";
-  flex: none;
-  width: 0.75rem;
-  margin-top: 0.8em;
-  height: 2px;
-  background: var(--accent);
-}
+.platform-panel ul li { padding-block: 0.5rem; border-top: 1px solid var(--line); }
+.platform-panel ul li:last-child { border-bottom: 1px solid var(--line); }
 .platform-panel > a { display: inline-block; margin-top: 1.5rem; }
 
 /* ---------- Process ---------- */
@@ -1653,16 +1606,6 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 .remodel-page-hero .muted { margin-top: 1rem; }
 .page-actions { margin-top: 2rem; }
 
-.breadcrumbs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  color: var(--fg-2);
-  font-size: 0.875rem;
-}
-.breadcrumbs a { color: var(--fg-2); text-decoration: underline; text-underline-offset: 0.2em; }
-.breadcrumbs a:hover { color: var(--accent); }
 
 .fact-strip {
   display: grid;
@@ -1723,11 +1666,11 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 .scope-columns > .card { margin: 0; }
 
 .compact-list li {
-  display: flex;
-  gap: 0.75rem;
-  padding-block: 0.375rem;
+  padding-block: 0.5rem;
+  border-top: 1px solid var(--line);
   font-size: 0.975rem;
 }
+.compact-list li:last-child { border-bottom: 1px solid var(--line); }
 
 /* Included versus not included — the honest boundary. */
 .boundary-grid {
@@ -1747,19 +1690,11 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 .boundary-grid h3 { margin-bottom: 0.75rem; }
 .boundary-grid .exclusion-list { margin-top: 0.5rem; }
 .exclusion-list li {
-  display: flex;
-  gap: 0.75rem;
-  padding-block: 0.375rem;
+  padding-block: 0.5rem;
+  border-top: 1px solid var(--line);
   color: var(--fg-2);
 }
-.exclusion-list li::before {
-  content: "";
-  flex: none;
-  width: 0.75rem;
-  height: 2px;
-  margin-top: 0.8em;
-  background: var(--fg-2);
-}
+.exclusion-list li:last-child { border-bottom: 1px solid var(--line); }
 
 .form-guidance {
   padding: 1rem 1.25rem;
@@ -1881,14 +1816,11 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 }
 .plan-badge {
   position: absolute;
-  top: 1.375rem;
-  right: 1.25rem;
-  padding: 0.25rem 0.5rem;
-  background: var(--on-field);
-  color: var(--field);
-  font-size: 0.75rem;
-  font-weight: 720;
-  line-height: 1.2;
+  top: 1.5rem;
+  right: 1.375rem;
+  color: var(--fg-2);
+  font-size: 0.875rem;
+  font-weight: 640;
 }
 .plan-name { font-weight: 720; }
 .plan-featured .plan-name { padding-right: 6rem; }
@@ -1921,8 +1853,9 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 
 .plan-includes { margin-top: 1.5rem; }
 .plan-includes > p { color: var(--fg-2); font-size: 0.875rem; font-weight: 640; }
-.plan-features { display: grid; gap: 0.625rem; margin-top: 0.75rem; font-size: 0.9375rem; line-height: 1.4; }
-.plan-features li { display: flex; gap: 0.625rem; }
+.plan-features { margin-top: 0.625rem; font-size: 0.9375rem; line-height: 1.4; }
+.plan-features li { padding-block: 0.5rem; border-top: 1px solid var(--line); }
+.plan-features li:last-child { border-bottom: 1px solid var(--line); }
 
 .plan-foot {
   align-self: end;
@@ -2009,15 +1942,13 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 
 .portfolio-truth-note,
 .concept-flag {
-  display: inline-block;
+  display: block;
   margin-top: 1.25rem;
-  padding: 0.375rem 0.625rem;
-  background: var(--panel);
-  color: var(--fg);
+  color: var(--fg-2);
   font-size: 0.875rem;
   font-weight: 600;
 }
-.model-card .concept-flag { margin-top: 0; background: transparent; padding: 0; color: var(--fg-2); }
+.model-card .concept-flag { margin-top: 0; }
 
 .feature-facts { margin-top: 1.75rem; border-top: 1px solid var(--line); }
 .feature-facts div {
@@ -2103,7 +2034,7 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 .phase-activities { grid-column: 3; }
 .phase-activities > span { display: block; margin-bottom: 0.375rem; font-size: 0.875rem; font-weight: 700; }
 .phase-activities ul { display: flex; flex-wrap: wrap; gap: 0.375rem 1.25rem; color: var(--fg-2); font-size: 0.9375rem; }
-.phase-activities li::before { content: "– "; color: var(--accent); }
+.phase-activities li:not(:last-child)::after { content: "·"; margin-left: 1.25rem; color: var(--fg-2); }
 
 .portal-workspace {
   display: grid;
@@ -2458,17 +2389,6 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 .contact-success-card p { color: var(--fg-2); max-width: 36em; }
 .contact-success-note { font-size: 0.9375rem; }
 .contact-success-card .btn-row { margin-top: 0.75rem; }
-.status-orb {
-  display: grid;
-  place-items: center;
-  width: 3rem;
-  height: 3rem;
-  background: var(--blue);
-  color: var(--paper);
-  font-family: system-ui, sans-serif;
-  font-size: 1.375rem;
-  font-weight: 700;
-}
 
 .thank-you-panel { max-width: 46rem; }
 .thank-you-panel .page-title { margin-bottom: 1.25rem; }
@@ -2528,7 +2448,6 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   .hero-copy { grid-column: 1 / span 7; }
   .hero-reel { grid-column: 9 / -1; width: min(100%, 15rem); }
 
-  .trust-ledger { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .offer-grid { grid-template-columns: minmax(0, 1fr); }
   .offer-card,
   .offer-card + .offer-card,
@@ -2637,7 +2556,6 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 
   .hero-copy .btn-row > .btn { flex: 1 1 100%; }
 
-  .trust-ledger { grid-template-columns: minmax(0, 1fr); gap: 0.75rem; }
   .process-rail { grid-template-columns: minmax(0, 1fr); row-gap: 2.25rem; }
   .portal-strip dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 

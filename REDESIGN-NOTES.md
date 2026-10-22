@@ -2,7 +2,11 @@
 
 Status: implemented on branch `claude/clever-allen-vt1at2` for owner review. Not deployed. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
 
-## Search and first-impression pass (October 2026, latest)
+## No template habits (October 2026, latest)
+
+At the owner’s request the site was rechecked for patterns that read as generated rather than designed, and they were removed: checkmark bullets (lists are now hairline-ruled rows, like a spec sheet), the row of “trust” ticks under the hero and in Why RielArt, breadcrumb trails (kept only as BreadcrumbList schema for search), labels stacked above headings that repeated the heading, filler tags (“A practical next step”, “Approved clients”), a tick-in-a-square on the inquiry confirmation, the pill “Best value” badge (now set in type), and the small keyword line above the homepage headline (keywords stay in the title and opening sentence). Rule of thumb for future edits: no icon where a word or a rule will do, and no label that the heading already says.
+
+## Search and first-impression pass (October 2026)
 
 - **Price spacing:** Brand & Website Launch moved to $349 ($175 + $174) so it never reads as the same price as Growth Partner ($399/month); Growth Partner now saves $701 in the first three months. The typical website timeline is 2–3 weeks.
 - **Hero reel, scene 4:** back to the word “Advertising”, now shown as a campaign dashboard: the campaign goes Live, three ad groups switch on, their results grow, and a “New inquiry” alert arrives.
