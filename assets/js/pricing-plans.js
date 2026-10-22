@@ -50,6 +50,19 @@
     if (target !== panels[index]) target.scrollIntoView();
   }
 
+  // "Help me choose": one question; CSS shows the matching answer.
+  const helpToggle = document.querySelector("[data-plan-help-toggle]");
+  const helpPanel = document.getElementById("plan-help");
+  if (helpToggle && helpPanel) {
+    helpToggle.hidden = false;
+    helpToggle.addEventListener("click", () => {
+      const open = helpPanel.hidden;
+      helpPanel.hidden = !open;
+      helpToggle.setAttribute("aria-expanded", String(open));
+      if (open) helpPanel.querySelector("input").focus();
+    });
+  }
+
   switcher.hidden = false;
   select(0);
   showHashTarget();

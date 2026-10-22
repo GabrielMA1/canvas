@@ -2,7 +2,11 @@
 
 Status: implemented on branch `claude/clever-allen-vt1at2` for owner review. Not deployed. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
 
-## No template habits (October 2026, latest)
+## ForgeGUI reference review (October 2026, latest)
+
+The owner asked whether forgegui.com should guide the look. Verdict: mostly no. Its dark space-and-cloud backgrounds, glow blobs, glassy cards, gradient words, skewed “AI” badge, 3D tilted carousel, “#1” claim, italic POPULAR and green “Save” pills, and checkmark lists are the generic AI-startup look this site deliberately avoids, and they suit a game-creator tool, not small-business owners deciding whom to trust. Three ideas were worth keeping. Two are already true here: show the real work large, and print the saving where the price is read. The third was adopted: a **Help me choose** text button beside the Services | Extras switch on Pricing. It opens one question (“What do you need most right now?”) with four answers. CSS (`:has`) shows the matching recommendation, which links to that plan card; JavaScript only opens and closes the panel.
+
+## No template habits (October 2026)
 
 At the owner’s request the site was rechecked for patterns that read as generated rather than designed, and they were removed: checkmark bullets (lists are now hairline-ruled rows, like a spec sheet), the row of “trust” ticks under the hero and in Why RielArt, breadcrumb trails (kept only as BreadcrumbList schema for search), labels stacked above headings that repeated the heading, filler tags (“A practical next step”, “Approved clients”), a tick-in-a-square on the inquiry confirmation, the pill “Best value” badge (now set in type), and the small keyword line above the homepage headline (keywords stay in the title and opening sentence). Rule of thumb for future edits: no icon where a word or a rule will do, and no label that the heading already says.
 

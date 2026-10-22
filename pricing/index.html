@@ -88,6 +88,22 @@ try{document.documentElement.dataset.theme=localStorage.getItem("theme")==="dark
           <button type="button" role="tab" id="plan-tab-services" aria-controls="plans-services" aria-selected="true">Services</button>
           <button type="button" role="tab" id="plan-tab-extras" aria-controls="extras" aria-selected="false" tabindex="-1">Extras</button>
         </div>
+        <button class="plan-help-toggle" type="button" data-plan-help-toggle aria-expanded="false" aria-controls="plan-help" hidden>Help me choose</button>
+        <div class="plan-help" id="plan-help" hidden>
+          <fieldset>
+            <legend>What do you need most right now?</legend>
+            <label><input type="radio" name="plan_need" value="brand"> A professional look and a website</label>
+            <label><input type="radio" name="plan_need" value="videos"> Video ads for social media</label>
+            <label><input type="radio" name="plan_need" value="ads"> More customers—I already have a good website</label>
+            <label><input type="radio" name="plan_need" value="all"> All of it, or I’m not sure</label>
+          </fieldset>
+          <div class="plan-help-answer" aria-live="polite">
+            <p data-need="brand">Start with <a href="#brand-website-launch">Brand &amp; Website Launch</a>: $349 once. Add ads later, when the site is ready.</p>
+            <p data-need="videos">Order <a href="#ad-videos">Ad Videos</a>: $99 each, ready in 1–3 business days.</p>
+            <p data-need="ads">Choose <a href="#focused-ads-management">Ads Management</a>: $249 a month, no long contract.</p>
+            <p data-need="all">Choose <a href="#growth-partner">Growth Partner</a>: everything for $399 a month, and you save $701 in the first three months.</p>
+          </div>
+        </div>
       </div>
 
       <div class="plan-panel" id="plans-services" role="tabpanel" aria-labelledby="plan-tab-services">
