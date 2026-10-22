@@ -1,15 +1,17 @@
-# Focused Ads Management Scope
+# Ads Management Scope
+
+Public name since the October 2026 simplification: **Ads Management** (formerly Focused Ads Management; the URL `/services/focused-ads-management/` is unchanged).
 
 ## Commercial terms
 
-**RielArt management fee:** $299 USD per month (Growth Partner, which adds two new ad videos per month: $449 USD per month)  
-**Initial commitment:** Two months, then month to month  
+**RielArt management fee:** $249 USD per month (Growth Partner, $399 USD per month, adds Brand & Website Launch, two new ad videos per month, business email setup, and Google Business Profile setup)  
+**Commitment:** None, month to month. Growth Partner has a 3-month minimum. New clients who commit to 3 months get 10% off the first month.  
 **Advertising spend:** Paid separately by the client directly to Google or Meta  
 **Standard platform:** One — Google Ads or Meta Ads  
 **Standard market:** One country or one clearly defined regional market  
 **Standard language and offer:** One advertising language and one primary service or offer
 
-The initial period allows time to configure tracking, build and launch the campaign, gather useful data, and make informed improvements. It does not guarantee that meaningful results will occur within two months. After the initial period the service continues month to month.
+Ads usually need a few weeks to configure tracking, launch, gather useful data, and improve, so clients are encouraged (not required) to allow two to three months. No term guarantees results.
 
 ## Shared monthly scope
 
@@ -75,7 +77,7 @@ When Meta Ads is selected, the standard service includes:
 
 Creative refreshes are produced when campaign needs and suitable source assets support them; two new assets are not promised every month.
 
-Updated October 22, 2026: Focused Ads Management includes static creative and can run video the client already has. New motion-graphics ad videos are sold as Ad Videos or included twice a month in Growth Partner ($149 USD per video, $349 for three, up to 30 seconds, 9:16 and 1:1, delivered in 1–3 business days). Filming, actors or UGC creators, and professional voiceover are not included in any standard scope.
+Updated October 22, 2026: Ads Management includes static creative and can run video the client already has. New motion-graphics ad videos are sold as Ad Videos or included twice a month in Growth Partner ($99 USD per video, up to 30 seconds, 9:16 and 1:1, delivered in 1–3 business days). Filming, actors or UGC creators, and professional voiceover are not included in any standard scope.
 
 The standard scope does not automatically include organic social posting, account or community management, comment or direct-message responses, influencer marketing, professional photography, full video production, filming, actors or UGC creators, professional voice talent, elaborate editing, advanced motion work, ongoing custom video production, large creative volumes, ecommerce catalogues, multiple countries or languages, multiple unrelated offers, or advanced funnel systems.
 
@@ -138,7 +140,7 @@ When RielArt did not build the website, campaign-related edits are subject to a 
 
 Advertising budgets generally begin around $500 USD per month, but the appropriate budget depends on the industry, location, competition, offer, platform, and goals.
 
-- The advertising budget is not included in the $299 or $449 RielArt fee.
+- The advertising budget is not included in the $249 or $399 RielArt fee.
 - The client pays advertising spend directly to Google or Meta.
 - $500 is a starting reference, not a guaranteed sufficient budget.
 - Competitive industries may require more.

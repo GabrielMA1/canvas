@@ -4,22 +4,20 @@ Static, dependency-free production website for RielArt. Deploy the repository’
 
 ## Public commercial model
 
-Approved by the owner on October 22, 2026. Headline: **The art your business deserves.** RielArt presents four primary offers:
+Approved by the owner on October 22, 2026 and simplified the same month. Headline: **The art your business deserves.** RielArt sells three single services and one bundle:
 
-- **Brand & Website Launch — $499 USD one time**, paid $250 at project start and $249 at launch
-- **Ad Videos — $149 USD per video**, or **3 videos for $349** (motion graphics up to 30 seconds, 9:16 and 1:1, delivered in 1–3 business days)
-- **Focused Ads Management — $299 USD per month**, two-month initial commitment, then month to month
-- **Growth Partner — $449 USD per month**: Focused Ads Management plus two new ad videos every month, two-month initial commitment, then month to month
+- **Brand & Website Launch — $399 USD one time**, paid $200 at project start and $199 when the site goes live
+- **Ad Videos — $99 USD per video** (animation up to 30 seconds, vertical and square, ready in 1–3 business days)
+- **Ads Management — $249 USD per month**, month to month with no minimum (formerly “Focused Ads Management”; the URL `/services/focused-ads-management/` is unchanged)
+- **Growth Partner — $399 USD per month**, 3-month minimum then month to month: Brand & Website Launch, Ads Management, two new ad videos a month, business email setup, and Google Business Profile setup. Against buying the same things separately it saves $751 in the first three months ($1,948 vs $1,197) and $48 a month after that ($447 vs $399).
 
-One approved subordinate setup is also public: **Business Email & Workspace Setup — from $149 USD one time**. It is a practical optional setup for a straightforward new Google Workspace or Microsoft 365 configuration, not a primary service.
+Extras: **Business Email & Workspace Setup — from $129 USD one time**, **Google Business Profile Setup — $79**, and **extra website pages — $79 each**. Business email and Google Business Profile setup are included with Growth Partner.
 
-Advertising spend is separate and is paid by the client directly to Google or Meta. Focused Ads Management includes static creative; new motion-graphics videos come from Ad Videos or Growth Partner. The general site CTA is **Get Started**, linking to `/contact/#project-inquiry`. Service-specific actions are **Start Your Launch**, **Order an Ad Video**, **Start Advertising**, and **Become a Growth Partner**. There are no public Stripe checkout links.
+Advertising spend is separate and is paid by the client directly to Google or Meta (shown to visitors as “Facebook & Instagram”). The general site CTA is **Get Started**, linking to `/contact/#project-inquiry`. Service-specific actions are **Start Your Launch**, **Order an Ad Video**, **Start Advertising**, and **Become a Growth Partner**. There are no public Stripe checkout links.
 
-### Founding client pricing (active)
+### New client offer (active)
 
-Until the first 10 clients sign, every page shows a founding-client notice and the four offers show the regular price crossed out beside the founding price: Brand & Website Launch $399 (paid $200 + $199), Ad Videos $119 or 3 for $279, Focused Ads Management $239/month, and Growth Partner $359/month. Monthly founding prices last for a client’s first 6 months. In return RielArt may feature the project and request a voluntary testimonial; any published testimonial must say the client received founding pricing.
-
-To end the offer when the 10 places are filled, remove the `offer-banner` aside from every page, remove each `price-was` element together with the founding price beside it (restoring the regular price in the `<strong>`), restore the regular offer notes, and remove the `founding-panel`, `founding-note`, and `service-inclusions-founding` elements, the founding FAQ entry (homepage and FAQ page, including their JSON-LD), the founding Terms paragraph, and the founding wording in the contact choices. Then run the audit.
+Every page has a thin banner, “Open to new clients: 10% off your first month*”, whose asterisk links to a small-print note at the foot of the page (`#offer-terms-note`): 10% off the first month of Ads Management or Growth Partner with a 3-month commitment; ad budget not included. The same terms appear under the Pricing plans (`#plans-footnote`), in the FAQ, and in Terms (`#new-client-offer`). To end the offer, remove the `offer-banner` aside and the `offer-terms` footer paragraph from every page, the asterisks and footnote on Pricing, the FAQ entries (homepage and FAQ page, including JSON-LD), and the Terms paragraph, then run the audit.
 
 Support beyond these offers is available only as a separately reviewed inquiry. **Ask About a Custom Scope** links to `/contact/?service=custom-scope#project-inquiry`; it does not create another package, price, or promise of availability.
 
@@ -27,18 +25,18 @@ Future approved payment links have one internal configuration location: `config/
 
 ## Site structure
 
-- `index.html` — homepage: founding-client notice, “The art your business deserves.” beside a CSS motion-graphics reel of the four services (pausable; still frame under reduced motion), the problem statement, the three-offer price board with founding prices and the Growth Partner band, a compact optional business-email callout, the ad-video showcase, Why RielArt, Google/Meta comparison, process with a Client Portal strip, labelled work, FAQ, and final inquiry CTA
-- `services/` — overview of the four primary offers plus a subordinate business-email setup section
-- `services/brand-website-launch/` — detailed $499 launch scope, two-part payment, and an optional business-email cross-reference
+- `index.html` — homepage: new-client banner, “The art your business deserves.” beside a CSS motion-graphics reel of the four services ending on a social ad that brings in a customer message (pausable; still frame under reduced motion), the problem statement, the three-offer price board with the Growth Partner band, an Extras row, the ad-video showcase, Why RielArt, Google/Meta comparison, process with a Client Portal strip, labelled work, FAQ, and final inquiry CTA
+- `services/` — overview of the four offers, the Extras row, and a plain-language guide to where to start
+- `services/brand-website-launch/` — detailed $399 launch scope, two-part payment, and an optional business-email cross-reference
 - `services/ad-videos/` — Ad Videos scope, formats, delivery, exclusions, usage, and the three video slots
-- `services/focused-ads-management/` — detailed $299 monthly advertising scope, Google and Meta explanations, and the Growth Partner section (`#growth-partner`)
-- `pricing/` — four-offer price board, “launch, then grow” example, four inclusion columns, detailed optional business-email setup, and a discreet custom-scope inquiry
+- `services/focused-ads-management/` — plain-language Ads Management scope ($249/month), a four-step explainer, Google and Facebook & Instagram explanations, and the Growth Partner section (`#growth-partner`)
+- `pricing/` — plan cards in the style of software pricing pages: a Services | Extras switch (`assets/js/pricing-plans.js`; both groups show without JavaScript), four plan cards with Growth Partner printed in solid ink as “Best value”, three extras cards (business email, Google Business Profile, extra page), small-print offer terms, a custom-scope line, the “Why Growth Partner costs less” receipt, and what each price covers
 - `process/` — four-step customer-facing process
 - `portfolio/` — RielArt's own site as the internal project (real screenshots of this site), design decisions, and flagged representative concepts with structural scope sketches
 - `about/` — company approach, operating principles, ownership, and service area
 - `faq/` — detailed commercial, business-email setup, and delivery answers
 - `blog/` — searchable Insights index and nine educational articles
-- `contact/` — canonical inquiry with four primary choices, a non-required business-email checkbox, conditional advertising questions, and preserved query context
+- `contact/` — canonical inquiry with four primary choices plus “not sure”, optional Extras checkboxes (business email, Google Business Profile, extra pages), conditional advertising questions, and preserved query context
 - `privacy-policy/`, `terms/` — legal information covering advertising and authorized business-email/workspace access, pending the decisions recorded in `RIELART-MANUAL-REVIEW.md`
 - `thanks/`, `404.html` — noindex utility pages
 - `assets/css/site.css` — consolidated visual system (“Printed in one ink”, October 2026) and responsive rules

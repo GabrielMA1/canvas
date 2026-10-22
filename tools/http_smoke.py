@@ -35,7 +35,9 @@ EXTRA_ROUTES = (
 MISSING_ROUTE = "/audit-check-this-route-should-not-exist/"
 DEFAULT_BUDGETS = {
     "html_per_route": 60 * 1024,
-    "css_total": 82 * 1024,
+    # One stylesheet for every page; includes the pricing plan cards and the
+    # hero reel (about 18 KB gzipped).
+    "css_total": 90 * 1024,
     # Shared site.js, loaded on every page.
     "javascript_total": 20 * 1024,
     # First-party scripts loaded only on the page that needs them.

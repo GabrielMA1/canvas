@@ -32,25 +32,26 @@ CALENDLY_URL = (
 )
 EMAIL_URL = "mailto:hello@rielart.com"
 LINKEDIN_URL = "https://www.linkedin.com/in/gabrielmacovei/"
-# Commercial model approved by the owner on October 22, 2026: four primary
-# offers plus the subordinate Business Email & Workspace Setup.
+# Commercial model approved by the owner on October 22, 2026 and simplified the
+# same month: three single services, the Growth Partner bundle, and extras
+# (Business Email & Workspace Setup, Google Business Profile, extra pages).
 PRIMARY_SERVICE_MARKERS = [
     "brand-website-launch",
     "ad-videos",
     "focused-ads-management",
     "growth-partner",
 ]
-EXPECTED_ONE_TIME_PRICES = {"$499", "$149", "$349"}
-EXPECTED_MONTHLY_PRICES = {"$299", "$449"}
-LEGACY_COMMERCIAL_PRICES = {"$247", "$497", "$599", "$699", "$948"}
-# $249 is now the second Brand & Website Launch instalment, $349 the Video
-# Pack price, and $399 the founding launch price; only their retired monthly
-# offers are disallowed.
+EXPECTED_ONE_TIME_PRICES = {"$399", "$99"}
+EXPECTED_MONTHLY_PRICES = {"$249", "$399"}
+# Earlier price lists, including the founding-client discount prices.
+LEGACY_COMMERCIAL_PRICES = {
+    "$247", "$497", "$599", "$699", "$948",
+    "$499", "$149", "$299", "$449", "$349", "$119", "$239", "$279", "$359",
+}
+# $249 and $399 are current monthly prices again; only the retired $349
+# monthly offer remains disallowed.
 LEGACY_MONTHLY_PRICE_PATTERNS = {
-    "$249/month": r"\$249\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
     "$349/month": r"\$349\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
-    # $399 is now the founding Brand & Website Launch price (one time).
-    "$399/month": r"\$399\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
 }
 PUBLIC_PAGE_COUNT = 25
 # Owner-supplied ad videos referenced by the video slots. Until each file is
@@ -63,14 +64,14 @@ PENDING_MEDIA_UPLOADS = {
 }
 OPTIONAL_SERVICE_NAME = "Business Email & Workspace Setup"
 OPTIONAL_SERVICE_MARKER = "business-email-workspace"
-OPTIONAL_SERVICE_PRICE = "From $149 USD one time"
+OPTIONAL_SERVICE_PRICE = "From $129 USD one time"
 OPTIONAL_SERVICE_INQUIRY_URL = (
     "/contact/?service=business-email-workspace#project-inquiry"
 )
 APPROVED_SERVICE_NAMES = {
     "Brand & Website Launch",
     "Ad Videos",
-    "Focused Ads Management",
+    "Ads Management",
     "Growth Partner",
 }
 LEGACY_SERVICE_NAMES = {
@@ -85,6 +86,7 @@ LEGACY_SERVICE_NAMES = {
     "AI Automation Care",
     "Online Ads Management",
     "Growth Systems Partner",
+    "Focused Ads Management",
 }
 FORBIDDEN_COMPETITOR_TOKEN = "brand" + "vm"
 IGNORED_DIRECTORIES = {".git", "node_modules", "__pycache__"}
@@ -1665,16 +1667,15 @@ def main() -> int:
             )
 
         expected_price_patterns = {
-            "$499": re.compile(r"\$499\s+USD\s+one\s+time\b", re.I),
-            "$149": re.compile(r"\$149\s+USD\s+per\s+video\b", re.I),
-            "$349": re.compile(r"\b3\s+videos\s+for\s+\$349\b", re.I),
-            "$299": re.compile(r"\$299\s+USD\s+per\s+month\b", re.I),
-            "$449": re.compile(r"\$449\s+USD\s+per\s+month\b", re.I),
+            "$399 one time": re.compile(r"\$399\s+USD\s+one\s+time\b", re.I),
+            "$99 per video": re.compile(r"\$99\s+USD\s+per\s+video\b", re.I),
+            "$249 per month": re.compile(r"\$249\s+USD\s+per\s+month\b", re.I),
+            "$399 per month": re.compile(r"\$399\s+USD\s+per\s+month\b", re.I),
         }
         for marker, expected_pattern in sorted(
             expected_price_patterns.items()
         ):
-            marker_count = len(re.findall(re.escape(marker), pricing_text))
+            marker_count = len(re.findall(re.escape(marker.split()[0]) + r"(?![\d,])", pricing_text))
             if marker_count == 0:
                 critical.append(
                     f"pricing/index.html: required visible {marker} price "
@@ -2271,9 +2272,11 @@ def main() -> int:
                 f"{expected_section!r}"
             )
 
-    current_css_cache_reference = "site.css?v=20261024reel2"
-    current_js_cache_reference = "site.js?v=20261024reel2"
+    current_css_cache_reference = "site.css?v=20261022simple1"
+    current_js_cache_reference = "site.js?v=20261022simple1"
     retired_cache_references = (
+        "site.css?v=20261024reel2",
+        "site.js?v=20261024reel2",
         "site.css?v=20261023founding1",
         "site.js?v=20261023founding1",
         "site.css?v=20261022offer1",
@@ -2536,7 +2539,8 @@ def main() -> int:
         offer_card_count = len(
             re.findall(
                 r'<(?:article|div)\b[^>]*\bclass=["\'][^"\']*'
-                r'\boffer-card\b[^"\']*["\']',
+                r'\b(?:offer-card|plan-card)\b[^"\']*["\']'
+                r'(?=[^>]*\bdata-primary-service=)',
                 source,
                 re.I,
             )
@@ -2562,17 +2566,11 @@ def main() -> int:
             "Provider subscriptions are paid separately",
         ),
         "services/index.html": (
-            "Professional business email when you need it.",
-            "One existing business domain",
-            "Up to 3 users",
+            "Want professional email on your own domain?",
             "Google Workspace",
             "Microsoft 365",
-            "SPF, DKIM, and an appropriate initial DMARC configuration",
-            "Client-owned administrative handoff",
-            "Provider subscriptions are billed separately",
-            "paid directly by the client",
-            "Domain registration, renewals, premium software, and other provider fees are separate",
-            "Existing email migration",
+            "up to 3 users",
+            "Provider subscriptions are paid separately",
         ),
         "pricing/index.html": (
             "One existing business domain",
@@ -2588,7 +2586,8 @@ def main() -> int:
             "Need professional business email too?",
             "one existing business domain",
             "up to 3 users",
-            "not included in the standard $499",
+            "Not included in the $399 Brand & Website Launch",
+            "included with Growth Partner",
             "subscription costs are separate",
             "client owns the account",
         ),
@@ -2662,64 +2661,55 @@ def main() -> int:
         re.I | re.S,
     )
     approved_faq_json_price_fragments = (
-        '"text": "Yes. Business Email & Workspace Setup starts at $149 USD '
-        'one time for a straightforward new setup and can include professional '
-        'email on your domain through Google Workspace or Microsoft 365, '
-        'essential DNS and email-authentication configuration, and basic '
-        'account and security setup. Provider subscriptions are billed '
-        'separately. Existing mailbox migration, larger teams, and more '
-        'complex environments are scoped separately."',
-        '"name": "Does the $149 include Google Workspace or Microsoft 365 '
+        '"text": "' + (
+            'Yes. Business Email & Workspace Setup starts at $129 USD one '
+            'time for a straightforward new setup and can include '
+            'professional email on your domain through Google Workspace or '
+            'Microsoft 365, the settings that help your email reach '
+            'inboxes, and basic account and security setup. Provider '
+            'subscriptions are billed separately. Moving existing '
+            'mailboxes, larger teams, and more complex setups are quoted '
+            'separately. It is included with Growth Partner.'
+        ) + '"',
+        '"name": "Does the $129 include Google Workspace or Microsoft 365 '
         'subscriptions?"',
     )
     expected_optional_price_counts = {
         "index.html": 1,
         "services/index.html": 1,
-        "pricing/index.html": 1,
+        "pricing/index.html": 2,
         "services/brand-website-launch/index.html": 1,
         "contact/index.html": 2,
         "faq/index.html": 4,
         "terms/index.html": 1,
     }
-    ad_video_price_context = re.compile(
-        r"(?i)(?:ad\s+videos?|per\s+video|/video|video\s+pack|"
-        r"three\s+for|3\s+for|each\s+additional\s+ad\s+video)"
+    # The pricing page's singles-versus-Growth-Partner receipt lists the email
+    # setup as one of its lines.
+    savings_receipt_pattern = re.compile(
+        r'<div class="savings" id="compare-savings">.*?</dl>', re.S
     )
     for relative, source in sorted(html_sources.items()):
-        all_price_matches = list(re.finditer(r"\$149(?!\d)", source))
-        email_ranges = [
-            (match.start(), match.end())
-            for match in optional_price_context_pattern.finditer(source)
-        ]
-        price_matches = []
-        for price_match in all_price_matches:
-            in_email_context = any(
-                start <= price_match.start() < end
-                for start, end in email_ranges
-            )
-            # Raw (unescaped) text keeps titles and meta descriptions, whose
-            # wording sits inside attributes, in view.
-            window = unescape(
-                source[max(0, price_match.start() - 140):price_match.end() + 140]
-            )
-            if not in_email_context and ad_video_price_context.search(window):
-                continue
-            price_matches.append(price_match)
+        price_matches = list(re.finditer(r"\$129(?!\d)", source))
         expected_price_count = expected_optional_price_counts.get(relative, 0)
         if len(price_matches) != expected_price_count:
             critical.append(
-                f"{relative}: expected {expected_price_count} approved $149 "
+                f"{relative}: expected {expected_price_count} approved $129 "
                 f"Business Email occurrences, found {len(price_matches)}"
             )
         approved_ranges = [
             (match.start(), match.end())
             for match in optional_price_context_pattern.finditer(source)
         ]
+        if relative == "pricing/index.html":
+            approved_ranges.extend(
+                (match.start(), match.end())
+                for match in savings_receipt_pattern.finditer(source)
+            )
         if relative == "faq/index.html":
             for fragment in approved_faq_json_price_fragments:
                 if source.count(fragment) != 1:
                     critical.append(
-                        "faq/index.html: approved $149 FAQPage JSON context "
+                        "faq/index.html: approved $129 FAQPage JSON context "
                         "is missing or duplicated"
                     )
                     continue
@@ -2731,15 +2721,15 @@ def main() -> int:
                 for start, end in approved_ranges
             ):
                 critical.append(
-                    f"{relative}: $149 is outside an approved Business Email "
+                    f"{relative}: $129 is outside an approved Business Email "
                     "& Workspace Setup context"
                 )
     if re.search(
-        r"(?i)\$149\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
+        r"(?i)\$129\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
         strip_html(production_html),
     ):
         critical.append(
-            "public HTML contains an unapproved $149 monthly offer"
+            "public HTML contains an unapproved $129 monthly offer"
         )
     if re.search(r"(?i)\bManaged IT Services\b", production_html):
         critical.append("public HTML advertises unapproved Managed IT Services")
@@ -2748,17 +2738,15 @@ def main() -> int:
     refined_pricing_html = page_source(pricing_relative)
     refined_pricing_text = page_visible(pricing_relative)
     approved_inclusions_intro = (
-        "Compare the services What each service includes. "
-        "Each service has its own focused scope. Choose the one your business "
-        "needs now, or combine them; Growth Partner brings management and new "
-        "video together every month."
+        "Simple prices. No surprises. Pick one service, or get everything "
+        "with Growth Partner for one monthly price."
     )
     if (
         approved_inclusions_intro.casefold()
         not in refined_pricing_text.casefold()
     ):
         critical.append(
-            f"{pricing_relative}: approved independent-scope introduction "
+            f"{pricing_relative}: approved plan introduction "
             "is missing"
         )
     for old_comparison_phrase in (
@@ -2790,8 +2778,8 @@ def main() -> int:
     inclusion_matches = list(
         re.finditer(
             r'<article\b'
-            r'(?=[^>]*\bclass=["\'][^"\']*\bservice-inclusions-column\b)'
-            r'(?=[^>]*\bdata-inclusion-service=["\']'
+            r'(?=[^>]*\bclass=["\'][^"\']*\bplan-card\b)'
+            r'(?=[^>]*\bdata-primary-service=["\']'
             r'(?P<service>[^"\']+)["\'])'
             r'[^>]*>(?P<body>.*?)</article\s*>',
             refined_pricing_html,
@@ -2803,55 +2791,46 @@ def main() -> int:
     ]
     if inclusion_services != expected_service_markers:
         critical.append(
-            f"{pricing_relative}: expected four independent inclusion columns "
+            f"{pricing_relative}: expected four plan cards with inclusion lists "
             f"for {expected_service_markers}, found {inclusion_services}"
         )
 
     required_inclusion_phrases = {
         "brand-website-launch": (
             "Brand & Website Launch",
-            "$499 USD one time",
-            "One focused project from brand direction through launch and "
-            "handoff.",
-            "Pay in two: $250 to start, $249 at launch.",
-            "Practical brand direction and visual identity",
-            "Responsive website with up to four core pages",
-            "Contact or lead form",
-            "Basic on-page SEO",
-            "Analytics and conversion-tracking foundation",
-            "One organized revision round",
-            "Launch assistance and handoff",
+            "$399 USD one time",
+            "Pay in two: $200 to start, $199 when your site goes live.",
+            "A website with up to four pages that works on phones and computers",
+            "A contact form so customers can reach you",
+            "Basic setup so Google can find your site",
+            "One round of changes",
         ),
         "ad-videos": (
             "Ad Videos",
-            "$149 USD per video",
-            "3 videos for $349. Delivered in 1–3 business days.",
-            "Up to 30 seconds of motion graphics",
-            "Royalty-free music",
-            "Vertical 9:16 and square 1:1 MP4 files",
-            "One organized revision round",
+            "$99 USD per video",
+            "Ready in 1–3 business days.",
+            "Up to 30 seconds of animation",
+            "Music included",
+            "Vertical and square video files for every platform",
+            "One round of changes",
         ),
         "focused-ads-management": (
-            "Focused Ads Management",
-            "$299 USD per month",
-            "Two-month initial commitment, then month to month. Advertising "
-            "spend separate.",
-            "One platform and one primary campaign",
-            "Campaign setup and conversion tracking",
-            "Ad copy and platform-appropriate static creative",
-            "Monitoring and optimization",
-            "Monthly reporting and review",
-            "Up to one hour of campaign-related website changes",
-            "For Meta campaigns, up to two refreshed static creative "
-            "variations per month when useful",
+            "Ads Management",
+            "$249 USD per month",
+            "Month to month. Your ad budget is paid separately.",
+            "Ads on one platform: Google, or Facebook & Instagram",
+            "A simple monthly report and review",
+            "Up to one hour of website changes a month",
+            "On Facebook & Instagram, up to two fresh image ads a month when useful",
         ),
         "growth-partner": (
             "Growth Partner",
-            "$449 USD per month",
-            "Two-month initial commitment, then month to month. Advertising "
-            "spend separate.",
-            "Everything in Focused Ads Management",
-            "Two new motion-graphics ad videos each month",
+            "$399 USD per month",
+            "Save $751 in your first 3 months",
+            "3-month minimum, then month to month.",
+            "Brand & Website Launch included",
+            "Everything in Ads Management, every month",
+            "Two new ad videos every month",
             "Unused videos do not roll over",
         ),
     }
@@ -2866,8 +2845,9 @@ def main() -> int:
                 )
 
     combined_scope_copy = (
-        "Choosing more than one service? You receive everything listed in "
-        "each column, delivered in the appropriate sequence for your business."
+        "Choosing more than one service? You get everything listed on each "
+        "card. If you want three or more, Growth Partner is usually the "
+        "better deal."
     )
     if combined_scope_copy.casefold() not in refined_pricing_text.casefold():
         critical.append(
@@ -2901,10 +2881,9 @@ def main() -> int:
         custom_scope_html = custom_scope_match.group(0)
         custom_scope_text = strip_html(custom_scope_html)
         required_custom_copy = (
-            "Need something beyond these scopes? "
-            "RielArt can review ongoing website support, content updates, "
-            "blog publishing, additional landing pages, or broader campaign "
-            "requirements separately."
+            "Need something not listed here? "
+            "RielArt can look at ongoing website updates, blog posts, extra "
+            "landing pages, or larger ad campaigns separately."
         )
         if required_custom_copy.casefold() not in custom_scope_text.casefold():
             critical.append(
@@ -2938,8 +2917,8 @@ def main() -> int:
     ads_relative = "services/focused-ads-management/index.html"
     ads_text = page_visible(ads_relative)
     ads_required_phrases = {
-        "two-month initial commitment":
-            "two-month initial commitment",
+        "no minimum term":
+            "no minimum term: the service continues month to month",
         "month-to-month continuation":
             "the service continues month to month",
         "advertising spend is separate":
@@ -2955,30 +2934,28 @@ def main() -> int:
         "website edit time does not roll over":
             "unused website-update time does not roll over",
         "limited Meta creative refresh":
-            "up to two refreshed static creative variations per month when useful",
+            "up to two fresh image ads a month when useful",
         "Meta creative material sources":
             "campaign creative using approved client media, licensed stock "
             "assets, website content, brand graphics, motion typography, or "
             "other suitable materials",
         "Meta initial creative range":
-            "meta campaigns normally begin with approximately three to five "
-            "ad variations built around a focused set of creative concepts",
+            "facebook & instagram campaigns usually start with three to five "
+            "ads using your photos or videos",
         "ad videos are a separate service":
-            "new motion-graphics ad videos are available as ad videos, or two "
-            "are included every month with growth partner",
+            "new animated video ads are available as ad videos, or two are "
+            "included every month with growth partner",
         "static creative in management":
-            "focused ads management includes static creative",
+            "ads management includes simple image ads",
         "live production exclusion":
             "filming, actors or ugc creators, and professional voiceover are "
             "not included in either",
         "Growth Partner explained on the ads page":
-            "everything in focused ads management, plus two new "
-            "motion-graphics ad videos each month",
+            "everything in ads management, plus two new ad videos each month",
         "creative is refreshed based on need":
-            "creative is refreshed based on campaign needs rather than "
-            "produced unnecessarily",
+            "fresh image ads are made only when they’ll help",
         "Google excludes video production":
-            "google search campaigns do not include video production",
+            "google search ads are text ads, so they don’t include video",
         "Google responsive-ad explanation":
             "google responsive search ads combine and test multiple headlines and descriptions",
     }
@@ -2997,6 +2974,7 @@ def main() -> int:
         "a simple 10–15 second short-form video ad variation",
         "a video counts as one of the two included variations",
         "three-month initial commitment",
+        "two-month initial commitment",
     ):
         if retired_video_phrase.casefold() in ads_text.casefold():
             critical.append(
@@ -3010,12 +2988,11 @@ def main() -> int:
     homepage_ads_phrases = (
         "Ad copy and campaign creative",
         "The practical parts of your online presence, handled together.",
-        "RielArt connects your brand, website, ad videos, campaigns, "
-        "tracking, and reporting without taking ownership of your accounts "
-        "or adding unnecessary complexity.",
+        "RielArt looks after your brand, website, videos, and ads in one "
+        "place—and everything stays in your name.",
         "Flat fees—never a percentage of ad spend.",
-        "Client-owned accounts, data, and payment methods.",
-        "Videos, ads, and website made in-house.",
+        "You own everything.",
+        "One team makes it all.",
     )
     for phrase in homepage_ads_phrases:
         if phrase.casefold() not in homepage_text.casefold():
@@ -3029,21 +3006,20 @@ def main() -> int:
         )
 
     approved_ad_count_answer = (
-        "Focused Ads Management covers one advertising platform and one "
-        "primary campaign. Google Search campaigns use focused ad groups "
-        "with responsive ad copy variations. Meta campaigns normally begin "
-        "with approximately three to five ad variations built from static "
-        "images or video you already have, with up to two refreshed static "
-        "variations per month when useful. New motion-graphics ad videos "
-        "are available as Ad Videos, and Growth Partner includes two every "
-        "month."
+        'Ads Management covers one advertising platform and one main '
+        'campaign. On Google, RielArt writes several versions of your '
+        'ad and Google shows the best-performing ones. On Facebook and '
+        'Instagram, campaigns usually start with three to five ads '
+        'using your photos or videos, with up to two fresh image ads a '
+        'month when useful. New animated video ads are available as Ad '
+        'Videos, and Growth Partner includes two every month.'
     )
     video_faq_answer = (
-        "Yes. Ad Videos are motion-graphics ads up to 30 seconds, made from "
-        "your logo, photos, and offer, with royalty-free music and vertical "
-        "9:16 and square 1:1 versions. Each is $149 USD, or three for $349, "
-        "and Growth Partner includes two every month. Filming, actors or "
-        "UGC creators, and professional voiceover are not included."
+        'Yes. Ad Videos are short animated video ads, up to 30 seconds, '
+        'made from your logo, photos, and offer, with music and '
+        'versions for Instagram, Facebook, TikTok, and YouTube. Each is '
+        '$99 USD, and Growth Partner includes two every month. Filming, '
+        'actors, and voiceover are not included.'
     )
     internal_ads_scope_relative = "RIELART-ADS-SERVICE-SCOPE.md"
     internal_ads_scope_text = read_text(root / internal_ads_scope_relative)
@@ -3061,6 +3037,7 @@ def main() -> int:
     for retired_phrase in (
         "a simple short-form video ad variation may be assembled from suitable client-provided or otherwise approved assets when appropriate",
         "three-month initial commitment",
+        "two-month initial commitment",
     ):
         if retired_phrase.casefold() in internal_ads_scope_text.casefold():
             critical.append(
@@ -3078,13 +3055,14 @@ def main() -> int:
             critical.append(f"{faq_relative}: missing {label}")
 
     business_email_faq_answer = (
-        "Yes. Business Email & Workspace Setup starts at $149 USD one time "
-        "for a straightforward new setup and can include professional email "
-        "on your domain through Google Workspace or Microsoft 365, essential "
-        "DNS and email-authentication configuration, and basic account and "
-        "security setup. Provider subscriptions are billed separately. "
-        "Existing mailbox migration, larger teams, and more complex "
-        "environments are scoped separately."
+        'Yes. Business Email & Workspace Setup starts at $129 USD one '
+        'time for a straightforward new setup and can include '
+        'professional email on your domain through Google Workspace or '
+        'Microsoft 365, the settings that help your email reach '
+        'inboxes, and basic account and security setup. Provider '
+        'subscriptions are billed separately. Moving existing '
+        'mailboxes, larger teams, and more complex setups are quoted '
+        'separately. It is included with Growth Partner.'
     )
     business_email_subscription_answer = (
         "No. RielArt charges for the setup work. The client owns the account "
@@ -3095,7 +3073,7 @@ def main() -> int:
     for question, answer in (
         ("Can RielArt set up professional business email?", business_email_faq_answer),
         (
-            "Does the $149 include Google Workspace or Microsoft 365 subscriptions?",
+            "Does the $129 include Google Workspace or Microsoft 365 subscriptions?",
             business_email_subscription_answer,
         ),
     ):
@@ -3136,7 +3114,7 @@ def main() -> int:
     terms_text = page_visible("terms/index.html")
     for phrase in (
         "optional setup—not a third primary service",
-        "starts at $149 USD one time",
+        "starts at $129 USD one time",
         "client owns and controls the workspace tenant",
         "administrative or delegated access",
         "Existing email migration",
@@ -3166,10 +3144,10 @@ def main() -> int:
             "missing"
         )
     approved_contact_choices = {
-        "Brand & Website Launch — $499 one time",
-        "Ad Videos — from $149 per video",
-        "Focused Ads Management — $299/month",
-        "Growth Partner — $449/month",
+        "Brand & Website Launch — $399 one time",
+        "Ad Videos — $99 per video",
+        "Ads Management — $249/month",
+        "Growth Partner — $399/month",
         "More than one, or not sure yet",
     }
     if contact_page is not None:
@@ -3290,7 +3268,7 @@ def main() -> int:
                     "not be required"
                 )
             if unescape(optional_control.value) != (
-                "Business Email & Workspace Setup — from $149"
+                "Business Email & Workspace Setup — from $129"
             ):
                 critical.append(
                     "contact/index.html: Business Email checkbox value does "
@@ -3594,10 +3572,10 @@ def main() -> int:
 
     service_schema_names: set[str] = set()
     expected_schema_prices = {
-        "Brand & Website Launch": "499",
-        "Ad Videos": "149",
-        "Focused Ads Management": "299",
-        "Growth Partner": "449",
+        "Brand & Website Launch": "399",
+        "Ad Videos": "99",
+        "Ads Management": "249",
+        "Growth Partner": "399",
     }
     localbusiness_found = False
     postal_address_pages: set[str] = set()
@@ -3740,7 +3718,7 @@ def main() -> int:
             f"Forms checked: {form_count}",
             f"Orphan indexable pages found: {len(orphan_pages)}",
             f"Approved visible pricing markers found: "
-            f"{pricing_markers_validated}/2",
+            f"{pricing_markers_validated}/4",
             f"Approved optional starting-price markers found: "
             f"{optional_price_validated}/1",
             f"Subordinate Business Email offer blocks checked: "

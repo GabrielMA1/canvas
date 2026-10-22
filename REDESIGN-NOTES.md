@@ -2,7 +2,16 @@
 
 Status: implemented on branch `claude/clever-allen-vt1at2` for owner review. Not deployed. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
 
-## Hero reel and founding pricing (October 23, 2026)
+## Simpler offer and plan-card pricing (October 2026, latest)
+
+- **Offer:** three single services (Brand & Website Launch $399, Ad Videos $99, Ads Management $249/month month to month) and Growth Partner at $399/month with everything included (3-month minimum). Extras: business email from $129, Google Business Profile $79, extra page $79. Founding-client pricing and crossed-out prices are retired.
+- **Offer banner:** “Open to new clients: 10% off your first month*”. The asterisk leads to small but legible print at the foot of every page; it is a legal disclosure, so it is never hidden or below body-copy contrast.
+- **Pricing page:** rebuilt as plan cards, the pattern people know from software pricing pages, set in this system’s voice: square corners, a 4px ink rule on top of each card, one card in solid ultramarine for Growth Partner with a “Best value” tag and the saving printed under its price. A two-option switch (Services | Extras) sits under the headline; it is a real tablist with arrow-key support and deep links, and without JavaScript both groups simply stack. Cards share a subgrid so names, prices, buttons, and lists line up across the row.
+- **Hero reel, scene 4:** “Advertising” was abstract, so it now tells a story anyone recognises: a “Sponsored” post for “Your business” scrolls into a phone feed, someone taps “Book now”, and a “New customer message” notification drops in. The closing words are “More customers”.
+- **Plain language:** every page was rewritten for business owners with no marketing background: “Meta” became “Facebook & Instagram”, jargon (conversion tracking, ad sets, DMARC) is either replaced or explained in brackets, and each service page explains what happens step by step.
+- **Budgets:** the CSS budget rose from 82 KB to 90 KB for the plan cards, Extras, and receipt (about 18 KB gzipped); unused rules from the old pricing layout were removed.
+
+## Hero reel and founding pricing (October 23, 2026) (superseded)
 
 - **Hero:** at the owner’s request the price list left the hero (prices live on the board just below and on Pricing). In its place a CSS motion-graphics reel, styled like a vertical Story with progress segments, shows the four services in twelve seconds, picture first with one word each: colour blocks burst around the R mark; a phone rises, its page builds and a cursor taps the button; a play button gives way to a small animated scene with a video progress bar; a feed scrolls, the ad is tapped and a message arrives. Scenes cut in with a wipe and alternate paper, blue, and black. A video-player style icon button pauses and plays it (October 24 revision). It demonstrates the motion work RielArt now sells, adds no JavaScript to the critical path, pauses on request or off screen, and is a single still frame under reduced motion.
 - **Founding client pricing:** 20% off the four offers for the first 10 clients, shown as the regular price crossed out beside the founding price, with a site-wide notice and a full explanation on Pricing. The urgency is real (a genuine limit and a six-month lock for monthly plans); no countdowns, invented scarcity, or fictitious reference prices. Crossed-out prices carry screen-reader text (“Regular price … Founding client price …”).
