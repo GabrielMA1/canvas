@@ -40,7 +40,7 @@ The typical page set is Home, About, Services, and Contact. Another four-page st
 
 ### Timeline
 
-Most Brand & Website Launch projects are designed to be completed in approximately three to five weeks after RielArt receives the required content, feedback, approvals, and account access. An exact date is confirmed only after scope and dependencies are reviewed.
+Most Brand & Website Launch projects are designed to be completed in approximately two to three weeks after RielArt receives the required content, feedback, approvals, and account access. An exact date is confirmed only after scope and dependencies are reviewed.
 
 ### Not automatically included
 

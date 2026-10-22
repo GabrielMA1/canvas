@@ -385,6 +385,7 @@ body:not(.home) .section:not(.section-alt):not(.section-dark):not(.section-tint)
 .check-list li::before,
 .compact-list li::before,
 .plan-features li::before,
+.hero-trust li::before,
 .trust-ledger li::before {
   content: "";
   flex: none;
@@ -706,14 +707,38 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   text-wrap: initial;
 }
 .hero-line { display: block; }
+.hero-kicker {
+  display: block;
+  max-width: 28em;
+  margin-bottom: 1.25rem;
+  color: var(--fg-2);
+  font-size: clamp(1rem, 0.9rem + 0.35vw, 1.1875rem);
+  font-weight: 640;
+  font-stretch: 92%;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
 
 .hero-copy { grid-column: 1 / span 6; align-self: start; }
 .hero-copy .lead { color: var(--fg); max-width: 34em; }
 .hero-copy .btn-row { margin-top: 2rem; }
+.hero-trust { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 1.75rem; color: var(--fg); font-size: 0.9375rem; font-weight: 600; }
+.hero-trust li { display: flex; gap: 0.5rem; }
+.hero-call { margin-top: 1rem; color: var(--fg-2); font-size: 0.9375rem; }
+.hero-call a { color: var(--accent); font-weight: 680; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+.final-cta .hero-call { margin-top: 1.25rem; font-size: 1rem; }
+
+/* Who it's for: a ruled list of the kinds of businesses RielArt serves. */
+.who-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 var(--gutter); border-top: 4px solid var(--line-strong); }
+.who-list li { padding: 1.25rem 0 1.5rem; border-bottom: 1px solid var(--line); }
+.who-list h3 { font-size: 1.1875rem; font-weight: 740; font-stretch: 88%; }
+.who-list p { margin-top: 0.375rem; color: var(--fg-2); font-size: 0.9375rem; }
+@media (max-width: 900px) { .who-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .who-list { grid-template-columns: 1fr; } }
 
 /* The hero reel: a vertical ad, played in CSS, that shows the four services
-   in twelve seconds — picture first, a word or two each — the same motion
-   work RielArt sells. Resting styles are each element's final pose; keyframes
+   in twelve seconds — picture first, one word each — the same motion work
+   RielArt sells. Resting styles are each element's final pose; keyframes
    only describe the entrance, so reduced motion shows a finished frame. */
 .hero-reel {
   --reel: 12s;
@@ -938,58 +963,83 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
 @keyframes reel-slide-r { 0% { transform: translateX(100%); } 5%, 100% { transform: none; } }
 @keyframes reel-bar { 0% { transform: scaleX(0); } 15%, 100% { transform: scaleX(1); } }
 
-/* 4 · Advertising, told as a story anyone recognises: a "Sponsored" post for
-   your business scrolls into a phone feed, someone taps "Book now", and a
-   new customer message arrives. */
-.reel-feed {
+/* 4 · Advertising: a campaign goes live, its ad groups switch on one by
+   one, results bars grow, and a new inquiry arrives. */
+.ads-panel {
   position: absolute;
-  left: 50%;
-  top: 3rem;
-  width: 11.5rem;
-  height: 17rem;
-  margin-left: -5.75rem;
-  overflow: hidden;
-  padding: 0.5rem;
-  background: #f3efe6;
-  border: 4px solid #16181d;
+  left: 1.125rem;
+  right: 1.125rem;
+  top: 3.25rem;
+  display: grid;
+  gap: 0.625rem;
+  padding: 0.75rem;
+  background: #fff;
+  border: 3px solid #16181d;
+  animation-name: reel-rise;
+  animation-delay: var(--s4);
 }
-.f-track { display: grid; gap: 0.5rem; animation-name: reel-scroll; animation-delay: var(--s4); }
-.f-post { display: block; height: 2.5rem; background: #e2ded4; }
-.f-track .f-post:last-child { height: 4rem; }
-.f-ad { display: grid; border: 1px solid rgba(22, 24, 29, 0.2); background: #fff; }
-.f-head { display: flex; align-items: center; gap: 0.375rem; height: 1.625rem; padding: 0 0.375rem; font-size: 0.625rem; font-weight: 720; line-height: 1.05; }
-.f-logo { display: grid; place-items: center; flex: none; width: 1.125rem; height: 1.125rem; background: #f3efe6; border: 1px solid #16181d; }
-.f-logo img { width: 0.75rem; height: 0.75rem; }
-.f-head small { display: block; color: #5a5d66; font-size: 0.5625rem; font-weight: 500; }
-.f-media { position: relative; height: 6.25rem; overflow: hidden; background: #1238c4; }
-.f-media .m-sun { position: absolute; right: 1.25rem; top: 1rem; width: 1.75rem; height: 1.75rem; border-radius: 50%; background: #f3efe6; }
-.f-media .m-hill { position: absolute; left: -10%; right: 25%; bottom: 0; height: 3.75rem; background: #16181d; clip-path: polygon(0 100%, 50% 0, 100% 100%); }
-.f-cta { display: flex; align-items: center; justify-content: space-between; height: 1.875rem; padding: 0 0.375rem; font-size: 0.625rem; font-weight: 600; }
-.f-cta b {
-  position: relative;
-  padding: 0.25rem 0.5rem;
+.ads-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(22, 24, 29, 0.15); }
+.ads-head span { display: grid; color: #5a5d66; font-size: 0.5625rem; font-weight: 600; line-height: 1.2; }
+.ads-head b { color: #16181d; font-size: 0.875rem; font-weight: 760; }
+.ads-head em {
+  padding: 0.125rem 0.375rem;
   background: #1238c4;
   color: #f3efe6;
+  font-size: 0.625rem;
+  font-style: normal;
   font-weight: 720;
-  animation-name: reel-press;
-  animation-delay: calc(var(--s4) + 1s);
+  animation-name: reel-pop;
+  animation-delay: calc(var(--s4) + 0.45s);
 }
-.f-cta b::after {
+.ads-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0.25rem 0.5rem; font-size: 0.625rem; font-weight: 640; }
+.ads-switch {
+  position: relative;
+  width: 1.375rem;
+  height: 0.75rem;
+  border-radius: 1rem;
+  background: #1238c4;
+  animation-name: reel-switch;
+}
+.ads-switch::after {
   content: "";
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
-  margin: -1.25rem 0 0 -1.25rem;
-  border: 2px solid #16181d;
+  top: 0.125rem;
+  left: 0.75rem;
+  width: 0.5rem;
+  height: 0.5rem;
   border-radius: 50%;
-  opacity: 0;
-  animation: reel-ring var(--reel) ease-out infinite both;
-  animation-delay: calc(var(--s4) + 1s);
+  background: #fff;
+  animation: reel-knob var(--reel) cubic-bezier(0.2, 0.8, 0.2, 1) infinite both;
+  animation-delay: inherit;
 }
-@keyframes reel-scroll { 0% { transform: translateY(9rem); } 7%, 100% { transform: none; } }
-@keyframes reel-press { 0% { transform: scale(0.88); } 2%, 100% { transform: none; } }
+.ads-bar { grid-column: 1 / -1; display: block; height: 0.375rem; width: var(--w); background: #1238c4; transform-origin: 0 50%; animation-name: reel-grow; }
+.ads-row:nth-of-type(2) .ads-switch { animation-delay: calc(var(--s4) + 0.65s); }
+.ads-row:nth-of-type(3) .ads-switch { animation-delay: calc(var(--s4) + 0.8s); }
+.ads-row:nth-of-type(4) .ads-switch { animation-delay: calc(var(--s4) + 0.95s); }
+.ads-row:nth-of-type(2) .ads-bar { --w: 78%; animation-delay: calc(var(--s4) + 0.85s); }
+.ads-row:nth-of-type(3) .ads-bar { --w: 56%; animation-delay: calc(var(--s4) + 1s); }
+.ads-row:nth-of-type(4) .ads-bar { --w: 92%; animation-delay: calc(var(--s4) + 1.15s); }
+@keyframes reel-switch { 0% { background-color: #c9cbd1; } 2%, 100% { background-color: #1238c4; } }
+@keyframes reel-knob { 0% { transform: translateX(-0.5rem); } 2%, 100% { transform: none; } }
+.ads-chart {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: end;
+  gap: 0.25rem;
+  height: 3.75rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid rgba(22, 24, 29, 0.15);
+}
+.ads-chart span { position: absolute; left: 0; top: 0.25rem; color: #5a5d66; font-size: 0.5625rem; font-weight: 600; }
+.ads-chart i { display: block; background: #16181d; transform-origin: 50% 100%; animation-name: reel-bar-up; }
+.ads-chart i:nth-of-type(1) { height: 25%; animation-delay: calc(var(--s4) + 1.25s); }
+.ads-chart i:nth-of-type(2) { height: 40%; animation-delay: calc(var(--s4) + 1.32s); }
+.ads-chart i:nth-of-type(3) { height: 35%; animation-delay: calc(var(--s4) + 1.39s); }
+.ads-chart i:nth-of-type(4) { height: 60%; animation-delay: calc(var(--s4) + 1.46s); }
+.ads-chart i:nth-of-type(5) { height: 75%; animation-delay: calc(var(--s4) + 1.53s); }
+.ads-chart i:nth-of-type(6) { height: 100%; background: #1238c4; animation-delay: calc(var(--s4) + 1.6s); }
+@keyframes reel-bar-up { 0% { transform: scaleY(0); } 4%, 100% { transform: none; } }
 @keyframes reel-ring {
   0% { opacity: 0; transform: scale(0.4); }
   1% { opacity: 1; }
@@ -1011,11 +1061,12 @@ body.menu-open .site-header { border-bottom-color: var(--rule); }
   line-height: 1.25;
   box-shadow: 0 0.5rem 1.25rem rgba(22, 24, 29, 0.3);
   animation-name: reel-drop;
-  animation-delay: calc(var(--s4) + 1.4s);
+  animation-delay: calc(var(--s4) + 1.9s);
 }
 .reel-note b { font-size: 0.8125rem; font-weight: 720; }
+.reel-ads .reel-note { top: auto; bottom: 4.5rem; }
+.reel-ads .reel-tag { font-size: 2.125rem; }
 @keyframes reel-drop { 0% { opacity: 0; transform: translateY(-1.5rem); } 3% { opacity: 1; transform: translateY(0.125rem); } 5%, 100% { opacity: 1; transform: none; } }
-.reel-ads .reel-tag { font-size: 2.25rem; }
 
 @keyframes reel-pop { 0% { opacity: 0; transform: scale(0.4); } 3% { opacity: 1; transform: scale(1.08); } 5%, 100% { opacity: 1; transform: none; } }
 @keyframes reel-up { 0% { opacity: 0; transform: translateY(1.5rem); } 4%, 100% { opacity: 1; transform: none; } }

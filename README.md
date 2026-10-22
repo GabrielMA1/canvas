@@ -6,10 +6,10 @@ Static, dependency-free production website for RielArt. Deploy the repository’
 
 Approved by the owner on October 22, 2026 and simplified the same month. Headline: **The art your business deserves.** RielArt sells three single services and one bundle:
 
-- **Brand & Website Launch — $399 USD one time**, paid $200 at project start and $199 when the site goes live
+- **Brand & Website Launch — $349 USD one time**, paid $175 at project start and $174 when the site goes live
 - **Ad Videos — $99 USD per video** (animation up to 30 seconds, vertical and square, ready in 1–3 business days)
 - **Ads Management — $249 USD per month**, month to month with no minimum (formerly “Focused Ads Management”; the URL `/services/focused-ads-management/` is unchanged)
-- **Growth Partner — $399 USD per month**, 3-month minimum then month to month: Brand & Website Launch, Ads Management, two new ad videos a month, business email setup, and Google Business Profile setup. Against buying the same things separately it saves $751 in the first three months ($1,948 vs $1,197) and $48 a month after that ($447 vs $399).
+- **Growth Partner — $399 USD per month**, 3-month minimum then month to month: Brand & Website Launch, Ads Management, two new ad videos a month, business email setup, and Google Business Profile setup. Against buying the same things separately it saves $701 in the first three months ($1,898 vs $1,197) and $48 a month after that ($447 vs $399).
 
 Extras: **Business Email & Workspace Setup — from $129 USD one time**, **Google Business Profile Setup — $79**, and **extra website pages — $79 each**. Business email and Google Business Profile setup are included with Growth Partner.
 
@@ -23,6 +23,15 @@ Support beyond these offers is available only as a separately reviewed inquiry. 
 
 Future approved payment links have one internal configuration location: `config/payment-links.json`. Both values remain `null` until approved and tested. The `config/` directory is excluded from the GitHub Pages build.
 
+## Search and visibility (October 2026)
+
+- Page titles and descriptions use the words customers search for (“small business website design”, “video ads”, “Google Ads & Facebook Ads management”) with the price where it helps.
+- The homepage H1 opens with a plain keyword line (“Websites, video ads & online advertising for small businesses”) above the brand line, and a “Made for small businesses like yours” section names the kinds of businesses served.
+- Organization schema carries a slogan and `knowsAbout`; every service page has Service schema with current prices; FAQ pages have FAQPage schema; the sitemap lists all 27 public pages with current dates.
+- Service pages link to the matching guides, and the guides link back to the services.
+
+Owner-only steps that matter most for Google: verify rielart.com in Google Search Console and Bing Webmaster Tools and submit `https://rielart.com/sitemap.xml`; create and verify a Google Business Profile (service-area business, no public address needed); ask the first clients for Google reviews; upload the three ad videos; and add a real client project to Work as soon as one is approved.
+
 ## Site structure
 
 - `index.html` — homepage: new-client banner, “The art your business deserves.” beside a CSS motion-graphics reel of the four services ending on a social ad that brings in a customer message (pausable; still frame under reduced motion), the problem statement, the three-offer price board with the Growth Partner band, an Extras row, the ad-video showcase, Why RielArt, Google/Meta comparison, process with a Client Portal strip, labelled work, FAQ, and final inquiry CTA
@@ -35,7 +44,7 @@ Future approved payment links have one internal configuration location: `config/
 - `portfolio/` — RielArt's own site as the internal project (real screenshots of this site), design decisions, and flagged representative concepts with structural scope sketches
 - `about/` — company approach, operating principles, ownership, and service area
 - `faq/` — detailed commercial, business-email setup, and delivery answers
-- `blog/` — searchable Insights index and nine educational articles
+- `blog/` — searchable Insights index and eleven educational articles, including “How Much Does a Small Business Website Cost in 2026?” and “Google Ads vs Facebook Ads” (Advertising category)
 - `contact/` — canonical inquiry with four primary choices plus “not sure”, optional Extras checkboxes (business email, Google Business Profile, extra pages), conditional advertising questions, and preserved query context
 - `privacy-policy/`, `terms/` — legal information covering advertising and authorized business-email/workspace access, pending the decisions recorded in `RIELART-MANUAL-REVIEW.md`
 - `thanks/`, `404.html` — noindex utility pages

@@ -41,19 +41,22 @@ PRIMARY_SERVICE_MARKERS = [
     "focused-ads-management",
     "growth-partner",
 ]
-EXPECTED_ONE_TIME_PRICES = {"$399", "$99"}
+EXPECTED_ONE_TIME_PRICES = {"$349", "$99"}
 EXPECTED_MONTHLY_PRICES = {"$249", "$399"}
 # Earlier price lists, including the founding-client discount prices.
 LEGACY_COMMERCIAL_PRICES = {
     "$247", "$497", "$599", "$699", "$948",
-    "$499", "$149", "$299", "$449", "$349", "$119", "$239", "$279", "$359",
+    "$499", "$149", "$299", "$449", "$119", "$239", "$279", "$359",
+    "$751", "$1,948",
 }
-# $249 and $399 are current monthly prices again; only the retired $349
-# monthly offer remains disallowed.
+# Retired prices that share digits with current ones, matched by cadence:
+# $349 is now the one-time launch price, and $399 is now Growth Partner's
+# monthly price only.
 LEGACY_MONTHLY_PRICE_PATTERNS = {
     "$349/month": r"\$349\s*(?:USD\s*)?(?:/\s*month|per\s+month|monthly)",
+    "$399 one time": r"\$399\s*(?:USD\s*)?one[\s-]+time",
 }
-PUBLIC_PAGE_COUNT = 25
+PUBLIC_PAGE_COUNT = 27
 # Owner-supplied ad videos referenced by the video slots. Until each file is
 # uploaded the slot shows a placeholder, and the audit reports a warning
 # instead of a missing-asset failure.
@@ -1667,7 +1670,7 @@ def main() -> int:
             )
 
         expected_price_patterns = {
-            "$399 one time": re.compile(r"\$399\s+USD\s+one\s+time\b", re.I),
+            "$349 one time": re.compile(r"\$349\s+USD\s+one\s+time\b", re.I),
             "$99 per video": re.compile(r"\$99\s+USD\s+per\s+video\b", re.I),
             "$249 per month": re.compile(r"\$249\s+USD\s+per\s+month\b", re.I),
             "$399 per month": re.compile(r"\$399\s+USD\s+per\s+month\b", re.I),
@@ -2046,6 +2049,16 @@ def main() -> int:
             "Websites",
         ),
         (
+            "How Much Does a Small Business Website Cost in 2026?",
+            f"{SITE_ORIGIN}/blog/small-business-website-cost/",
+            "Websites",
+        ),
+        (
+            "Google Ads vs Facebook Ads: Which Is Right for Your Small Business?",
+            f"{SITE_ORIGIN}/blog/google-ads-vs-facebook-ads/",
+            "Advertising",
+        ),
+        (
             "3 Brand Identity Mistakes That Kill Credibility",
             f"{SITE_ORIGIN}/blog/brand-identity-mistakes/",
             "Brand",
@@ -2174,6 +2187,11 @@ def main() -> int:
         )
     ]
     expected_grid_records = [
+        ("websites", "How Much Does a Small Business Website Cost in 2026?"),
+        (
+            "advertising",
+            "Google Ads vs Facebook Ads: Which Is Right for Your Small Business?",
+        ),
         ("brand", "3 Brand Identity Mistakes That Kill Credibility"),
         ("websites", "Local SEO Checklist for Toronto Small Businesses"),
         (
@@ -2210,6 +2228,7 @@ def main() -> int:
         ("all", "All"),
         ("brand", "Brand"),
         ("websites", "Websites"),
+        ("advertising", "Advertising"),
         ("practical-technology", "Practical Technology"),
     ]
     filter_records = [
@@ -2230,6 +2249,8 @@ def main() -> int:
 
     expected_article_sections = {
         "blog/website-costing-you-leads/index.html": "Websites",
+        "blog/small-business-website-cost/index.html": "Websites",
+        "blog/google-ads-vs-facebook-ads/index.html": "Advertising",
         "blog/brand-identity-mistakes/index.html": "Brand",
         "blog/local-seo-checklist-toronto/index.html": "Websites",
         "blog/small-business-automation-ideas/index.html":
@@ -2586,7 +2607,7 @@ def main() -> int:
             "Need professional business email too?",
             "one existing business domain",
             "up to 3 users",
-            "Not included in the $399 Brand & Website Launch",
+            "Not included in the $349 Brand & Website Launch",
             "included with Growth Partner",
             "subscription costs are separate",
             "client owns the account",
@@ -2798,8 +2819,8 @@ def main() -> int:
     required_inclusion_phrases = {
         "brand-website-launch": (
             "Brand & Website Launch",
-            "$399 USD one time",
-            "Pay in two: $200 to start, $199 when your site goes live.",
+            "$349 USD one time",
+            "Pay in two: $175 to start, $174 when your site goes live.",
             "A website with up to four pages that works on phones and computers",
             "A contact form so customers can reach you",
             "Basic setup so Google can find your site",
@@ -2826,7 +2847,7 @@ def main() -> int:
         "growth-partner": (
             "Growth Partner",
             "$399 USD per month",
-            "Save $751 in your first 3 months",
+            "Save $701 in your first 3 months",
             "3-month minimum, then month to month.",
             "Brand & Website Launch included",
             "Everything in Ads Management, every month",
@@ -3144,7 +3165,7 @@ def main() -> int:
             "missing"
         )
     approved_contact_choices = {
-        "Brand & Website Launch — $399 one time",
+        "Brand & Website Launch — $349 one time",
         "Ad Videos — $99 per video",
         "Ads Management — $249/month",
         "Growth Partner — $399/month",
@@ -3572,7 +3593,7 @@ def main() -> int:
 
     service_schema_names: set[str] = set()
     expected_schema_prices = {
-        "Brand & Website Launch": "399",
+        "Brand & Website Launch": "349",
         "Ad Videos": "99",
         "Ads Management": "249",
         "Growth Partner": "399",
