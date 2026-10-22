@@ -15,7 +15,7 @@
   toggle.addEventListener("click", () => {
     pausedByUser = !pausedByUser;
     toggle.setAttribute("aria-pressed", String(pausedByUser));
-    toggle.textContent = pausedByUser ? "Play animation" : "Pause animation";
+    toggle.setAttribute("aria-label", pausedByUser ? "Play animation" : "Pause animation");
     sync();
   });
 

@@ -2271,9 +2271,11 @@ def main() -> int:
                 f"{expected_section!r}"
             )
 
-    current_css_cache_reference = "site.css?v=20261023founding1"
-    current_js_cache_reference = "site.js?v=20261023founding1"
+    current_css_cache_reference = "site.css?v=20261024reel2"
+    current_js_cache_reference = "site.js?v=20261024reel2"
     retired_cache_references = (
+        "site.css?v=20261023founding1",
+        "site.js?v=20261023founding1",
         "site.css?v=20261022offer1",
         "site.js?v=20261022offer1",
         "site.css?v=20261009motion1",
