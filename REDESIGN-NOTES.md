@@ -2,9 +2,16 @@
 
 Status: implemented on branch `claude/clever-allen-vt1at2` for owner review. Not deployed. No external account, DNS, Formspree, Calendly, Stripe, or provider setting was changed, and no production form was submitted.
 
-## Simpler offer and plan-card pricing (October 2026, latest)
+## Search and first-impression pass (October 2026, latest)
 
-- **Offer:** three single services (Brand & Website Launch $399, Ad Videos $99, Ads Management $249/month month to month) and Growth Partner at $399/month with everything included (3-month minimum). Extras: business email from $129, Google Business Profile $79, extra page $79. Founding-client pricing and crossed-out prices are retired.
+- **Price spacing:** Brand & Website Launch moved to $349 ($175 + $174) so it never reads as the same price as Growth Partner ($399/month); Growth Partner now saves $701 in the first three months. The typical website timeline is 2–3 weeks.
+- **Hero reel, scene 4:** back to the word “Advertising”, now shown as a campaign dashboard: the campaign goes Live, three ad groups switch on, their results grow, and a “New inquiry” alert arrives.
+- **Appeal:** three trust points under the hero buttons (published prices, you own everything, no long contracts for ads), a free 15-minute call link in the hero and final CTA, a “Made for small businesses like yours” section, and a “Why are your prices so affordable?” answer.
+- **Search:** keyword-led titles and descriptions, a keyword line in the homepage H1, richer Organization schema, two new guides targeting common owner searches, internal links between guides and services, and current sitemap dates.
+
+## Simpler offer and plan-card pricing (October 2026)
+
+- **Offer:** three single services (Brand & Website Launch $349, Ad Videos $99, Ads Management $249/month month to month) and Growth Partner at $399/month with everything included (3-month minimum). Extras: business email from $129, Google Business Profile $79, extra page $79. Founding-client pricing and crossed-out prices are retired.
 - **Offer banner:** “Open to new clients: 10% off your first month*”. The asterisk leads to small but legible print at the foot of every page; it is a legal disclosure, so it is never hidden or below body-copy contrast.
 - **Pricing page:** rebuilt as plan cards, the pattern people know from software pricing pages, set in this system’s voice: square corners, a 4px ink rule on top of each card, one card in solid ultramarine for Growth Partner with a “Best value” tag and the saving printed under its price. A two-option switch (Services | Extras) sits under the headline; it is a real tablist with arrow-key support and deep links, and without JavaScript both groups simply stack. Cards share a subgrid so names, prices, buttons, and lists line up across the row.
 - **Hero reel, scene 4:** “Advertising” was abstract, so it now tells a story anyone recognises: a “Sponsored” post for “Your business” scrolls into a phone feed, someone taps “Book now”, and a “New customer message” notification drops in. The closing words are “More customers”.
